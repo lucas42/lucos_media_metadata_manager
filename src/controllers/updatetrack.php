@@ -11,7 +11,7 @@ function updateTrack($trackid, $postdata) {
 		// If a tag is marked as null, DELETE it from the API
 		// Otherwise, update the value using PUT
 		$method = array_key_exists("${key}_null", $postdata) ? "DELETE" : "PUT";
-		$val = $postdata[$key];
+		$val = array_key_exists($key, $postdata) ? $postdata[$key] : null;
 		$tagurl = "https://media-api.l42.eu/tags/${trackid}/${key}";
 		$context = stream_context_create([
 			"http" => [
