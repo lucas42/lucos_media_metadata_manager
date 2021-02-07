@@ -42,7 +42,11 @@ function getFormFields() {
 				5 => "Do it accapella without lyric sheet",
 			],
 			"hint" => "Can Luke sing along to it?",
-		]
+		],
+		"memory" => [
+			"type" => "text",
+			"hint" => "What this song reminds Luke of",
+		],
 	];
 }
 
