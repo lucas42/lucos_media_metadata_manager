@@ -102,6 +102,7 @@
 					min="0"
 					max="10"
 					step="0.1" />
+				<span class="preview" ></span>
 				<?php
 				break;
 			default:

@@ -68,6 +68,9 @@ form {
 	padding: 5px;
 	display: flex;
 }
+.form-field:nth-child(odd) {
+	background: rgba(150, 150, 255, 0.1);
+}
 .form-field .key-label {
 	display: inline-block;
 	width: 100px;
@@ -75,15 +78,17 @@ form {
 }
 .form-field .form-input {
 	width: 250px;
-	display: inline-block;
-}
-.form-field:nth-child(odd) {
-	background: rgba(150, 150, 255, 0.1);
+	display: flex;
 }
 .form-field .form-input > input {
 	width: 100%;
 	vertical-align: middle;
 	font-size: 19px;
+}
+.form-field .form-input .preview {
+	margin-left: 0.5em;
+	width: 1.5em;
+	text-align: center;
 }
 .form-field .isnull {
 	font-size: small;
