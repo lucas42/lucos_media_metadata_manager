@@ -25,7 +25,13 @@
 		$is_null = true;
 	}?>
 	<div class="form-field">
-		<label for="<?=htmlspecialchars($key)?>" class="key-label">
+		<label
+			for="<?=htmlspecialchars($key)?>"
+			class="key-label"
+			<?php if(!empty($field["hint"])) {?>
+			title="<?=htmlspecialchars($field["hint"])?>"
+			<?php }?>
+		>
 			<?=htmlspecialchars(str_replace('_', ' ', $key))?>
 		</label>
 		<span class="form-input">
@@ -58,9 +64,11 @@
 					id="<?=htmlspecialchars($key)?>"
 					name="<?=htmlspecialchars($key)?>">
 					<option></option>
-					<?php foreach ($field["values"] as $option) {?>
-					<option <?=($option === $value)?"selected":""?>>
-						<?=$option?>
+					<?php foreach ($field["values"] as $option => $label) {?>
+					<option
+						value="<?=htmlspecialchars($option)?>"
+						<?=(strval($option) === $value)?"selected":""?>>
+						<?=htmlspecialchars($label)?>
 					</option>
 					<?php
 					}?>

@@ -76,6 +76,15 @@ a {
 	width: 100px;
 	text-transform: capitalize;
 }
+.form-field .key-label[title] {
+	cursor: help;
+}
+.form-field .key-label[title]:after {
+	content: "ⓘ";
+	font-size: 0.5em;
+	vertical-align: top;
+	text-transform: none;
+}
 .form-field .form-input {
 	width: 250px;
 	display: flex;
