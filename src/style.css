@@ -33,6 +33,15 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+
+@media (max-width: 520px) {
+	#lucos_navbar_title {
+		width: auto;
+		margin: auto;
+		right: 0;
+		left: 25%;
+	}
+}
 html {
 	background: #ddeeff;
 	min-height: 100%;
@@ -57,6 +66,7 @@ form {
 .form-field {
 	font-size: 19px;
 	padding: 5px;
+	display: flex;
 }
 .form-field .key-label {
 	display: inline-block;
@@ -80,6 +90,7 @@ form {
 	color: #999;
 	margin-left: 10px;
 	width: 60px;
+	display: inline-block;
 }
 .form-field .isnull input {
 	width: 8px;
@@ -99,6 +110,7 @@ form {
 
 #details .detail {
 	padding: 4px;
+	display: flex;
 }
 #details .detail:nth-child(odd) {
 	background: rgba(150, 150, 255, 0.1);
