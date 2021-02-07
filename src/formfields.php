@@ -11,6 +11,9 @@ function getFormFields() {
 		"album" => [
 			"type" => "text",
 		],
+		"composer" => [
+			"type" => "text",
+		],
 		"rating" => [
 			"type" => "range",
 		],
