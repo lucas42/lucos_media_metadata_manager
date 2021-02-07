@@ -51,7 +51,21 @@
 	$tags = $data["tags"];
 	$unknown_tag_keys = array_diff_key($tags, $form_fields);
 ?>
-<h1>Track <?=$trackid?></h1>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Lucos Media Metadata Manager - track <?=$trackid?></title>
+		<link href="/style.css" rel="stylesheet">
+		<link rel="icon" href="/icon" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="mobile-web-app-capable" content="yes">
+	</head>
+	<body>
+		<div id="lucos_navbar">
+			<a href="https://l42.eu/"><img src="https://l42.eu/logo.png" alt="lucOS" id="lucos_navbar_icon" /></a>
+			<span id="lucos_navbar_title">Metadata Manager - track <?=$trackid?></span>
+		</div>
+		<div id="content">
 <h2>Metadata</h2>
 <form method="post">
 <?php foreach ($form_fields as $key => $type) {
@@ -63,9 +77,10 @@
 		$is_null = true;
 	}?>
 	<div class="form-field">
-		<label for="<?=htmlspecialchars($key)?>">
-			<?=htmlspecialchars($key)?>
+		<label for="<?=htmlspecialchars($key)?>" class="key-label">
+			<?=htmlspecialchars(str_replace('_', ' ', $key))?>
 		</label>
+		<span class="form-input">
 		<?php switch($type) {
 			case "text":
 				?>
@@ -91,41 +106,49 @@
 			default:
 				?>Unknown type "<?=$type?>"<?php
 		}?>
-		<input 
-			type="checkbox" 
-			id="<?=htmlspecialchars($key)?>_null" 
-			name="<?=htmlspecialchars($key)?>_null" 
-			<?=$is_null ? "checked" : ""?>
-			>
-		<label for="<?=htmlspecialchars($key)?>_null">Null?</label>
+		</span>
+		<span class="isnull">
+			<input
+				type="checkbox"
+				id="<?=htmlspecialchars($key)?>_null"
+				name="<?=htmlspecialchars($key)?>_null"
+				<?=$is_null ? "checked" : ""?>
+				>
+			<label for="<?=htmlspecialchars($key)?>_null">Null</label>
+		</span>
 	</div>
 <?php
 }
 ?>
-	<input type="submit" value="Save"/>
+	<input type="submit" value="Save" id="save" />
 </form>
 <h2>Additional Details</h2>
-<table>
+<div id="details">
 <?php foreach ($unknown_tag_keys as $key => $val) {?>
-	<tr>
-		<td class="key"><?=htmlspecialchars($key)?></td>
-		<td class="value"><?=htmlspecialchars($val)?></td>
-	</tr>
+	<div class="detail">
+		<span class="key"><?=htmlspecialchars(str_replace('_', ' ', $key))?></span>
+		<span class="value"><?=htmlspecialchars($val)?></span>
+	</div>
 <?php
 }
 ?>
-	<tr>
-		<td class="key">URL</td>
-		<td class="value">
-			<a href="<?=htmlspecialchars($data["url"])?>"><?=htmlspecialchars($data["url"])?></a>
-		</td>
-	</tr>
-	<tr>
-		<td class="key">Weighting</td>
-		<td class="value"><?=$data["weighting"]?></td>
-	</tr>
-	<tr>
-		<td class="key">Duration</td>
-		<td class="value"><?=$data["duration"]?> seconds</td>
-	</tr>
-</table>
+	<div class="detail">
+		<span class="key">URL</span>
+		<span class="value">
+			<a href="<?=htmlspecialchars($data["url"])?>" target="_blank">
+				<?=htmlspecialchars($data["url"])?>
+			</a>
+		</span>
+	</div>
+	<div class="detail">
+		<span class="key">Weighting</span>
+		<span class="value"><?=$data["weighting"]?></span>
+	</div>
+	<div class="detail">
+		<span class="key">Duration</span>
+		<span class="value"><?=$data["duration"]?> seconds</span>
+	</div>
+</div>
+</div>
+</body>
+</html>
