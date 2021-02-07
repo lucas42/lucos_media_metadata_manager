@@ -59,6 +59,7 @@
 		<link rel="icon" href="/icon" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="mobile-web-app-capable" content="yes">
+		<script src="/track-ui.js"></script>
 	</head>
 	<body>
 		<div id="lucos_navbar">
