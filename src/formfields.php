@@ -49,7 +49,11 @@ function getFormFields() {
 		],
 		"theme_tune" => [
 			"type" => "text",
-			"hint" => "What this track was used as the theme tune for",
+			"hint" => "What this track was used as the primary theme tune for",
+		],
+		"soundtrack" => [
+			"type" => "text",
+			"hint" => "What this track appeared in the soundtrack of",
 		],
 	];
 }
