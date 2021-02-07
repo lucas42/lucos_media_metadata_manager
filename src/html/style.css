@@ -85,6 +85,12 @@ a {
 	vertical-align: top;
 	text-transform: none;
 }
+.form-field .key-label.medium-key{
+	font-size: 15px;
+}
+.form-field .key-label.long-key{
+	font-size: 8px;
+}
 .form-field .form-input {
 	width: 250px;
 	display: flex;

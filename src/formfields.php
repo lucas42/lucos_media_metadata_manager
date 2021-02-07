@@ -47,6 +47,10 @@ function getFormFields() {
 			"type" => "text",
 			"hint" => "What this song reminds Luke of",
 		],
+		"theme_tune" => [
+			"type" => "text",
+			"hint" => "What this track was used as the theme tune for",
+		],
 	];
 }
 

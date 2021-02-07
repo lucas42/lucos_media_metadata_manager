@@ -23,11 +23,18 @@
 	} else {
 		$value = null;
 		$is_null = true;
-	}?>
+	}
+	$class = "key-label";
+	if (mb_strlen($key) > 12) {
+		$class .= " long-key";
+	} elseif (mb_strlen($key) > 9) {
+		$class .= " medium-key";
+	}
+	?>
 	<div class="form-field">
 		<label
 			for="<?=htmlspecialchars($key)?>"
-			class="key-label"
+			class="<?=$class?>"
 			<?php if(!empty($field["hint"])) {?>
 			title="<?=htmlspecialchars($field["hint"])?>"
 			<?php }?>
