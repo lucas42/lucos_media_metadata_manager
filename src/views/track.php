@@ -34,8 +34,8 @@
 				?>
 				<input 
 					type="text" 
-					id="<?=htmlspecialchars($key)?>" 
-					name="<?=htmlspecialchars($key)?>" 
+					id="<?=htmlspecialchars($key)?>"
+					name="<?=htmlspecialchars($key)?>"
 					value="<?=htmlspecialchars($value)?>" />
 				<?php
 				break;
@@ -43,8 +43,8 @@
 				?>
 				<input 
 					type="range" 
-					id="<?=htmlspecialchars($key)?>" 
-					name="<?=htmlspecialchars($key)?>" 
+					id="<?=htmlspecialchars($key)?>"
+					name="<?=htmlspecialchars($key)?>"
 					value="<?=htmlspecialchars($value)?>"
 					min="0"
 					max="10"
@@ -54,10 +54,14 @@
 				break;
 			case "select":
 				?>
-				<select>
+				<select
+					id="<?=htmlspecialchars($key)?>"
+					name="<?=htmlspecialchars($key)?>">
 					<option></option>
 					<?php foreach ($field["values"] as $option) {?>
-					<option><?=$option?></option>
+					<option <?=($option === $value)?"selected":""?>>
+						<?=$option?>
+					</option>
 					<?php
 					}?>
 				</select>
