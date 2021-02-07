@@ -22,5 +22,5 @@ function updateTrack($trackid, $postdata) {
 		]);
 		file_get_contents($tagurl, false, $context);
 	}
-	header("Location: /tracks/${trackid}", true, 303);
+	header("Location: /tracks/${trackid}?saved=true", true, 303);
 }

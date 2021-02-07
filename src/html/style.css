@@ -106,11 +106,20 @@ form {
 #save {
 	margin: 1em;
 	float: right;
-	background: #000060;
+	background-color: #000060;
 	color: white;
 	border-radius: 8px;
 	padding: 4px 15px;
 	border: outset;
+	transition: background-color 10s ease-out;
+}
+#save[disabled] {
+	transition: none;
+	background-color: #555555;
+}
+#save[data-saved] {
+	transition: none;
+	background-color: #009900;
 }
 
 #details .detail {

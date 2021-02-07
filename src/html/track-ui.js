@@ -36,3 +36,18 @@ function updatePreview(row, range) {
 	if (isnull) val = " - ";
 	row.querySelector(".preview").innerText = val;
 }
+
+// Following a post-redirect-get flow, indicate the successful save and modify the current URL
+window.addEventListener('DOMContentLoaded', event => {
+	if (window.location.search.indexOf("saved=true") !== 1) return;
+	document.getElementById("save").dataset.saved = true;
+	document.getElementById("save").offsetHeight; // Force a repaint for the transition effect to take place
+	delete document.getElementById("save").dataset.saved;
+	history.replaceState(null, "", window.location.pathname);
+});
+
+window.addEventListener('DOMContentLoaded', event => {
+	document.getElementById("trackform").addEventListener("submit", () => {
+		document.getElementById("save").disabled = true;
+	});
+});

@@ -15,7 +15,7 @@
 		</div>
 		<div id="content">
 <h2>Metadata</h2>
-<form method="post">
+<form method="post" id="trackform">
 <?php foreach ($form_fields as $key => $type) {
 	if (array_key_exists($key, $data["tags"])) {
 		$value = $data["tags"][$key];
