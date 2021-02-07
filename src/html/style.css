@@ -68,7 +68,7 @@ form {
 	padding: 5px;
 	display: flex;
 }
-.form-field:nth-child(odd) {
+#trackform .form-field:nth-child(odd) {
 	background: rgba(150, 150, 255, 0.1);
 }
 .form-field .key-label {
@@ -106,6 +106,8 @@ form {
 #save {
 	margin: 1em;
 	float: right;
+}
+input[type=submit] {
 	background-color: #000060;
 	color: white;
 	border-radius: 8px;
@@ -113,11 +115,11 @@ form {
 	border: outset;
 	transition: background-color 10s ease-out;
 }
-#save[disabled] {
+input[type=submit][disabled] {
 	transition: none;
 	background-color: #555555;
 }
-#save[data-saved] {
+input[type=submit][data-saved] {
 	transition: none;
 	background-color: #009900;
 }
