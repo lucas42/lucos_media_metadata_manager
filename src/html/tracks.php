@@ -1,5 +1,5 @@
 <?php
-	$path = $_SERVER['REDIRECT_URL'];
+	$path = $_SERVER['PHP_SELF'];
 	$trackid = explode('/', $path)[2];
 	if (!is_numeric($trackid)) {
 		http_response_code(404);
