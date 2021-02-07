@@ -1,17 +1,20 @@
 <?php
-	require("../controllers/updatetrack.php");
-	require("../controllers/viewtrack.php");
+require("../controllers/updatetrack.php");
+require("../controllers/viewtrack.php");
+require("../controllers/randomtrack.php");
+require_once("../controllers/error.php");
 
-	$path = $_SERVER['PHP_SELF'];
-	$trackid = explode('/', $path)[2];
-	if (!is_numeric($trackid)) {
-		http_response_code(404);
-		echo "Need to provide a numerical trackid in URL";
-		exit;
-	}
+$urlparts = explode('/', $_SERVER['PHP_SELF']);
+$trackid = (count($urlparts) > 2) ? $urlparts[2] : null;
 
-	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-		updateTrack($trackid, $_POST);
-	} else {
-		viewTrack($trackid);
-	}
+if (array_key_exists("trackid", $_GET)) {
+	header("Location: /tracks/${_GET["trackid"]}");
+} elseif (array_key_exists("random", $_POST)) {
+	pickRandomTrack();
+} elseif (!is_numeric($trackid)) {
+	displayError(404, "Need to provide a numerical trackid in URL", $trackid);
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	updateTrack($trackid, $_POST);
+} else {
+	viewTrack($trackid);
+}
