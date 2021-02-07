@@ -80,7 +80,7 @@ a {
 	width: 250px;
 	display: flex;
 }
-.form-field .form-input > input {
+.form-field .form-input > input, .form-field .form-input > select {
 	width: 100%;
 	vertical-align: middle;
 	font-size: 19px;
@@ -122,6 +122,9 @@ input[type=submit][disabled] {
 input[type=submit][data-saved] {
 	transition: none;
 	background-color: #009900;
+}
+select {
+	text-transform: capitalize;
 }
 
 #details .detail {

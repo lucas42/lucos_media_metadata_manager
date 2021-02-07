@@ -6,7 +6,7 @@ require_once("../formfields.php");
  * Sets the value to of each field to the value in $postdata for that key UNLESS there exists a key for that field suffixed with "_null", in which case the field is deleted
  **/
 function updateTrack($trackid, $postdata) {
-	foreach (getFormFields() as $key => $type) {
+	foreach (getFormKeys() as $key) {
 
 		// If a tag is marked as null, DELETE it from the API
 		// Otherwise, update the value using PUT

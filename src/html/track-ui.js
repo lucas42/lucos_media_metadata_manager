@@ -7,14 +7,14 @@ window.addEventListener('DOMContentLoaded', event => {
 		row.querySelector(".form-input").addEventListener("click", () => {
 			row.querySelector(".isnull > input").checked = false;
 			row.querySelector(".isnull > input").dispatchEvent(new Event('change'));
-			row.querySelector(".form-input > input").focus();
+			row.querySelector(".form-input > input, .form-input > select").focus();
 		});
 	});
 });
 
 function enableDisableRow(row) {
 	const isnull = row.querySelector(".isnull > input").checked;
-	row.querySelector(".form-input > input").disabled = isnull;
+	row.querySelector(".form-input > input, .form-input > select").disabled = isnull;
 }
 
 window.addEventListener('DOMContentLoaded', event => {

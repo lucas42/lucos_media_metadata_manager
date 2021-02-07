@@ -16,7 +16,7 @@
 		<div id="content">
 <h2>Metadata</h2>
 <form method="post" id="trackform">
-<?php foreach ($form_fields as $key => $type) {
+<?php foreach ($form_fields as $key => $field) {
 	if (array_key_exists($key, $data["tags"])) {
 		$value = $data["tags"][$key];
 		$is_null = false;
@@ -29,7 +29,7 @@
 			<?=htmlspecialchars(str_replace('_', ' ', $key))?>
 		</label>
 		<span class="form-input">
-		<?php switch($type) {
+		<?php switch($field["type"]) {
 			case "text":
 				?>
 				<input 
@@ -52,8 +52,19 @@
 				<span class="preview" ></span>
 				<?php
 				break;
+			case "select":
+				?>
+				<select>
+					<option></option>
+					<?php foreach ($field["values"] as $option) {?>
+					<option><?=$option?></option>
+					<?php
+					}?>
+				</select>
+				<?php
+				break;
 			default:
-				?>Unknown type "<?=$type?>"<?php
+				?>Unknown type "<?=$field["type"]?>"<?php
 		}?>
 		</span>
 		<span class="isnull">
