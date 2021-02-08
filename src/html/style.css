@@ -75,6 +75,8 @@ a {
 	display: inline-block;
 	width: 100px;
 	text-transform: capitalize;
+	white-space: nowrap;
+	margin-right: 5px;
 }
 .form-field .key-label[title] {
 	cursor: help;
@@ -111,6 +113,7 @@ a {
 	margin-left: 10px;
 	width: 60px;
 	display: inline-block;
+	white-space: nowrap;
 }
 .form-field .isnull input {
 	width: 8px;
