@@ -24,6 +24,15 @@
 					<input type="submit" value="View Track" />
 				</div>
 			</form>
+			<form method="get" action="/search">
+				<div class="form-field">
+					<label for="trackid" class="key-label">Search Term</label>
+					<span class="form-input">
+						<input type="text" name="q"/>
+					</span>
+					<input type="submit" value="Search" />
+				</div>
+			</form>
 			<form method="post" action="/tracks">
 				<input type="hidden" name="random" value="true"/>
 				<input type="submit" value="View Random Track" />
