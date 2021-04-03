@@ -172,3 +172,17 @@ select {
 	font-weight: bold;
 	text-align: center;
 }
+h3 {
+	margin-bottom: 0;
+}
+.queueactions {
+	display: flex;
+}
+.queueactions form {
+	flex: 1;
+}
+.queueactions input[type=submit] {
+	width: 100%;
+	font-size: 10px;
+    background-color: #5599cc;
+}

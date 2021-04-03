@@ -18,9 +18,19 @@
 <ul>
 <?php foreach ($tracks as $track) {
 	?><li>
-		<a href="/tracks/<?=$track["id"]?>">
-			<?=htmlspecialchars($track["title"])?>
-		</a>
+		<h3><?=htmlspecialchars($track["title"])?></h3>
+		<span class="queueactions">
+			<form action="/tracks/<?=$track["id"]?>" method="get">
+				<input type="submit" value="Edit" />
+			</form>
+			<?php foreach (array("now" => "Play Now", "next" => "Play Next", "end" => "Queue Track") as $pos => $label) {?> 
+			<form action="/tracks/queue" method="post">
+				<input type="hidden" name="url" value="<?=htmlspecialchars($track["url"])?>" />
+				<input type="hidden" name="pos" value="<?=$pos?>" />
+				<input type="submit" value="<?=$label?>" />
+			</form>
+			<?php } ?>
+		</span>
 	</li><?php
 }
 ?>

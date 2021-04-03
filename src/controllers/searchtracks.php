@@ -37,7 +37,8 @@ function searchTracks($query, $page) {
 			}
 			return [
 				"id" => $track["trackid"],
-				"title" => $title
+				"title" => $title,
+				"url" => $track["url"],
 			];
 		}, $data["tracks"]);
 
