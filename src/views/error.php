@@ -14,7 +14,8 @@
 			<span id="lucos_navbar_title">Metadata Manager - Error</span>
 		</div>
 		<div id="content">
-			<h1><?=htmlspecialchars($errorMessage)?></h1>
+			<h1>An error occured</h1>
+			<pre style="white-space: break-spaces;"><?=htmlspecialchars($errorMessage)?></pre>
 			<h2>Try Another Track?</h2>
 			<form method="get" action="/tracks">
 				<div class="form-field">

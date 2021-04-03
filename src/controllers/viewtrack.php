@@ -13,7 +13,7 @@ function viewTrack($trackid) {
 		if (str_contains($error, "404 Not Found")) {
 			displayError(404, "Track ${trackid} Not Found", $trackid);
 		} else {
-			displayError(502, "Can't fetch track from API.\n\n".$error["message"], $trackid);
+			displayError(502, "Can't fetch track from API.\n\n".$error, $trackid);
 		}
 	} else {
 		$data = json_decode($response, true);
