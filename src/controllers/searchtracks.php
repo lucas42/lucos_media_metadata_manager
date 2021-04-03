@@ -4,8 +4,9 @@ require_once("../controllers/error.php");
 /**
  * Fetches metadata about the given track and displays it in a html form
  */
-function searchTracks($query) {
-	$apiurl = "https://media-api.l42.eu/search?q=".urlencode($query);
+function searchTracks($query, $page) {
+	if (!is_numeric($page) or $page < 1) $page = "1";
+	$apiurl = "https://media-api.l42.eu/search?q=".urlencode($query)."&page=".$page;
 	$response = @file_get_contents($apiurl);
 	if ($response === false) {
 		$error = error_get_last()["message"];

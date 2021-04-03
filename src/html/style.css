@@ -59,6 +59,10 @@ h2 {
 }
 a {
 	color: #000060;
+	text-decoration: none;
+}
+a:hover, a:active {
+	text-decoration: underline;
 }
 #trackform {
 	margin-bottom: 5em;
@@ -163,4 +167,8 @@ select {
 	width: 280px;
 	display: inline-block;
 	overflow-wrap: anywhere;
+}
+.pagination {
+	font-weight: bold;
+	text-align: center;
 }
