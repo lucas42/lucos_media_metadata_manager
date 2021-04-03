@@ -13,6 +13,34 @@ function searchTracks($query, $page) {
 		displayError(502, "Can't fetch search results from API.\n\n".$error);
 	} else {
 		$data = json_decode($response, true);
+
+		$tracks = array_map(function ($track) {
+
+			if (!empty($track["tags"]["title"])) {
+				$title = $track["tags"]["title"];
+
+			// If track has no title, base it on URL
+			} else {
+				// Only look at the filename
+				$url_parts = explode("/",$track["url"]);
+				$filename = array_pop($url_parts);
+
+				// Strip the extension off the filename
+				$filename_parts = explode(".", $filename);
+				array_pop($filename_parts);
+				$title = implode(".", $filename_parts);
+			}
+
+			// Prefix the tile with the artist, if one is given
+			if (!empty($track["tags"]["artist"])) {
+				$title = $track["tags"]["artist"]." - ".$title;
+			}
+			return [
+				"id" => $track["trackid"],
+				"title" => $title
+			];
+		}, $data["tracks"]);
+
 		require("../views/search.php");
 	}
 }

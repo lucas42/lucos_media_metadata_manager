@@ -16,15 +16,10 @@
 		<div id="content">
 <h2>Tracks</h2>
 <ul>
-<?php foreach ($data["tracks"] as $track) {
-	$title = $track["tags"]["title"];
-	if (empty($title)) $title = $track["url"]; // TODO: just get the file name (excluding extension)
-	if (!empty($track["tags"]["artist"])) {
-		$title = $track["tags"]["artist"]." - ".$title;
-	}
+<?php foreach ($tracks as $track) {
 	?><li>
-		<a href="/tracks/<?=$track["trackid"]?>">
-			<?=htmlspecialchars($title)?>
+		<a href="/tracks/<?=$track["id"]?>">
+			<?=htmlspecialchars($track["title"])?>
 		</a>
 	</li><?php
 }
