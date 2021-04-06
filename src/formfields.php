@@ -58,6 +58,9 @@ function getFormFields() {
 			"type" => "text",
 			"hint" => "What this track appeared in the soundtrack of",
 		],
+		"lyrics" => [
+			"type" => "textarea",
+		]
 	];
 }
 

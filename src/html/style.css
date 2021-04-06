@@ -101,7 +101,7 @@ a:hover, a:active {
 	width: 250px;
 	display: flex;
 }
-.form-field .form-input > input, .form-field .form-input > select {
+.form-field .form-input > input, .form-field .form-input > select, .form-field .form-input > textarea {
 	width: 100%;
 	vertical-align: middle;
 	font-size: 19px;

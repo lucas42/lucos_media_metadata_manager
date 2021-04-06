@@ -14,7 +14,7 @@ window.addEventListener('DOMContentLoaded', event => {
 
 function enableDisableRow(row) {
 	const isnull = row.querySelector(".isnull > input").checked;
-	row.querySelector(".form-input > input, .form-input > select").disabled = isnull;
+	row.querySelector(".form-input > input, .form-input > select, .form-input > textarea").disabled = isnull;
 }
 
 window.addEventListener('DOMContentLoaded', event => {

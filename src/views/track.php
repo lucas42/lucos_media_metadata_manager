@@ -54,7 +54,7 @@
 				break;
 			case "range":
 				?>
-				<input 
+				<input
 					type="range" 
 					id="<?=htmlspecialchars($key)?>"
 					name="<?=htmlspecialchars($key)?>"
@@ -80,6 +80,13 @@
 					<?php
 					}?>
 				</select>
+				<?php
+				break;
+			case "textarea":
+				?>
+				<textarea
+					id="<?=htmlspecialchars($key)?>"
+					name="<?=htmlspecialchars($key)?>"><?=htmlspecialchars($value)?></textarea>
 				<?php
 				break;
 			default:
