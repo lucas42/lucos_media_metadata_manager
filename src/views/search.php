@@ -6,7 +6,7 @@
 		<link rel="icon" href="/icon" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="mobile-web-app-capable" content="yes">
-		<script src="/track-ui.js"></script>
+		<script src="/queue-controls.js"></script>
 	</head>
 	<body>
 		<div id="lucos_navbar">
@@ -19,18 +19,9 @@
 <?php foreach ($tracks as $track) {
 	?><li>
 		<h3><?=htmlspecialchars($track["title"])?></h3>
-		<span class="queueactions">
-			<form action="/tracks/<?=$track["id"]?>" method="get">
-				<input type="submit" value="Edit" />
-			</form>
-			<?php foreach (array("now" => "Play Now", "next" => "Play Next", "end" => "Queue Track") as $pos => $label) {?> 
-			<form action="/tracks/queue" method="post">
-				<input type="hidden" name="url" value="<?=htmlspecialchars($track["url"])?>" />
-				<input type="hidden" name="pos" value="<?=$pos?>" />
-				<input type="submit" value="<?=$label?>" />
-			</form>
-			<?php } ?>
-		</span>
+		<queue-controls
+			data-trackurl="<?=htmlspecialchars($track["url"])?>"
+			data-trackid="<?=$track["id"]?>" />
 	</li><?php
 }
 ?>
