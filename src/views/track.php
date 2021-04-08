@@ -7,6 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="mobile-web-app-capable" content="yes">
 		<script src="/track-ui.js"></script>
+		<script src="/queue-controls.js"></script>
 	</head>
 	<body>
 		<div id="lucos_navbar">
@@ -138,6 +139,9 @@
 		<span class="value"><?=$data["duration"]?> seconds</span>
 	</div>
 </div>
+<queue-controls
+	data-trackurl="<?=htmlspecialchars($data["url"])?>"
+	data-trackid="<?=$data["trackid"]?>" />
 </div>
 </body>
 </html>
