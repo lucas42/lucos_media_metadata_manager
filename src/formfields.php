@@ -80,6 +80,31 @@ function getFormFields() {
 			],
 			"hint" => "The primary language used for lyrics in this track",
 		],
+		"dance" => [
+			"type" => "select",
+			"values" => [
+				"Lindy Hop",
+				"Charleston",
+				"Blues",
+				"Collegiate Shag",
+				"Céilí",
+				"Irish Step",
+				"Ceilidh",
+				"Morris",
+				"Regency",
+				"Waltz",
+				"Foxtrot",
+				"Tango",
+				"Quickstep",
+				"Rhumba",
+				"Samba",
+				"Cha Cha",
+				"Jive",
+				"Rock'n'Roll",
+				"Disco",
+			],
+			"hint" => "Style of dance which goes with this track",
+		],
 	];
 }
 
