@@ -60,7 +60,26 @@ function getFormFields() {
 		],
 		"lyrics" => [
 			"type" => "textarea",
-		]
+		],
+		"language" => [
+			"type" => "select",
+			"values" => [
+				"en" => "English",
+				"ga" => "Irish",
+				"fr" => "French",
+				"de" => "German",
+				"cy" => "Welsh",
+				"gd" => "Scottish Gaelic",
+				"it" => "Italian",
+				"sco" => "Scots",
+				"br" => "Breton",
+				"sv" => "Swedish",
+				"ru" => "Russian",
+				"mul" => "Multiple Languages",
+				"zxx" => "Instrumental / No Language",
+			],
+			"hint" => "The primary language used for lyrics in this track",
+		],
 	];
 }
 
