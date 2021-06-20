@@ -75,6 +75,7 @@ function getFormFields() {
 				"br" => "Breton",
 				"sv" => "Swedish",
 				"ru" => "Russian",
+				"la" => "Latin",
 				"mul" => "Multiple Languages",
 				"zxx" => "Instrumental / No Language",
 			],
