@@ -98,7 +98,7 @@ a:hover, a:active {
 	font-size: 8px;
 }
 .form-field .form-input {
-	width: 250px;
+	width: 310px;
 	display: flex;
 }
 .form-field .form-input > input, .form-field .form-input > select, .form-field .form-input > textarea {

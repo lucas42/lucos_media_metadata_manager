@@ -1,41 +1,35 @@
-window.addEventListener('DOMContentLoaded', event => {
-	document.querySelectorAll(".form-field").forEach(row => {
-		enableDisableRow(row);
-		row.querySelector(".isnull > input").addEventListener("change", () => {
-			enableDisableRow(row);
-		});
-		row.querySelector(".form-input").addEventListener("click", () => {
-			row.querySelector(".isnull > input").checked = false;
-			row.querySelector(".isnull > input").dispatchEvent(new Event('change'));
-			row.querySelector(".form-input > input, .form-input > select").focus();
-		});
-	});
-});
-
-function enableDisableRow(row) {
-	const isnull = row.querySelector(".isnull > input").checked;
-	row.querySelector(".form-input > input, .form-input > select, .form-input > textarea").disabled = isnull;
-}
-
+/**
+ * Range elements have a separate toggle to indicate a null value
+ * This gets sent to the server by disabling the range input and enabling a hidden input of the same name
+ */
 window.addEventListener('DOMContentLoaded', event => {
 	document.querySelectorAll(".form-field input[type=range]").forEach(range => {
 		const row = range.parentElement.parentElement;
-		updatePreview(row, range);
-		range.addEventListener("input", () => {
-			updatePreview(row, range);
+		const nullInput = row.querySelector(".isnull > input");
+		const preview = row.querySelector(".preview");
+		const hidden = row.querySelector("input[type=hidden]");
+		updatePreview();
+		row.addEventListener("click", () => {
+			nullInput.checked = false;
+			updatePreview();
+			range.focus();
 		});
-		row.querySelector(".isnull > input").addEventListener("change", () => {
-			updatePreview(row, range);
+		range.addEventListener("input", updatePreview);
+		nullInput.addEventListener("change", updatePreview);
+		nullInput.parentElement.addEventListener("click", event => {
+			event.stopPropagation();
 		});
+		function updatePreview() {
+			let val = Number(range.value).toFixed(1);
+			const isnull = row.querySelector(".isnull > input").checked;
+			if (isnull) val = " - ";
+			preview.innerText = val;
+			range.disabled = isnull;
+			hidden.disabled = !isnull;
+		}
 	});
 });
 
-function updatePreview(row, range) {
-	let val = Number(range.value).toFixed(1);
-	const isnull = row.querySelector(".isnull > input").checked;
-	if (isnull) val = " - ";
-	row.querySelector(".preview").innerText = val;
-}
 
 // Following a post-redirect-get flow, indicate the successful save and modify the current URL
 window.addEventListener('DOMContentLoaded', event => {

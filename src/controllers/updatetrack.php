@@ -3,12 +3,12 @@ require_once("../formfields.php");
 
 /**
  * Updates the metadata of a given track id
- * Sets the value to of each field to the value in $postdata for that key UNLESS there exists a key for that field suffixed with "_null", in which case the field is deleted
+ * Sets the value to of each field to the value in $postdata for that key
  **/
 function updateTrack($trackid, $postdata) {
 	$tags = array();
 	foreach (getFormKeys() as $key) {
-		$tags[$key] = array_key_exists("${key}_null", $postdata) ? null : $postdata[$key];
+		$tags[$key] = $postdata[$key];
 	}
 	$trackurl = "https://media-api.l42.eu/tracks/${trackid}";
 	$context = stream_context_create([

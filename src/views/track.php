@@ -62,8 +62,26 @@
 					value="<?=htmlspecialchars($value)?>"
 					min="0"
 					max="10"
-					step="0.1" />
+					step="0.1"
+					<?=$is_null ? "disabled" : ""?>
+					/>
+				<input
+					type="hidden"
+					id="<?=htmlspecialchars($key)?>_hidden"
+					name="<?=htmlspecialchars($key)?>"
+					value=""
+					<?=$is_null ? "" : "disabled"?>
+					/>
 				<span class="preview" ></span>
+				<span class="isnull">
+					<input
+						type="checkbox"
+						id="<?=htmlspecialchars($key)?>_null"
+						name="<?=htmlspecialchars($key)?>_null"
+						<?=$is_null ? "checked" : ""?>
+						/>
+					<label for="<?=htmlspecialchars($key)?>_null">Null</label>
+				</span>
 				<?php
 				break;
 			case "select":
@@ -93,15 +111,6 @@
 			default:
 				?>Unknown type "<?=$field["type"]?>"<?php
 		}?>
-		</span>
-		<span class="isnull">
-			<input
-				type="checkbox"
-				id="<?=htmlspecialchars($key)?>_null"
-				name="<?=htmlspecialchars($key)?>_null"
-				<?=$is_null ? "checked" : ""?>
-				>
-			<label for="<?=htmlspecialchars($key)?>_null">Null</label>
 		</span>
 	</div>
 <?php
