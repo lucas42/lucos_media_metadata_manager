@@ -77,6 +77,7 @@ function getFormFields() {
 				"ru" => "Russian",
 				"la" => "Latin",
 				"he" => "Hebrew",
+				"es" => "Spanish",
 				"mul" => "Multiple Languages",
 				"zxx" => "Instrumental / No Language",
 			],
