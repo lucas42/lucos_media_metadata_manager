@@ -105,6 +105,7 @@ function getFormFields() {
 				"Jive" => "Jive",
 				"Rock'n'Roll" => "Rock'n'Roll",
 				"Disco" => "Disco",
+				"Bhangra" => "Bhangra",
 			],
 			"hint" => "Style of dance which goes with this track",
 		],
