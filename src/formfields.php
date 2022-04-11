@@ -79,6 +79,7 @@ function getFormFields() {
 				"he" => "Hebrew",
 				"es" => "Spanish",
 				"pa" => "Punjabi",
+				"owl" => "Old Welsh",
 				"mul" => "Multiple Languages",
 				"zxx" => "Instrumental / No Language",
 			],
