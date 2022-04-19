@@ -80,6 +80,7 @@ function getFormFields() {
 				"es" => "Spanish",
 				"pa" => "Punjabi",
 				"owl" => "Old Welsh",
+				"is" => "Icelandic",
 				"mul" => "Multiple Languages",
 				"zxx" => "Instrumental / No Language",
 			],
