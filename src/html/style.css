@@ -179,5 +179,19 @@ h3 {
 /* Top level queue-controls should have some margin
   (But not inline ones in search results) */
 #content > queue-controls {
-    margin: 2em 0;
+	margin: 2em 0;
+}
+.predicate-search {
+	padding-left: 4px;
+}
+.predicate-search:hover {
+	text-decoration: none;
+	transform: scale(2);
+}
+.predicate-search.disabled {
+	opacity: 0.1;
+	cursor: default;
+}
+.predicate-search.disabled:hover {
+	transform: none;
 }
