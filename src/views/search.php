@@ -31,11 +31,11 @@
 $nextpage = $page + 1;
 $prevpage = $page - 1;
 if ($prevpage > 0) {
-	?><a href="<?=htmlspecialchars("/search?q=".urlencode($query)."&page=$prevpage")?>">&lt;- Prev</a> | <?php
+	?><a href="<?=htmlspecialchars("/search?${basequerystring}&page=${prevpage}")?>">&lt;- Prev</a> | <?php
 }
 ?>
 Page <?=$page?> |
-	<a href="<?=htmlspecialchars("/search?q=".urlencode($query)."&page=$nextpage")?>">Next -&gt;</a>
+	<a href="<?=htmlspecialchars("/search?${basequerystring}&page=${nextpage}")?>">Next -&gt;</a>
 </div>
 </div>
 </body>
