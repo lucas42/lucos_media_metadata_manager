@@ -20,103 +20,17 @@
 <?php foreach ($form_fields as $key => $field) {
 	if (array_key_exists($key, $data["tags"])) {
 		$value = $data["tags"][$key];
-		$is_null = false;
 	} else {
 		$value = null;
-		$is_null = true;
 	}
-	$class = "key-label";
-	if (mb_strlen($key) > 12) {
-		$class .= " long-key";
-	} elseif (mb_strlen($key) > 9) {
-		$class .= " medium-key";
-	}
-	?>
-	<div class="form-field">
-		<label
-			for="<?=htmlspecialchars($key)?>"
-			class="<?=$class?>"
-			<?php if(!empty($field["hint"])) {?>
-			title="<?=htmlspecialchars($field["hint"])?>"
-			<?php }?>
-		>
-			<?=htmlspecialchars(str_replace('_', ' ', $key))?>
-		</label>
-		<span class="form-input">
-		<?php switch($field["type"]) {
-			case "text":
-				?>
-				<input 
-					type="text" 
-					id="<?=htmlspecialchars($key)?>"
-					name="<?=htmlspecialchars($key)?>"
-					value="<?=htmlspecialchars($value)?>" />
-				<?php
-				break;
-			case "range":
-				?>
-				<input
-					type="range" 
-					id="<?=htmlspecialchars($key)?>"
-					name="<?=htmlspecialchars($key)?>"
-					value="<?=htmlspecialchars($value)?>"
-					min="0"
-					max="10"
-					step="0.1"
-					<?=$is_null ? "disabled" : ""?>
-					/>
-				<input
-					type="hidden"
-					id="<?=htmlspecialchars($key)?>_hidden"
-					name="<?=htmlspecialchars($key)?>"
-					value=""
-					<?=$is_null ? "" : "disabled"?>
-					/>
-				<span class="preview" ></span>
-				<span class="isnull">
-					<input
-						type="checkbox"
-						id="<?=htmlspecialchars($key)?>_null"
-						name="<?=htmlspecialchars($key)?>_null"
-						<?=$is_null ? "checked" : ""?>
-						/>
-					<label for="<?=htmlspecialchars($key)?>_null">Null</label>
-				</span>
-				<?php
-				break;
-			case "select":
-				?>
-				<select
-					id="<?=htmlspecialchars($key)?>"
-					name="<?=htmlspecialchars($key)?>">
-					<option></option>
-					<?php foreach ($field["values"] as $option => $label) {?>
-					<option
-						value="<?=htmlspecialchars($option)?>"
-						<?=(strval($option) === $value)?"selected":""?>>
-						<?=htmlspecialchars($label)?>
-					</option>
-					<?php
-					}?>
-				</select>
-				<?php
-				break;
-			case "textarea":
-				?>
-				<textarea
-					id="<?=htmlspecialchars($key)?>"
-					name="<?=htmlspecialchars($key)?>"><?=htmlspecialchars($value)?></textarea>
-				<?php
-				break;
-			default:
-				?>Unknown type "<?=$field["type"]?>"<?php
-		}?>
-		</span>
-		<?php if (!empty($value)) {?>
+
+	include 'field.php';
+
+	if (!empty($value)) {?>
 		<a href="/search?p.<?=htmlspecialchars($key)?>=<?=htmlspecialchars(urlencode($value))?>" class='predicate-search' target="_blank" title='Find all tracks with <?=htmlspecialchars($key)?> "<?=htmlspecialchars($value)?>"'>🔍</a>
-		<?php } else { ?>
+	<?php } else { ?>
 		<span class='predicate-search disabled'>🔍</span>
-		<?php } ?>
+	<?php } ?>
 	</div>
 <?php
 }
