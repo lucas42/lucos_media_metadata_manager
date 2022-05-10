@@ -12,7 +12,7 @@
 	<body>
 		<div id="lucos_navbar">
 			<a href="https://l42.eu/"><img src="https://l42.eu/logo.png" alt="lucOS" id="lucos_navbar_icon" /></a>
-			<span id="lucos_navbar_title">Metadata Manager - track <?=$trackid?></span>
+			<a href="/" id="lucos_navbar_title">Metadata Manager - track <?=$trackid?></a>
 		</div>
 		<div id="content">
 <h2>Metadata</h2>

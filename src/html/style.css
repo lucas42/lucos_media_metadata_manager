@@ -32,6 +32,10 @@
 	height: 30px;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	color: inherit;
+}
+#lucos_navbar_title:hover {
+	text-decoration: none;
 }
 
 @media (max-width: 520px) {
