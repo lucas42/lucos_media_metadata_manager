@@ -23,7 +23,9 @@
 	} else {
 		$value = null;
 	}
-
+?>
+	<div class="form-field">
+<?php
 	include 'field.php';
 
 	if (!empty($value)) {?>
@@ -35,7 +37,7 @@
 <?php
 }
 ?>
-	<input type="submit" value="Save" id="save" />
+	<input type="submit" value="Save" id="save" class="primary-submit" />
 </form>
 <h2>Additional Details</h2>
 <div id="details">

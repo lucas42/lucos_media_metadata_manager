@@ -15,7 +15,6 @@
 		$class .= " medium-key";
 	}
 ?>
-	<div class="form-field">
 		<label
 			for="<?=htmlspecialchars($key)?>"
 			class="<?=$class?>"
@@ -23,7 +22,7 @@
 			title="<?=htmlspecialchars($field["hint"])?>"
 			<?php }?>
 		>
-			<?=htmlspecialchars(str_replace('_', ' ', $key))?>
+			<?=htmlspecialchars(str_replace('p.', '', str_replace('_', ' ', $key)))?>
 		</label>
 		<span class="form-input">
 		<?php switch($field["type"]) {

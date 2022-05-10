@@ -100,6 +100,7 @@ a:hover, a:active {
 .form-field .form-input {
 	width: 310px;
 	display: flex;
+	margin-right: 4px;
 }
 .form-field .form-input > input, .form-field .form-input > select, .form-field .form-input > textarea {
 	width: 100%;
@@ -125,10 +126,6 @@ a:hover, a:active {
 .form-field .isnull :checked + label {
 	color: #000;
 }
-#save {
-	margin: 1em;
-	float: right;
-}
 input[type=submit] {
 	background-color: #000060;
 	color: white;
@@ -136,6 +133,11 @@ input[type=submit] {
 	padding: 4px 15px;
 	border: outset;
 	transition: background-color 10s ease-out;
+	height: fit-content;
+}
+input[type=submit].primary-submit {
+	margin: 1em;
+	float: right;
 }
 input[type=submit][disabled] {
 	transition: none;
@@ -181,9 +183,6 @@ h3 {
 #content > queue-controls {
 	margin: 2em 0;
 }
-.predicate-search {
-	padding-left: 4px;
-}
 .predicate-search:hover {
 	text-decoration: none;
 	transform: scale(2);
@@ -194,4 +193,10 @@ h3 {
 }
 .predicate-search.disabled:hover {
 	transform: none;
+}
+small {
+	margin: 1em 0;
+	display: block;
+	background: #ccddee;
+	padding: 5px 10px;
 }

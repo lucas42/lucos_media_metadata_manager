@@ -14,29 +14,32 @@
 			<span id="lucos_navbar_title">Metadata Manager</span>
 		</div>
 		<div id="content">
-			<h2>Select a track</h2>
-			<form method="get" action="/tracks">
-				<div class="form-field">
-					<label for="trackid" class="key-label">Track ID</label>
-					<span class="form-input">
-						<input type="text" name="trackid"/>
-					</span>
-					<input type="submit" value="View Track" />
-				</div>
-			</form>
+			<h2 id="basic">Basic Search</h2>
+			<small>Attempts to find term across any tags on the track, including substrings.  Case insensitive.</small>
 			<form method="get" action="/search">
 				<div class="form-field">
-					<label for="trackid" class="key-label">Search Term</label>
+					<label for="trackid" class="key-label medium-key">Search Term</label>
 					<span class="form-input">
 						<input type="text" name="q"/>
 					</span>
 					<input type="submit" value="Search" />
 				</div>
 			</form>
-			<a href="/search#advanced" style="float:right">Advanced Search</a>
-			<form method="post" action="/tracks">
-				<input type="hidden" name="random" value="true"/>
-				<input type="submit" value="View Random Track" />
+
+			<h2 id="advanced">Advanced Search</h2>
+			<small>Exact matches only.  Case sensitive.  Needs to match all fields (excluding those left blank).</small>
+			<form method="get" action="/search">
+			<?php foreach ($form_fields as $key => $field) {
+				$key = 'p.'.$key;
+				$value = null;
+			?>
+				<div class="form-field">
+				<?php
+					include 'field.php';
+				?>
+				</div>
+			<?php } ?>
+				<input type="submit" value="Search" class="primary-submit" />
 			</form>
 		</div>
 </body>

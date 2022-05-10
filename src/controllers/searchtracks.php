@@ -40,6 +40,12 @@ function searchTracks($params, $page) {
 			];
 		}, $data["tracks"]);
 
-		require("../views/search.php");
+		require("../views/searchresults.php");
 	}
+}
+
+function searchHomepage() {
+	require_once("../formfields.php");
+	$form_fields = getFormFields();
+	require("../views/advancedsearch.php");
 }
