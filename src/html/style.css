@@ -151,6 +151,10 @@ input[type=submit][data-saved] {
 	transition: none;
 	background-color: #009900;
 }
+input[type=submit][data-pending] {
+	transition: background-color 2s ease-in;
+	background-color: #cc6600;
+}
 select {
 	text-transform: capitalize;
 }

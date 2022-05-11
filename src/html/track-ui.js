@@ -45,3 +45,11 @@ window.addEventListener('DOMContentLoaded', event => {
 		document.getElementById("save").disabled = true;
 	});
 });
+
+window.addEventListener('DOMContentLoaded', () => {
+	document.querySelectorAll(".form-field input, .form-field select").forEach(input => {
+		input.addEventListener('change', () => {
+			document.getElementById("save").dataset.pending = true;
+		});
+	});
+});
