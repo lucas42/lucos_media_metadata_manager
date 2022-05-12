@@ -41,15 +41,19 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 window.addEventListener('DOMContentLoaded', event => {
-	document.getElementById("trackform").addEventListener("submit", () => {
-		document.getElementById("save").disabled = true;
-	});
-});
+	const trackform = document.getElementById("trackform");
+	const save = document.getElementById("save");
+	if (!trackform || !save) return;
 
-window.addEventListener('DOMContentLoaded', () => {
-	document.querySelectorAll(".form-field input, .form-field select").forEach(input => {
+	// When a form input changes, set the save button to pending to highlight there's unsave changes
+	document.querySelectorAll(".form-field .form-input > input, .form-field .form-input > select, .form-field .form-input > textarea").forEach(input => {
 		input.addEventListener('change', () => {
-			document.getElementById("save").dataset.pending = true;
+			save.dataset.pending = true;
 		});
+	});
+
+	// When the form is submitted, disable the save button
+	trackform.addEventListener("submit", () => {
+		document.getElementById("save").disabled = true;
 	});
 });

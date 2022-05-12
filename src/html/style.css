@@ -143,10 +143,6 @@ input[type=submit].primary-submit {
 	margin: 1em;
 	float: right;
 }
-input[type=submit][disabled] {
-	transition: none;
-	background-color: #555555;
-}
 input[type=submit][data-saved] {
 	transition: none;
 	background-color: #009900;
@@ -154,6 +150,10 @@ input[type=submit][data-saved] {
 input[type=submit][data-pending] {
 	transition: background-color 2s ease-in;
 	background-color: #cc6600;
+}
+input[type=submit][disabled] {
+	transition: none;
+	background-color: #555555;
 }
 select {
 	text-transform: capitalize;
