@@ -14,6 +14,9 @@ function getFormFields() {
 		"composer" => [
 			"type" => "text",
 		],
+		"producer" => [
+			"type" => "text",
+		],
 		"rating" => [
 			"type" => "range",
 		],
