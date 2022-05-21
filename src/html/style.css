@@ -139,6 +139,9 @@ input[type=submit] {
 	transition: background-color 10s ease-out;
 	height: fit-content;
 }
+input[type=submit]:active{
+	border: inset;
+}
 input[type=submit].primary-submit {
 	margin: 1em;
 	float: right;
@@ -154,6 +157,16 @@ input[type=submit][data-pending] {
 input[type=submit][disabled] {
 	transition: none;
 	background-color: #555555;
+}
+input[type=submit].loading {
+	animation: 1.5s linear infinite backgroundScroll;
+	background: linear-gradient(-55deg, #555 0%, #555 20%, #888 40%, #7e8888 55%, #555 80%);
+	background-size: 200%;
+	text-shadow: 1px 1px #555;
+}
+@keyframes backgroundScroll {
+	0% { background-position:  -100%; }
+	100% { background-position: 100%; }
 }
 select {
 	text-transform: capitalize;

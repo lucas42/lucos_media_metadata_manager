@@ -54,6 +54,8 @@ window.addEventListener('DOMContentLoaded', event => {
 
 	// When the form is submitted, disable the save button
 	trackform.addEventListener("submit", () => {
-		document.getElementById("save").disabled = true;
+		const save = document.getElementById("save");
+		save.disabled = true;
+		save.classList.add("loading");
 	});
 });
