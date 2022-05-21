@@ -112,6 +112,23 @@ function getFormFields() {
 			],
 			"hint" => "Style of dance which goes with this track",
 		],
+		"provenance" => [
+			"type" => "select",
+			"values" => [
+				"bandcamp" => "Bandcamp",
+				"cd-rip" => "CD Rip",
+				"sample" => "Free Sample", // For example, included when purchasing a new mp3 player
+				"charity-auction" => "Charity Auction",
+				"download" => "Download", // For example, free download from the artist's website
+				"7digital" => "7 Digital",
+				"radio" => "Recorded from Radio",
+				"live" => "Live recording",
+				"audio-software" => "Produced using audio software", // For example, an original composition created using musescore or audacity
+				"ambiguous" => "Ambiguous", // The source of this track isn't entirely clear
+				"game" => "Game Soundtrack", // For example, included in the resources folder of a computer game
+			],
+			"hint" => "Where this track was sourced from", // Not covering the entire provenance chain, just how it arrived in this collection.
+		],
 	];
 }
 
