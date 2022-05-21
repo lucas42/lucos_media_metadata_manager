@@ -221,3 +221,8 @@ small {
 	background: #ccddee;
 	padding: 5px 10px;
 }
+.standalone {
+	margin: 0.5em 0;
+	float: right;
+	clear: right;
+}

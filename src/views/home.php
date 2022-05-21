@@ -14,16 +14,7 @@
 			<a href="/" id="lucos_navbar_title">Metadata Manager</a>
 		</div>
 		<div id="content">
-			<h2>Select a track</h2>
-			<form method="get" action="/tracks">
-				<div class="form-field">
-					<label for="trackid" class="key-label">Track ID</label>
-					<span class="form-input">
-						<input type="text" name="trackid"/>
-					</span>
-					<input type="submit" value="View Track" />
-				</div>
-			</form>
+			<h2>Find a track</h2>
 			<form method="get" action="/search">
 				<div class="form-field">
 					<label for="trackid" class="key-label">Search Term</label>
@@ -33,11 +24,20 @@
 					<input type="submit" value="Search" />
 				</div>
 			</form>
-			<a href="/search#advanced" style="float:right">Advanced Search</a>
+			<form method="get" action="/tracks">
+				<div class="form-field">
+					<label for="trackid" class="key-label">Track ID</label>
+					<span class="form-input">
+						<input type="text" name="trackid"/>
+					</span>
+					<input type="submit" value="View Track" />
+				</div>
+			</form>
 			<form method="post" action="/tracks">
 				<input type="hidden" name="random" value="true"/>
-				<input type="submit" value="View Random Track" />
+				<input type="submit" value="View Random Track" class="standalone" />
 			</form>
+			<a href="/search#advanced" class="standalone">Advanced Search</a>
 		</div>
 </body>
 </html>
