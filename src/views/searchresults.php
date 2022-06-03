@@ -34,8 +34,13 @@ if ($prevpage > 0) {
 	?><a href="<?=htmlspecialchars("/search?${basequerystring}&page=${prevpage}")?>">&lt;- Prev</a> | <?php
 }
 ?>
-Page <?=$page?> |
-	<a href="<?=htmlspecialchars("/search?${basequerystring}&page=${nextpage}")?>">Next -&gt;</a>
+Page <?=$page?> out of <?=$totalPages?>
+<?php if ($page < $totalPages) {
+?>
+	| <a href="<?=htmlspecialchars("/search?${basequerystring}&page=${nextpage}")?>">Next -&gt;</a>
+<?php
+}
+?>
 </div>
 </div>
 </body>

@@ -39,6 +39,7 @@ function searchTracks($params, $page) {
 				"url" => $track["url"],
 			];
 		}, $data["tracks"]);
+		$totalPages = $data["totalPages"];
 
 		require("../views/searchresults.php");
 	}
