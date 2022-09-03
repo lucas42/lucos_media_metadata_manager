@@ -10,10 +10,7 @@
 		<script src="/queue-controls.js"></script>
 	</head>
 	<body>
-		<div id="lucos_navbar">
-			<a href="https://l42.eu/"><img src="https://l42.eu/logo.png" alt="lucOS" id="lucos_navbar_icon" /></a>
-			<a href="/" id="lucos_navbar_title">Metadata Manager - track <?=$trackid?></a>
-		</div>
+		<lucos-navbar bg-colour="#000020"><a href="/" id="lucos_navbar_title">Metadata Manager - track <?=$trackid?></a></lucos-navbar>
 		<div id="content">
 <h2>Metadata</h2>
 <form method="post" id="trackform">
@@ -73,5 +70,6 @@
 	data-trackurl="<?=htmlspecialchars($data["url"])?>"
 	data-trackid="<?=$data["trackid"]?>" />
 </div>
+<script src="/lucos_navbar.js" type="text/javascript"></script>
 </body>
 </html>

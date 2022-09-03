@@ -1,3 +1,4 @@
+FROM lucas42/lucos_navbar:latest as navbar
 FROM php:8-apache
 
 WORKDIR /srv/metadata_manager
@@ -8,7 +9,8 @@ RUN a2enmod rewrite
 RUN echo "ServerName localhost\nServerAdmin webmaster@localhost" >> /etc/apache2/apache2.conf
 COPY vhost.conf /etc/apache2/sites-available/000-default.conf
 
-COPY src/. .
+COPY src .
+COPY --from=navbar lucos_navbar.js html/
 
 ENV PORT 80
 EXPOSE $PORT

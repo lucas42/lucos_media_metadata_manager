@@ -9,10 +9,7 @@
 		<script src="/queue-controls.js"></script>
 	</head>
 	<body>
-		<div id="lucos_navbar">
-			<a href="https://l42.eu/"><img src="https://l42.eu/logo.png" alt="lucOS" id="lucos_navbar_icon" /></a>
-			<a href="/" id="lucos_navbar_title">Metadata Manager</a>
-		</div>
+		<lucos-navbar bg-colour="#000020"><a href="/" id="lucos_navbar_title">Metadata Manager</a></lucos-navbar>
 		<div id="content">
 <h2>Tracks</h2>
 <ul>
@@ -43,5 +40,6 @@ Page <?=$page?> out of <?=$totalPages?>
 ?>
 </div>
 </div>
+<script src="/lucos_navbar.js" type="text/javascript"></script>
 </body>
 </html>

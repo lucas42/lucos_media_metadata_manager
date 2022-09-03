@@ -9,10 +9,7 @@
 		<script src="/track-ui.js"></script>
 	</head>
 	<body>
-		<div id="lucos_navbar">
-			<a href="https://l42.eu/"><img src="https://l42.eu/logo.png" alt="lucOS" id="lucos_navbar_icon" /></a>
-			<a href="/" id="lucos_navbar_title">Metadata Manager</a>
-		</div>
+		<lucos-navbar bg-colour="#000020"><a href="/" id="lucos_navbar_title">Metadata Manager</a></lucos-navbar>
 		<div id="content">
 			<h2 id="basic">Basic Search</h2>
 			<small>Attempts to find term across any tags on the track, including substrings.  Case insensitive.</small>
@@ -42,5 +39,6 @@
 				<input type="submit" value="Search" class="primary-submit" />
 			</form>
 		</div>
-</body>
+		<script src="/lucos_navbar.js" type="text/javascript"></script>
+	</body>
 </html>
