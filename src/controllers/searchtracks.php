@@ -4,7 +4,7 @@ require_once("../controllers/error.php");
 function searchTracks($params, $page) {
 	if (!is_numeric($page) or $page < 1) $page = "1";
 	$basequerystring = http_build_query($params);
-	$apiurl = "https://media-api.l42.eu/search?${basequerystring}&page=${page}";
+	$apiurl = "https://media-api.l42.eu/v2/tracks?${basequerystring}&page=${page}";
 	$response = @file_get_contents($apiurl);
 	if ($response === false) {
 		$error = error_get_last()["message"];

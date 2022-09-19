@@ -10,7 +10,7 @@ function updateTrack($trackid, $postdata) {
 	foreach (getFormKeys() as $key) {
 		$tags[$key] = $postdata[$key];
 	}
-	$trackurl = "https://media-api.l42.eu/tracks/${trackid}";
+	$trackurl = "https://media-api.l42.eu/v2/tracks/${trackid}";
 	$context = stream_context_create([
 		"http" => [
 			"method" => "PATCH",

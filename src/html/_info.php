@@ -13,7 +13,7 @@
 	];
 
 	// TODO: don't hardcode this URL, use same fetch logic as elsewhere.
-	$tracks = file_get_contents("https://media-api.l42.eu/tracks");
+	$tracks = file_get_contents("https://media-api.l42.eu/v2/tracks");
 	if ($tracks === false) {
 		$output["checks"]["metadata-api"]["debug"] = error_get_last()["message"];
 		$output["checks"]["metadata-api"]["ok"] = false;
