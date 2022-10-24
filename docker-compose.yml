@@ -6,3 +6,4 @@ services:
     ports:
       - "8020:80"
     image: lucas42/lucos_media_metadata_manager
+    restart: always
