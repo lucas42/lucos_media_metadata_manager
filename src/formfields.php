@@ -85,6 +85,7 @@ function getFormFields() {
 				"owl" => "Old Welsh",
 				"is" => "Icelandic",
 				"pt" => "Portuguese",
+				"nl" => "Dutch",
 				"art-x-von" => "Hopelandic", // Fictional language created and used by Sigur Rós, also known as Vonlenska
 				"mul" => "Multiple Languages",
 				"zxx" => "Instrumental / No Language",
