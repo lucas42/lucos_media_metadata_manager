@@ -26,6 +26,15 @@ window.addEventListener('DOMContentLoaded', event => {
 			preview.innerText = val;
 			range.disabled = isnull;
 			hidden.disabled = !isnull;
+
+			/**
+			 * Weird hack to make it easy to re-enable element when disabled
+			 * See https://github.com/whatwg/html/issues/5886 for the whole discussion
+			 * Basically need to set CSS pointer-events to 'none' when disabled, so click even bubbles to parent
+			 * But need to set it to 'auto' when enabled, so clicking actually moves the range
+			 * Don't understand why CSS is solution here, but seems to work on Chrome 110
+			 **/
+			range.style.pointerEvents = isnull ? 'none' : 'auto';
 		}
 	});
 });
