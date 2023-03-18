@@ -44,7 +44,7 @@ Page <?=$page?> out of <?=$totalPages?>
 
 	<h2 id="advanced">Bulk Edit</h2>
 	<small>Updates all non-blank fields for the tracks returned by the current search</small>
-	<form method="post" action="<?=htmlspecialchars("/search?${basequerystring}&page=${page}")?>">
+	<form method="post" id="trackform">
 	<?php foreach ($form_fields as $key => $field) {
 		$value = null;
 	?>
@@ -54,7 +54,7 @@ Page <?=$page?> out of <?=$totalPages?>
 		?>
 		</div>
 	<?php } ?>
-		<input type="submit" value="Search" class="primary-submit" />
+		<input type="submit" value="Edit All" id="save" class="primary-submit" />
 	</form>
 </div>
 </div>

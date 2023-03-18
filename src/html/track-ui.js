@@ -42,11 +42,14 @@ window.addEventListener('DOMContentLoaded', event => {
 
 // Following a post-redirect-get flow, indicate the successful save and modify the current URL
 window.addEventListener('DOMContentLoaded', event => {
-	if (window.location.search.indexOf("saved=true") !== 1) return;
+	if (window.location.search.indexOf("saved=true") === -1) return;
 	document.getElementById("save").dataset.saved = true;
 	document.getElementById("save").offsetHeight; // Force a repaint for the transition effect to take place
 	delete document.getElementById("save").dataset.saved;
-	history.replaceState(null, "", window.location.pathname);
+
+	// Remove saved=true from the current url
+	const newSearch = window.location.search.replace('saved=true','').replace(/([\&\?])\&/, '$1').replace(/[\&\?]$/, '');
+	history.replaceState(null, "", window.location.pathname + newSearch);
 });
 
 window.addEventListener('DOMContentLoaded', event => {
