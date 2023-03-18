@@ -24,8 +24,8 @@
 		>
 			<?=htmlspecialchars(str_replace('p.', '', str_replace('_', ' ', $key)))?>
 		</label>
-		<span class="form-input">
-		<?php switch($field["type"]) {
+		<span class="form-input"><?php
+		switch($field["type"]) {
 			case "text":
 				?>
 				<input 
@@ -67,21 +67,32 @@
 				<?php
 				break;
 			case "select":
-				?>
-				<select
-					id="<?=htmlspecialchars($key)?>"
-					name="<?=htmlspecialchars($key)?>">
-					<option></option>
-					<?php foreach ($field["values"] as $option => $label) {?>
-					<option
-						value="<?=htmlspecialchars($option)?>"
-						<?=(strval($option) === $value)?"selected":""?>>
-						<?=htmlspecialchars($label)?>
-					</option>
+				?> 
+				<select id="<?=htmlspecialchars($key)?>" name="<?=htmlspecialchars($key)?>">
+						<option></option><?php 
+					foreach ($field["values"] as $key => $values) {
+						if (is_array($values)) {
+							$groupname = $key;
+							$options = $values;
+					?> 
+					<optgroup label="<?=htmlspecialchars($groupname)?>"><?php
+						} else {
+							$groupname = null;
+							$options = [$key => $values];
+						}
+						foreach ($options as $option => $label) {
+					?> 
+						<option value="<?=htmlspecialchars($option)?>"<?=(strval($option) === $value)?" selected":""?>>
+							<?=htmlspecialchars($label)?> 
+						</option><?php
+						}
+						if ($groupname) {
+					?> 
+					</optgroup>
 					<?php
-					}?>
-				</select>
-				<?php
+						}
+					}?> 
+				</select><?php
 				break;
 			case "textarea":
 				?>
@@ -92,5 +103,5 @@
 				break;
 			default:
 				?>Unknown type "<?=$field["type"]?>"<?php
-		}?>
+		}?> 
 		</span>
