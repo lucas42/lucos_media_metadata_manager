@@ -41,6 +41,8 @@ function searchTracks($params, $page) {
 		}, $data["tracks"]);
 		$totalPages = $data["totalPages"];
 
+		require_once("../formfields.php");
+		$form_fields = getFormFields();
 		require("../views/searchresults.php");
 	}
 }

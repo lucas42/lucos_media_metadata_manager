@@ -6,6 +6,7 @@
 		<link rel="icon" href="/icon" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="mobile-web-app-capable" content="yes">
+		<script src="/track-ui.js"></script>
 		<script src="/queue-controls.js"></script>
 	</head>
 	<body>
@@ -38,6 +39,23 @@ Page <?=$page?> out of <?=$totalPages?>
 <?php
 }
 ?>
+</div>
+<div id="bulk-edit">
+
+	<h2 id="advanced">Bulk Edit</h2>
+	<small>Updates all non-blank fields for the tracks returned by the current search</small>
+	<form method="post" action="<?=htmlspecialchars("/search?${basequerystring}&page=${page}")?>">
+	<?php foreach ($form_fields as $key => $field) {
+		$value = null;
+	?>
+		<div class="form-field">
+		<?php
+			include 'field.php';
+		?>
+		</div>
+	<?php } ?>
+		<input type="submit" value="Search" class="primary-submit" />
+	</form>
 </div>
 </div>
 <script src="/lucos_navbar.js" type="text/javascript"></script>

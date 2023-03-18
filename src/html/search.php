@@ -1,6 +1,7 @@
 <?php
 
 require("../controllers/searchtracks.php");
+require("../controllers/bulkupdatetracks.php");
 
 $params = array();
 $page = empty($_GET['page']) ? null : $_GET['page'];
@@ -25,7 +26,11 @@ if (!empty($_GET['q'])) {
 	}
 }
 if (!empty($params)) {
-	searchTracks($params, $page);
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		bulkUpdateTracks($params, $page, $_POST);
+	} else {
+		searchTracks($params, $page);
+	}
 } else {
 	searchHomepage();
 }
