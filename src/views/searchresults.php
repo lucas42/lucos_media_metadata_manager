@@ -11,7 +11,8 @@
 	</head>
 	<body>
 		<lucos-navbar bg-colour="#000020"><a href="/" id="lucos_navbar_title">Metadata Manager</a></lucos-navbar>
-		<div id="content">
+		<div class="content_container">
+			<div id="content">
 <h2>Tracks</h2>
 <ul>
 <?php foreach ($tracks as $track) {
@@ -40,24 +41,25 @@ Page <?=$page?> out of <?=$totalPages?>
 }
 ?>
 </div>
-<div id="bulk-edit">
+			</div>
+			<div id="bulk-edit">
 
-	<h2 id="advanced">Bulk Edit</h2>
-	<small>Updates all non-blank fields for the tracks returned by the current search</small>
-	<form method="post" id="trackform">
-	<?php foreach ($form_fields as $key => $field) {
-		$value = null;
-	?>
-		<div class="form-field">
-		<?php
-			include 'field.php';
-		?>
+				<h2 id="advanced">Bulk Edit</h2>
+				<small>Updates all non-blank fields for the tracks returned by the current search</small>
+				<form method="post" id="trackform">
+				<?php foreach ($form_fields as $key => $field) {
+					$value = null;
+				?>
+					<div class="form-field">
+					<?php
+						include 'field.php';
+					?>
+					</div>
+				<?php } ?>
+					<input type="submit" value="Edit All" id="save" class="primary-submit" />
+				</form>
+			</div>
 		</div>
-	<?php } ?>
-		<input type="submit" value="Edit All" id="save" class="primary-submit" />
-	</form>
-</div>
-</div>
-<script src="/lucos_navbar.js" type="text/javascript"></script>
-</body>
+		<script src="/lucos_navbar.js" type="text/javascript"></script>
+	</body>
 </html>
