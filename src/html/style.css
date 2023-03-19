@@ -141,6 +141,15 @@ input[type=submit].loading {
 select {
 	text-transform: capitalize;
 }
+.form-options {
+	font-size: 16px;
+}
+.form-options > label {
+	flex: 1;
+}
+.form-options input[type=radio] {
+	margin-right: 1em;
+}
 
 #details .detail {
 	padding: 4px;

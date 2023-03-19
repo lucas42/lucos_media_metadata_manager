@@ -16,10 +16,14 @@ function bulkUpdateTracks($params, $page, $postdata) {
 			$tags[$key] = $postdata[$key];
 		}
 	}
+	$headers = ["Content-Type: application/json"];
+	if (!empty($postdata['missing-only'])) {
+		array_push($headers, "If-None-Match: *");
+	}
 	$context = stream_context_create([
 		"http" => [
 			"method" => "PATCH",
-			"header" => "Content-Type: application/json",
+			"header" => $headers,
 			"content" => json_encode(["tags" => $tags]),
 		],
 	]);

@@ -45,7 +45,7 @@ Page <?=$page?> out of <?=$totalPages?>
 			<div id="bulk-edit">
 
 				<h2 id="advanced">Bulk Edit</h2>
-				<small>Updates all non-blank fields for the tracks returned by the current search</small>
+				<small>Updates all tracks returned by the current search.  Fields left blank won't be edited.</small>
 				<form method="post" id="trackform">
 				<?php foreach ($form_fields as $key => $field) {
 					$value = null;
@@ -56,6 +56,10 @@ Page <?=$page?> out of <?=$totalPages?>
 					?>
 					</div>
 				<?php } ?>
+					<div class="form-field form-options">
+						<label><input type="radio" name="missing-only" value="" checked />Overwrite existing values</label>
+						<label><input type="radio" name="missing-only" value="true" />Only set where missing</label>
+					</div>
 					<input type="submit" value="Edit All" id="save" class="primary-submit" />
 				</form>
 			</div>
