@@ -61,6 +61,10 @@ Page <?=$page?> out of <?=$totalPages?>
 						<label><input type="radio" name="missing-only" value="" checked />Overwrite existing values</label>
 						<label><input type="radio" name="missing-only" value="true" />Only set where missing</label>
 					</div>
+					<div class="form-field form-options">
+						<label><input type="radio" name="page" value="<?=htmlspecialchars($page)?>" checked />Only tracks on page <?=htmlspecialchars($page)?></label>
+						<label><input type="radio" name="page" value="all" />All Tracks</label>
+					</div>
 					<input type="submit" value="Edit All" id="save" class="primary-submit" />
 				</form>
 			</div>

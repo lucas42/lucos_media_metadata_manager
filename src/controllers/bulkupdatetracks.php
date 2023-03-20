@@ -5,10 +5,10 @@ require_once("../formfields.php");
  * Updates the metadata of tracks matching the given search paramaters
  * Sets the value of each field to the value in $postdata for that key
  **/
-function bulkUpdateTracks($params, $page, $postdata) {
-	if (!is_numeric($page) or $page < 1) $page = "1";
+function bulkUpdateTracks($params, $currentpage, $postdata) {
 	$basequerystring = http_build_query($params);
-	$apiurl = "https://media-api.l42.eu/v2/tracks?${basequerystring}&page=${page}";
+	$targetPage = !empty($postdata['page']) ? $postdata['page'] : $currentpage;
+	$apiurl = "https://media-api.l42.eu/v2/tracks?${basequerystring}&page=${targetPage}";
 
 	$tags = array();
 	foreach (getFormKeys() as $key) {
@@ -28,5 +28,5 @@ function bulkUpdateTracks($params, $page, $postdata) {
 		],
 	]);
 	file_get_contents($apiurl, false, $context);
-	header("Location: /search?${basequerystring}&page=${page}&saved=true", true, 303);
+	header("Location: /search?${basequerystring}&page=${currentpage}&saved=true", true, 303);
 }

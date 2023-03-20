@@ -5,6 +5,7 @@ require("../controllers/bulkupdatetracks.php");
 
 $params = array();
 $page = empty($_GET['page']) ? null : $_GET['page'];
+if (!is_numeric($page) or $page < 1) $page = "1";
 
 // If there's a search query, that takes precendence
 if (!empty($_GET['q'])) {
