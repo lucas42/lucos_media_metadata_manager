@@ -50,6 +50,7 @@ Page <?=$page?> out of <?=$totalPages?>
 				<form method="post" id="trackform">
 				<?php foreach ($form_fields as $key => $field) {
 					$value = null;
+					$blank = true;
 				?>
 					<div class="form-field">
 					<?php

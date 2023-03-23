@@ -122,7 +122,7 @@ a:hover, a:active {
 	width: 1.5em;
 	text-align: center;
 }
-.form-field .isnull {
+.form-field .isnull, .form-field .blank {
 	font-size: small;
 	color: #999;
 	margin-left: 10px;
@@ -130,10 +130,10 @@ a:hover, a:active {
 	display: inline-block;
 	white-space: nowrap;
 }
-.form-field .isnull input {
+.form-field .isnull input, .form-field .blank input {
 	width: 8px;
 }
-.form-field .isnull :checked + label {
+.form-field .isnull :checked + label, .form-field .blank :checked + label {
 	color: #000;
 }
 input[type=submit] {

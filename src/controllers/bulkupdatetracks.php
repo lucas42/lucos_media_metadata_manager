@@ -15,6 +15,9 @@ function bulkUpdateTracks($params, $currentpage, $postdata) {
 		if (!empty($postdata[$key])) {
 			$tags[$key] = $postdata[$key];
 		}
+		if (!empty($postdata["${key}_blank"])) {
+			$tags[$key] = "";
+		}
 	}
 	$headers = ["Content-Type: application/json"];
 	if (!empty($postdata['missing-only'])) {

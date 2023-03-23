@@ -70,15 +70,15 @@
 				?> 
 				<select id="<?=htmlspecialchars($key)?>" name="<?=htmlspecialchars($key)?>">
 						<option></option><?php 
-					foreach ($field["values"] as $key => $values) {
+					foreach ($field["values"] as $selectkey => $values) {
 						if (is_array($values)) {
-							$groupname = $key;
+							$groupname = $selectkey;
 							$options = $values;
 					?> 
 					<optgroup label="<?=htmlspecialchars($groupname)?>"><?php
 						} else {
 							$groupname = null;
-							$options = [$key => $values];
+							$options = [$selectkey => $values];
 						}
 						foreach ($options as $option => $label) {
 					?> 
@@ -104,4 +104,14 @@
 			default:
 				?>Unknown type "<?=$field["type"]?>"<?php
 		}?> 
+			<?php if(!empty($blank)) {?>
+				<span class="blank" title="Blank out this field for all tracks">
+					<input
+						type="checkbox"
+						id="<?=htmlspecialchars($key)?>_blank"
+						name="<?=htmlspecialchars($key)?>_blank"
+						/>
+					<label for="<?=htmlspecialchars($key)?>_blank">Blank</label>
+				</span>
+			<?php }?>
 		</span>
