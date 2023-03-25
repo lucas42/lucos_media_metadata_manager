@@ -1,5 +1,5 @@
 <?php
-
+require("../authentication.php");
 require("../controllers/searchtracks.php");
 require("../controllers/bulkupdatetracks.php");
 

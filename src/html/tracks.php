@@ -1,4 +1,5 @@
 <?php
+require("../authentication.php");
 require("../controllers/updatetrack.php");
 require("../controllers/viewtrack.php");
 require("../controllers/randomtrack.php");
