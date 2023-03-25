@@ -213,8 +213,11 @@ ul {
 	font-weight: bold;
 	text-align: center;
 }
-h3 {
+#results h3 {
 	margin-bottom: 0;
+}
+#results h3 > a {
+	color: inherit;
 }
 
 /* Top level queue-controls should have some margin

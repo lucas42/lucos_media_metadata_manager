@@ -15,10 +15,10 @@
 		<div class="content_container">
 			<div id="content">
 <h2>Tracks</h2>
-<ul>
+<ul id="results">
 <?php foreach ($tracks as $track) {
 	?><li>
-		<h3><?=htmlspecialchars($track["title"])?></h3>
+		<h3><a href="/tracks/<?=$track["id"]?>"><?=htmlspecialchars($track["title"])?></a></h3>
 		<queue-controls
 			data-trackurl="<?=htmlspecialchars($track["url"])?>"
 			data-trackid="<?=$track["id"]?>" />

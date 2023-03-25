@@ -31,17 +31,6 @@ class QueueControls extends HTMLElement {
 		`;
 		shadow.append(style);
 
-		// Add a link to the edit page unless already on it
-		if (window.location.href.indexOf("/tracks/") == -1) {
-			const editButton = document.createElement("button");
-			editButton.appendChild(document.createTextNode("Edit"));
-			editButton.addEventListener("click", async event => {
-				editButton.dataset.disabled = true;
-				window.location.href = "/tracks/"+component.dataset.trackid;
-			});
-			shadow.append(editButton);
-		}
-
 		const actions = {
 			"now": "Play Now",
 			"next": "Play Next",
