@@ -176,6 +176,15 @@ input[type=submit].loading {
 select {
 	text-transform: capitalize;
 }
+input[type=range] {
+	accent-color: #000060;
+}
+input[type=range][data-disposition=good] {
+	accent-color: #009900;
+}
+input[type=range][data-disposition=bad] {
+	accent-color: #990000;
+}
 .form-options {
 	font-size: 16px;
 }

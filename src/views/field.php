@@ -45,6 +45,8 @@
 					min="0"
 					max="10"
 					step="0.1"
+					data-bad="2"
+					data-good="8"
 					<?=is_null($value) ? "disabled" : ""?>
 					/>
 				<input

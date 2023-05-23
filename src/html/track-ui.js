@@ -43,6 +43,11 @@ window.addEventListener('DOMContentLoaded', event => {
 			range.disabled = fieldDisabled;
 			hidden.disabled = !fieldDisabled;
 
+			// Decide the "disposition" of the range value, so CSS can colour it appropriately
+			if (range.dataset.good && range.value > Number(range.dataset.good)) range.dataset.disposition = "good";
+			else if (range.dataset.bad && range.value < Number(range.dataset.bad)) range.dataset.disposition = "bad";
+			else delete range.dataset.disposition;
+
 			/**
 			 * Weird hack to make it easy to re-enable element when disabled
 			 * See https://github.com/whatwg/html/issues/5886 for the whole discussion
