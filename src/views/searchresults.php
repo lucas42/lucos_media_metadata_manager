@@ -66,7 +66,7 @@ Page <?=$page?> out of <?=$totalPages?>
 						<label><input type="radio" name="page" value="<?=htmlspecialchars($page)?>" checked />Only tracks on page <?=htmlspecialchars($page)?></label>
 						<label><input type="radio" name="page" value="all" />All Tracks</label>
 					</div>
-					<input type="submit" value="Edit All" id="save" class="primary-submit" />
+					<input type="submit" value="Edit All" class="primary-submit" />
 				</form>
 			</div>
 		</div>

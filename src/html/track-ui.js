@@ -97,9 +97,11 @@ window.addEventListener('DOMContentLoaded', event => {
 // Following a post-redirect-get flow, indicate the successful save and modify the current URL
 window.addEventListener('DOMContentLoaded', event => {
 	if (window.location.search.indexOf("saved=true") === -1) return;
-	document.getElementById("save").dataset.saved = true;
-	document.getElementById("save").offsetHeight; // Force a repaint for the transition effect to take place
-	delete document.getElementById("save").dataset.saved;
+	document.querySelectorAll(".primary-submit").forEach(submitButton => {
+		submitButton.dataset.saved = true;
+		submitButton.offsetHeight; // Force a repaint for the transition effect to take place
+		delete submitButton.dataset.saved;
+	});
 
 	// Remove saved=true from the current url
 	const newSearch = window.location.search.replace('saved=true','').replace(/([\&\?])\&/, '$1').replace(/[\&\?]$/, '');
@@ -108,20 +110,20 @@ window.addEventListener('DOMContentLoaded', event => {
 
 window.addEventListener('DOMContentLoaded', event => {
 	const trackform = document.getElementById("trackform");
-	const save = document.getElementById("save");
-	if (!trackform || !save) return;
+	if (!trackform ) return;
 
-	// When a form input changes, set the save button to pending to highlight there's unsave changes
+	// When a form input changes, set the form to pending to highlight there's unsaved changes
 	document.querySelectorAll(".form-field .form-input > input, .form-field .form-input > select, .form-field .form-input > textarea").forEach(input => {
 		input.addEventListener('change', () => {
-			save.dataset.pending = true;
+			trackform.dataset.pending = true;
 		});
 	});
 
-	// When the form is submitted, disable the save button
+	// When the form is submitted, disable the submit button(s)
 	trackform.addEventListener("submit", () => {
-		const save = document.getElementById("save");
-		save.disabled = true;
-		save.classList.add("loading");
+		trackform.querySelectorAll("input[type=submit]").forEach(submitButton => {
+			submitButton.disabled = true;
+			submitButton.classList.add("loading");
+		});
 	});
 });
