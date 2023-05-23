@@ -146,6 +146,9 @@ function getFormFields() {
 			],
 			"hint" => "Where this track was sourced from", // Not covering the entire provenance chain, just how it arrived in this collection.
 		],
+		"comment" => [
+			"type" => "textarea",
+		],
 	];
 }
 
