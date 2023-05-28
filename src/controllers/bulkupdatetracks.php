@@ -12,7 +12,7 @@ function bulkUpdateTracks($params, $currentpage, $postdata) {
 
 	$tags = array();
 	foreach (getFormKeys() as $key) {
-		if (!empty($postdata[$key])) {
+		if (!is_null($postdata[$key]) and $postdata[$key] !== "") {
 			$tags[$key] = $postdata[$key];
 		}
 		if (!empty($postdata["${key}_blank"])) {

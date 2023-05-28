@@ -26,7 +26,7 @@
 <?php
 	include 'field.php';
 
-	if (!empty($value)) {?>
+	if (!is_null($value)) {?>
 		<a href="/search?p.<?=htmlspecialchars($key)?>=<?=htmlspecialchars(urlencode($value))?>" class='predicate-search' target="_blank" title='Find all tracks with <?=htmlspecialchars($key)?> "<?=htmlspecialchars($value)?>"'>🔍</a>
 	<?php } else { ?>
 		<span class='predicate-search disabled'>🔍</span>
