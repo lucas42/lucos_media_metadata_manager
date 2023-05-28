@@ -68,6 +68,46 @@
 				</span>
 				<?php
 				break;
+			case "discrete-range":
+				?>
+				<span class="labeled-range">
+					<input
+						type="range"
+						id="<?=htmlspecialchars($key)?>"
+						name="<?=htmlspecialchars($key)?>"
+						value="<?=htmlspecialchars($value)?>"
+						min="<?=htmlspecialchars(array_key_first($field["values"]))?>"
+						max="<?=htmlspecialchars(array_key_last($field["values"]))?>"
+						step="1"
+						list="<?=htmlspecialchars($key)?>_datalist"
+						<?=is_null($value) ? "disabled" : ""?>
+						/>
+					<datalist
+						id="<?=htmlspecialchars($key)?>_datalist"><?php
+						foreach ($field["values"] as $optionValue => $label) { ?>
+							<option value="<?=htmlspecialchars($optionValue)?>" label="<?=htmlspecialchars($label)?>"></option><?php
+						}
+						?>
+					</datalist>
+				</span>
+				<input
+					type="hidden"
+					id="<?=htmlspecialchars($key)?>_hidden"
+					name="<?=htmlspecialchars($key)?>"
+					value=""
+					<?=is_null($value) ? "" : "disabled"?>
+					/>
+				<span class="isnull">
+					<input
+						type="checkbox"
+						id="<?=htmlspecialchars($key)?>_null"
+						name="<?=htmlspecialchars($key)?>_null"
+						<?=is_null($value) ? "checked" : ""?>
+						/>
+					<label for="<?=htmlspecialchars($key)?>_null">Null</label>
+				</span>
+				<?php
+				break;
 			case "select":
 				?> 
 				<select id="<?=htmlspecialchars($key)?>" name="<?=htmlspecialchars($key)?>">

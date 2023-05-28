@@ -185,6 +185,17 @@ input[type=range][data-disposition=good] {
 input[type=range][data-disposition=bad] {
 	accent-color: #990000;
 }
+.labeled-range input[type=range] {
+	appearance: slider-vertical;
+	height: 102px; /* Found using trial and error, may not apply to other ranges */
+	width: 30px;
+	transform: scale(1, -1);
+	float: left;
+}
+.labeled-range datalist {
+	display: block;
+	font-size: 14px;
+}
 .form-options {
 	font-size: 16px;
 }

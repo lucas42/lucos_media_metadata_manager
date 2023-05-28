@@ -38,7 +38,7 @@ function getFormFields() {
 			],
 		],
 		"singalong" => [
-			"type" => "select",
+			"type" => "discrete-range",
 			"values" => [
 				0 => "No chance",
 				1 => "Hum a Bit",

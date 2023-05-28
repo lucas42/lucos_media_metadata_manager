@@ -4,7 +4,7 @@
  */
 window.addEventListener('DOMContentLoaded', event => {
 	document.querySelectorAll(".form-field input[type=range]").forEach(range => {
-		const row = range.parentElement.parentElement;
+		const row = range.closest(".form-field")
 		const blankInput = row.querySelector(".blank > input");
 		const nullInput = row.querySelector(".isnull > input");
 		const preview = row.querySelector(".preview");
@@ -27,6 +27,17 @@ window.addEventListener('DOMContentLoaded', event => {
 			});
 			blankInput.addEventListener("change", updatePreview);
 		}
+		if (range.hasAttribute("list")) {
+			const list = document.getElementById(range.getAttribute("list"));
+			list.querySelectorAll("option").forEach(option => {
+				option.addEventListener("click", event => {
+					range.value = option.getAttribute("value");
+					nullInput.checked = false;
+					event.stopPropagation();
+					updatePreview();
+				});
+			});
+		}
 		function updatePreview(event) {
 			if (event) {
 				if (event.target == nullInput && nullInput.checked && blankInput) {
@@ -39,7 +50,7 @@ window.addEventListener('DOMContentLoaded', event => {
 			const fieldDisabled = nullInput.checked || blankInput?.checked;
 			let val = Number(range.value).toFixed(1);
 			if (fieldDisabled) val = " - ";
-			preview.innerText = val;
+			if (preview) preview.innerText = val;
 			range.disabled = fieldDisabled;
 			hidden.disabled = !fieldDisabled;
 
@@ -59,6 +70,7 @@ window.addEventListener('DOMContentLoaded', event => {
 		}
 	});
 });
+
 
 /**
  * Bulk edit fields have a toggle to indicate a value should be deliberately blanked out
