@@ -91,6 +91,7 @@ function getFormFields() {
 					"sco" => "Scots",
 					"sv" => "Swedish",
 					"is" => "Icelandic",
+					"da" => "Danish",
 				],
 				"Other Languages" => [
 					"ru" => "Russian",
