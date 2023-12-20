@@ -2,6 +2,7 @@
 require("../authentication.php");
 require("../controllers/updatecollection.php");
 require("../controllers/viewcollection.php");
+require("../controllers/listcollections.php");
 
 $urlparts = explode('/', $_SERVER['PHP_SELF']);
 $slug = (count($urlparts) > 2) ? $urlparts[2] : null;
@@ -16,5 +17,5 @@ if (array_key_exists("slug", $_GET)) {
 } elseif ($slug) {
 	viewCollection($slug);
 } else {
-	print("//TODO: list collections");
+	listCollections();
 }
