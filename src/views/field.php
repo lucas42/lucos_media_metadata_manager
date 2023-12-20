@@ -32,7 +32,8 @@
 					type="text" 
 					id="<?=htmlspecialchars($key)?>"
 					name="<?=htmlspecialchars($key)?>"
-					value="<?=htmlspecialchars($value)?>" />
+					value="<?=htmlspecialchars($value)?>"
+					<?=empty($disabled) ? "" : "disabled"?> />
 				<?php
 				break;
 			case "range":

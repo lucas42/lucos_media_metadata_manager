@@ -81,7 +81,7 @@ a:hover, a:active {
 	padding: 5px;
 	display: flex;
 }
-#trackform .form-field:nth-child(odd) {
+.form-field:nth-child(odd) {
 	background: rgba(150, 150, 255, 0.1);
 }
 .form-field .key-label {

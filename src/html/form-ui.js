@@ -126,19 +126,19 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 window.addEventListener('DOMContentLoaded', event => {
-	const trackform = document.getElementById("trackform");
-	if (!trackform ) return;
+	const primaryform = document.getElementById("trackform") || document.getElementById("collectionform");
+	if (!primaryform ) return;
 
 	// When a form input changes, set the form to pending to highlight there's unsaved changes
 	document.querySelectorAll(".form-field .form-input > input, .form-field .form-input > select, .form-field .form-input > textarea").forEach(input => {
 		input.addEventListener('change', () => {
-			trackform.dataset.pending = true;
+			primaryform.dataset.pending = true;
 		});
 	});
 
 	// When the form is submitted, disable the submit button(s)
-	trackform.addEventListener("submit", () => {
-		trackform.querySelectorAll("input[type=submit]").forEach(submitButton => {
+	primaryform.addEventListener("submit", () => {
+		primaryform.querySelectorAll("input[type=submit]").forEach(submitButton => {
 			submitButton.disabled = true;
 			submitButton.classList.add("loading");
 		});
