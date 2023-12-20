@@ -8,7 +8,7 @@ $page = empty($_GET['page']) ? null : $_GET['page'];
 if (!is_numeric($page) or $page < 1) $page = "1";
 
 // If there's a search query, that takes precendence
-if (!is_null($_GET['q'])) {
+if (array_key_exists('q', $_GET)) {
 	$params['q'] = $_GET['q'];
 
 // Without a search query, look for all the non-empty predicates (keys start with 'p.') and use them to search
