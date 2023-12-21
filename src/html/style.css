@@ -189,7 +189,7 @@ input[type=range][data-disposition=bad] {
 	accent-color: #990000;
 }
 .labeled-range input[type=range] {
-	appearance: slider-vertical;
+	writing-mode: vertical-rl;
 	height: 102px; /* Found using trial and error, may not apply to other ranges */
 	width: 30px;
 	transform: scale(1, -1);
