@@ -12,6 +12,7 @@
 	<body>
 		<lucos-navbar bg-colour="#000020"><a href="/" id="lucos_navbar_title">Metadata Manager - <?=htmlspecialchars($data['name'])?> Collection</a></lucos-navbar>
 		<div id="content">
+			<a href="/collections" class="standalone">&lt;— View All Collections</a>
 			<h2>Collection Metadata</h2>
 			<form method="post" id="collectionform">
 				<div class="form-field">
