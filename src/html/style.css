@@ -269,3 +269,17 @@ small {
 	float: right;
 	clear: right;
 }
+.message {
+	background-color: #005a00;
+	text-align: center;
+	color: #fff;
+	height: 2em;
+	overflow: hidden;
+}
+.message > div {
+	padding: 0.5em;
+}
+.message[data-collapse] {
+	height: 0;
+	transition: height 2s 5s;
+}
