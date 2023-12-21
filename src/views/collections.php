@@ -17,7 +17,7 @@
 			<ul id="results">
 			<?php foreach ($collections as $collection) {
 				?><li>
-					<h3><a href="/collections/<?=htmlspecialchars($collection["slug"])?>"><?=htmlspecialchars($collection["name"])?> [<?=count($collection["tracks"])?> Tracks]</a></h3>
+					<h3><a href="/collections/<?=htmlspecialchars(urlencode($collection["slug"]))?>"><?=htmlspecialchars($collection["name"])?> [<?=count($collection["tracks"])?> Tracks]</a></h3>
 				</li><?php
 			}
 			?>

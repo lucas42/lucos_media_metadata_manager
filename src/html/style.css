@@ -144,6 +144,9 @@ input[type=submit] {
 	transition: background-color 10s ease-out;
 	height: fit-content;
 }
+input[type=submit].danger {
+	background-color: #900000;
+}
 input[type=submit]:active{
 	border: inset;
 }

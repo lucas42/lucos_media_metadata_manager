@@ -28,6 +28,6 @@ function updateCollection($slug, $postdata) {
 	} elseif (str_ends_with($http_response_header[0], "400 Bad Request")) {
 		displayError(400, $response);
 	} else {
-		displayError(502, "Error updating collection in API.\n\n".$respnose);
+		displayError(502, "Error updating collection in API.\n\n".$response);
 	}
 }

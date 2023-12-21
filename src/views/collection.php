@@ -39,6 +39,9 @@
 			}
 			?>
 			</ul>
+			<form method="post" action="/collections/<?=htmlspecialchars(urlencode($data["slug"]))?>/delete">
+				<input type="submit" value="Delete Whole Collection" class="standalone danger" />
+			</form>
 
 		</div>
 		<script src="/lucos_navbar.js" type="text/javascript"></script>
