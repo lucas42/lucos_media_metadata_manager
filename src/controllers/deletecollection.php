@@ -10,7 +10,7 @@ function deleteCollection($slug) {
 		displayError(400, "Invalid collection slug $slug to delete");
 	}
 
-	$collectionurl = "https://media-api.l42.eu/v2/collections/${slug}";
+	$collectionurl = "https://media-api.l42.eu/v2/collections/".urlencode($slug);
 	$context = stream_context_create([
 		"http" => [
 			"method" => "DELETE",
@@ -20,7 +20,7 @@ function deleteCollection($slug) {
 	
 	$response = file_get_contents($collectionurl, false, $context);
 	if (str_ends_with($http_response_header[0], "204 No Content")) {
-		header("Location: /collections/?deleted=true", true, 303);
+		header("Location: /collections/?deleted=collection", true, 303);
 	} else {
 		displayError(502, "Error deleting collection in API.\n\n".$response);
 	}

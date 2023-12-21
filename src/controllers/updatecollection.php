@@ -12,7 +12,7 @@ function updateCollection($slug, $postdata) {
 		$slug = $postdata['slug'];
 	}
 
-	$collectionurl = "https://media-api.l42.eu/v2/collections/${slug}";
+	$collectionurl = "https://media-api.l42.eu/v2/collections/".urlencode($slug);
 	$context = stream_context_create([
 		"http" => [
 			"method" => "PUT",

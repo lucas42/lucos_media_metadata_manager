@@ -6,7 +6,7 @@ require_once("../controllers/searchtracks.php");
  * Fetches metadata about the given track and displays it in a html form
  */
 function viewCollection($slug) {
-	$apiurl = "https://media-api.l42.eu/v2/collections/${slug}";
+	$apiurl = "https://media-api.l42.eu/v2/collections/".urlencode($slug);
 	$response = @file_get_contents($apiurl);
 	if ($response === false) {
 		$error = error_get_last()["message"];
