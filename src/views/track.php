@@ -66,10 +66,13 @@
 		<span class="key">Duration</span>
 		<span class="value"><?=$data["duration"]?> seconds</span>
 	</div>
-</div>
-<queue-controls
-	data-trackurl="<?=htmlspecialchars($data["url"])?>"
-	data-trackid="<?=$data["trackid"]?>" />
+	<queue-controls
+		data-trackurl="<?=htmlspecialchars($data["url"])?>"
+		data-trackid="<?=$data["trackid"]?>" />
+	</div>
+	<form method="post" action="/tracks/<?=$data["trackid"]?>/delete" data-confirm="Are you sure you want to delete track <?=$trackid?>?">
+		<input type="submit" value="Delete Track" class="standalone danger" />
+	</form>
 </div>
 <script src="/lucos_navbar.js" type="text/javascript"></script>
 </body>
