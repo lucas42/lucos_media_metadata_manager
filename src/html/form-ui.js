@@ -144,3 +144,23 @@ window.addEventListener('DOMContentLoaded', event => {
 		});
 	});
 });
+
+/**
+ * Adds confirmation dialog to forms with [data-confirm] set
+ */
+window.addEventListener('DOMContentLoaded', loadedEvent => {
+	document.querySelectorAll("form[data-confirm]").forEach(form => {
+		const message = form.dataset.confirm;
+		form.addEventListener("submit", submitEvent => {
+			const result = window.confirm(message);
+			if (result) {
+				form.querySelectorAll("input[type=submit]").forEach(submitButton => {
+					submitButton.disabled = true;
+					submitButton.classList.add("loading");
+				});
+			} else {
+				submitEvent.preventDefault();
+			}
+		});
+	});
+});

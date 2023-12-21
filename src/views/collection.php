@@ -40,7 +40,7 @@
 			}
 			?>
 			</ul>
-			<form method="post" action="/collections/<?=htmlspecialchars(urlencode($data["slug"]))?>/delete">
+			<form method="post" action="/collections/<?=htmlspecialchars(urlencode($data["slug"]))?>/delete" data-confirm="Are you sure you want to delete collection <?=htmlspecialchars($data['name'])?>?">
 				<input type="submit" value="Delete Whole Collection" class="standalone danger" />
 			</form>
 
