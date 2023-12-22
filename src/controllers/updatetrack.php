@@ -6,16 +6,27 @@ require_once("../formfields.php");
  * Sets the value to of each field to the value in $postdata for that key
  **/
 function updateTrack($trackid, $postdata) {
+	$api_data = array();
+	if (isset($postdata["collections"])) {
+		$api_data["collections"] = [];
+		foreach($postdata["collections"] as $slug) {
+			$api_data["collections"][] = [
+				"slug" => $slug,
+			];
+		}
+		unset($postdata["collections"]);
+	}
 	$tags = array();
 	foreach (getFormKeys() as $key) {
 		$tags[$key] = $postdata[$key];
 	}
+	$api_data["tags"] = $tags;
 	$trackurl = "https://media-api.l42.eu/v2/tracks/${trackid}";
 	$context = stream_context_create([
 		"http" => [
 			"method" => "PATCH",
 			"header" => "Content-Type: application/json",
-			"content" => json_encode(["tags" => $tags]),
+			"content" => json_encode($api_data),
 		],
 	]);
 	file_get_contents($trackurl, false, $context);

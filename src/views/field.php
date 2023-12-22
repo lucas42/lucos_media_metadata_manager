@@ -137,6 +137,22 @@
 					}?> 
 				</select><?php
 				break;
+			case "multiselect":
+				?>
+				<select
+					id="<?=htmlspecialchars($key)?>"
+					name="<?=htmlspecialchars($key)?>[]"
+					multiple
+					>
+					<?php
+					foreach ($field["values"] as $key => $name) {
+					?>
+						<option value="<?=htmlspecialchars($key)?>"<?=in_array($key, $value)?" selected":""?>>
+							<?=htmlspecialchars($name)?>
+						</option><?php
+					}?>
+				</select><?php
+				break;
 			case "textarea":
 				?>
 				<textarea
