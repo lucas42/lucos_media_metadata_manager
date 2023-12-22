@@ -7,8 +7,8 @@ require_once("../formfields.php");
  **/
 function updateTrack($trackid, $postdata) {
 	$api_data = array();
+	$api_data["collections"] = [];
 	if (isset($postdata["collections"])) {
-		$api_data["collections"] = [];
 		foreach($postdata["collections"] as $slug) {
 			$api_data["collections"][] = [
 				"slug" => $slug,
