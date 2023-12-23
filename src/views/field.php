@@ -138,6 +138,7 @@
 				</select><?php
 				break;
 			case "multiselect":
+				if (empty($value)) $value = [];
 				?>
 				<select
 					id="<?=htmlspecialchars($key)?>"
@@ -145,9 +146,9 @@
 					multiple
 					>
 					<?php
-					foreach ($field["values"] as $key => $name) {
+					foreach ($field["values"] as $option => $name) {
 					?>
-						<option value="<?=htmlspecialchars($key)?>"<?=in_array($key, $value)?" selected":""?>>
+						<option value="<?=htmlspecialchars($option)?>"<?=in_array($option, $value)?" selected":""?>>
 							<?=htmlspecialchars($name)?>
 						</option><?php
 					}?>

@@ -1,6 +1,12 @@
 <?php
 
-function getFormFields() {
+/**
+ * Returns hardcoded fields used for tags
+ * The API doesn't validate tags, any key/value pair is allowed.
+ * So any values here are only enforced by the UI.
+ * @return associative array where the key is the name of the tag and value is an associative array of settings about that field
+ */
+function getTagFields() {
 	return [
 		"title" => [
 			"type" => "text",
@@ -154,7 +160,44 @@ function getFormFields() {
 		],
 	];
 }
+/**
+ * Get a dynamic list of collections from the API
+ * @throws an exception if the request to the API fails
+ * @return an array of collections, each an associative array containing "slug" and "name" keys
+ */
+function getCollections() {
+	$apiurl = "https://media-api.l42.eu/v2/collections/";
+	$response = @file_get_contents($apiurl);
+	if ($response === false) {
+		$error = error_get_last()["message"];
+		throw new Exception("Can't fetch collections from API.\n\n$error", 502);
+	}
+	return json_decode($response, true);
+}
 
-function getFormKeys() {
-	return array_keys(getFormFields());
+/**
+ * Returns a list of fields for use in the UI, containing both tags and a collections fields
+ * @throws an exception if the request to the API for collections fails
+ * @return associative array where the key is the name of the field and value is an associative array of settings about that field
+ */
+function getFormFields() {
+	$form_fields = getTagFields();
+	$form_fields["collections"] = [
+		"type" => "multiselect",
+		"values" => [],
+		"hint" => "The collections this track is part of",
+	];
+	foreach (getCollections() as $collection) {
+		$form_fields["collections"]["values"][$collection["slug"]] = $collection["name"];
+	}
+	return $form_fields;
+}
+
+/**
+ * Give the names of all tags managed through the UI
+ * (Doesn't touch collections)
+ * @return An array of strings
+ */
+function getTagKeys() {
+	return array_keys(getTagFields());
 }

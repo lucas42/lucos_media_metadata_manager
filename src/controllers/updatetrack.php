@@ -17,7 +17,7 @@ function updateTrack($trackid, $postdata) {
 		unset($postdata["collections"]);
 	}
 	$tags = array();
-	foreach (getFormKeys() as $key) {
+	foreach (getTagKeys() as $key) {
 		$tags[$key] = $postdata[$key];
 	}
 	$api_data["tags"] = $tags;

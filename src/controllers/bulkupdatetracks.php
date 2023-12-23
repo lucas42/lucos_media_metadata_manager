@@ -8,17 +8,32 @@ require_once("../formfields.php");
 function bulkUpdateTracks($params, $currentpage, $postdata) {
 	$basequerystring = http_build_query($params);
 	$targetPage = !empty($postdata['page']) ? $postdata['page'] : $currentpage;
-	$apiurl = "https://media-api.l42.eu/v2/tracks?${basequerystring}&page=${targetPage}";
+	$apiurl = "https://media-api.l42.eu/v2/tracks?{$basequerystring}&page={$targetPage}";
+
+	$api_data = array();
+	if (isset($postdata["collections"])) {
+		$api_data["collections"] = [];
+		foreach($postdata["collections"] as $slug) {
+			$api_data["collections"][] = [
+				"slug" => $slug,
+			];
+		}
+	}
+	if (!empty($postdata["collections_blank"])) {
+		$api_data["collections"] = [];
+	}
 
 	$tags = array();
-	foreach (getFormKeys() as $key) {
+	foreach (getTagKeys() as $key) {
 		if (!is_null($postdata[$key]) and $postdata[$key] !== "") {
 			$tags[$key] = $postdata[$key];
 		}
-		if (!empty($postdata["${key}_blank"])) {
+		if (!empty($postdata["{$key}_blank"])) {
 			$tags[$key] = "";
 		}
 	}
+	if (!empty($tags)) $api_data["tags"] = $tags; // Avoid including an empty associative array, as php's json will encode it as an array, not an object
+
 	$headers = ["Content-Type: application/json"];
 	if (!empty($postdata['missing-only'])) {
 		array_push($headers, "If-None-Match: *");
@@ -27,9 +42,15 @@ function bulkUpdateTracks($params, $currentpage, $postdata) {
 		"http" => [
 			"method" => "PATCH",
 			"header" => $headers,
-			"content" => json_encode(["tags" => $tags]),
+			"content" => json_encode($api_data),
+			"ignore_errors" => true,
 		],
 	]);
-	file_get_contents($apiurl, false, $context);
-	header("Location: /search?${basequerystring}&page=${currentpage}&saved=true", true, 303);
+	print_r($apiurl);
+	print_r(json_encode($api_data));
+	$response = file_get_contents($apiurl, false, $context);
+	if (!str_ends_with($http_response_header[0], "200 OK")) {
+		throw new Exception("Failed to bulk update tracks in API.\n\n{$error}\n\n{$response}", 502);
+	}
+	header("Location: /search?{$basequerystring}&page={$currentpage}&saved=true", true, 303);
 }

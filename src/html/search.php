@@ -2,6 +2,7 @@
 require("../authentication.php");
 require("../controllers/searchtracks.php");
 require("../controllers/bulkupdatetracks.php");
+require_once("../controllers/error.php");
 
 $params = array();
 $page = empty($_GET['page']) ? null : $_GET['page'];
@@ -26,12 +27,16 @@ if (array_key_exists('q', $_GET)) {
 		$params[$key] = $val;
 	}
 }
-if (!empty($params)) {
-	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-		bulkUpdateTracks($params, $page, $_POST);
+try {
+	if (!empty($params)) {
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			bulkUpdateTracks($params, $page, $_POST);
+		} else {
+			searchTracks($params, $page);
+		}
 	} else {
-		searchTracks($params, $page);
+		searchHomepage();
 	}
-} else {
-	searchHomepage();
+} catch (Exception $error) {
+	displayError(500, $error->getMessage());
 }
