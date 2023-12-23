@@ -50,6 +50,6 @@ function summariseTracks($tracks) {
 
 function searchHomepage() {
 	require_once("../formfields.php");
-	$form_fields = getFormFields();
+	$form_fields = getTagFields();
 	require("../views/advancedsearch.php");
 }
