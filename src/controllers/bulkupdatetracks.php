@@ -46,8 +46,6 @@ function bulkUpdateTracks($params, $currentpage, $postdata) {
 			"ignore_errors" => true,
 		],
 	]);
-	print_r($apiurl);
-	print_r(json_encode($api_data));
 	$response = file_get_contents($apiurl, false, $context);
 	if (!str_ends_with($http_response_header[0], "200 OK")) {
 		throw new Exception("Failed to bulk update tracks in API.\n\n{$error}\n\n{$response}", 502);
