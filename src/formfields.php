@@ -26,15 +26,6 @@ function getTagFields() {
 		"rating" => [
 			"type" => "range",
 		],
-		"event" => [
-			"type" => "select",
-			"values" => [
-				"xmas" => "🎄 Christmas",
-				"hallowe'en" => "🎃 Hallowe'en",
-				"eurovision" => "✨ Eurovision Song Contest",
-			],
-			"hint" => "Which occasion is this track associated with?",
-		],
 		"format" => [
 			"type" => "select",
 			"values" => [
