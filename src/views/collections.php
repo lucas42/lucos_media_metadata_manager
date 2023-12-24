@@ -7,6 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="mobile-web-app-capable" content="yes">
 		<script src="/deletion-success.js"></script>
+		<script src="/collection-controls.js"></script>
 	</head>
 	<body>
 		<lucos-navbar bg-colour="#000020"><a href="/" id="lucos_navbar_title">Metadata Manager - Collections</a></lucos-navbar>
@@ -19,10 +20,13 @@
 			<?php foreach ($collections as $collection) {
 				?><li>
 					<h3><a href="/collections/<?=htmlspecialchars(urlencode($collection["slug"]))?>"><?=htmlspecialchars($collection["name"])?> [<?=count($collection["tracks"])?> Tracks]</a></h3>
+					<collection-controls slug="<?=htmlspecialchars(urlencode($collection["slug"]))?>"></collection-controls>
 				</li><?php
 			}
 			?>
 			</ul>
+			<h2>Non-Collection</h2>
+				<collection-controls></collection-controls>
 		</div>
 		<script src="/lucos_navbar.js" type="text/javascript"></script>
 </body>

@@ -8,6 +8,7 @@
 		<meta name="mobile-web-app-capable" content="yes">
 		<script src="/form-ui.js"></script>
 		<script src="/queue-controls.js"></script>
+		<script src="/collection-controls.js"></script>
 	</head>
 	<body>
 		<lucos-navbar bg-colour="#000020"><a href="/" id="lucos_navbar_title">Metadata Manager - <?=htmlspecialchars($data['name'])?> Collection</a></lucos-navbar>
@@ -40,6 +41,7 @@
 			}
 			?>
 			</ul>
+			<collection-controls slug="<?=htmlspecialchars(urlencode($data["slug"]))?>"></collection-controls>
 			<form method="post" action="/collections/<?=htmlspecialchars(urlencode($data["slug"]))?>/delete" data-confirm="Are you sure you want to delete collection <?=htmlspecialchars($data['name'])?>?">
 				<input type="submit" value="Delete Whole Collection" class="standalone danger" />
 			</form>
