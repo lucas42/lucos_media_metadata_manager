@@ -21,7 +21,7 @@ if (array_key_exists('q', $_GET)) {
 		if (!str_starts_with($key, 'p.')) continue;
 		if (str_ends_with($key, '_null')) continue;
 		$key = str_replace('_', ' ', $key);
-
+		if (is_array($val)) $val = implode(",", $val);
 		if (is_null($val) or $val === "") continue;
 
 		$params[$key] = $val;

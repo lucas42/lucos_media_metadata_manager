@@ -113,27 +113,11 @@
 				?> 
 				<select id="<?=htmlspecialchars($key)?>" name="<?=htmlspecialchars($key)?>">
 						<option></option><?php 
-					foreach ($field["values"] as $selectkey => $values) {
-						if (is_array($values)) {
-							$groupname = $selectkey;
-							$options = $values;
-					?> 
-					<optgroup label="<?=htmlspecialchars($groupname)?>"><?php
-						} else {
-							$groupname = null;
-							$options = [$selectkey => $values];
-						}
-						foreach ($options as $option => $label) {
+					foreach ($field["values"] as $option => $label) {
 					?> 
 						<option value="<?=htmlspecialchars($option)?>"<?=(strval($option) === $value)?" selected":""?>>
 							<?=htmlspecialchars($label)?> 
 						</option><?php
-						}
-						if ($groupname) {
-					?> 
-					</optgroup>
-					<?php
-						}
 					}?> 
 				</select><?php
 				break;
@@ -152,6 +136,33 @@
 							<?=htmlspecialchars($name)?>
 						</option><?php
 					}?>
+				</select><?php
+				break;
+			case "multigroupselect":
+				$values = explode(",", $value)
+				?>
+				<select
+					id="<?=htmlspecialchars($key)?>"
+					name="<?=htmlspecialchars($key)?>[]"
+					multiple
+					>
+					<?php
+					foreach ($field["values"] as $groupname => $options) {
+					?>
+					<optgroup label="<?=htmlspecialchars($groupname)?>">
+					<?php
+						foreach ($options as $option => $name) {
+					?>
+						<option value="<?=htmlspecialchars($option)?>"<?=in_array($option, $values)?" selected":""?>>
+							<?=htmlspecialchars($name)?>
+						</option>
+					<?php
+						}
+					?>
+					</optgroup>
+					<?php
+					}
+					?>
 				</select><?php
 				break;
 			case "textarea":

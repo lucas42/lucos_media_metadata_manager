@@ -62,7 +62,7 @@ function getTagFields() {
 			"type" => "textarea",
 		],
 		"language" => [
-			"type" => "select",
+			"type" => "multigroupselect",
 			"values" => [
 				"Common Languages" => [
 					"en" => "English",
@@ -101,7 +101,7 @@ function getTagFields() {
 					"mul" => "Multiple Languages",
 				],
 			],
-			"hint" => "The primary language used for lyrics in this track",
+			"hint" => "The language(s) used for lyrics in this track",
 		],
 		"dance" => [
 			"type" => "select",

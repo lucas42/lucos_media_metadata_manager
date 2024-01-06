@@ -18,7 +18,8 @@ function updateTrack($trackid, $postdata) {
 	}
 	$tags = array();
 	foreach (getTagKeys() as $key) {
-		$tags[$key] = $postdata[$key];
+		if (is_array($postdata[$key])) $tags[$key] = implode(",", $postdata[$key]);
+		else $tags[$key] = $postdata[$key];
 	}
 	$api_data["tags"] = $tags;
 	$trackurl = "https://media-api.l42.eu/v2/tracks/${trackid}";

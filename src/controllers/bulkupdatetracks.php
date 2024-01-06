@@ -26,7 +26,8 @@ function bulkUpdateTracks($params, $currentpage, $postdata) {
 	$tags = array();
 	foreach (getTagKeys() as $key) {
 		if (!is_null($postdata[$key]) and $postdata[$key] !== "") {
-			$tags[$key] = $postdata[$key];
+			if (is_array($postdata[$key])) $tags[$key] = implode(",", $postdata[$key]);
+			else $tags[$key] = $postdata[$key];
 		}
 		if (!empty($postdata["{$key}_blank"])) {
 			$tags[$key] = "";
