@@ -98,6 +98,7 @@ function getTagFields() {
 					"mjy" => "Mohican",
 					"cmn" => "Mandarin",
 					"ja" => "Japanese",
+					"sw" => "Swahili",
 					"art-x-von" => "Hopelandic", // Fictional language created and used by Sigur Rós, also known as Vonlenska
 					"art-x-simlish" => "Simlish", // Fictional language used in The Sims in-game universe
 					"mul" => "Multiple Languages",
