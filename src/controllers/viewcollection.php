@@ -5,8 +5,8 @@ require_once("../controllers/searchtracks.php");
 /**
  * Fetches metadata about the given track and displays it in a html form
  */
-function viewCollection($slug) {
-	$apiurl = "https://media-api.l42.eu/v2/collections/".urlencode($slug);
+function viewCollection($slug, $page) {
+	$apiurl = "https://media-api.l42.eu/v2/collections/".urlencode($slug)."?page=${page}";
 	$response = @file_get_contents($apiurl);
 	if ($response === false) {
 		$error = error_get_last()["message"];
@@ -18,6 +18,7 @@ function viewCollection($slug) {
 	} else {
 		$data = json_decode($response, true);
 		$tracks = summariseTracks($data["tracks"]);
+		$totalPages = $data["totalPages"];
 		require("../views/collection.php");
 	}
 }

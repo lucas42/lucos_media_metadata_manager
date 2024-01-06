@@ -11,6 +11,9 @@ $urlparts = explode('/', $_SERVER['PHP_SELF']);
 $slug = (count($urlparts) > 2) ? $urlparts[2] : null;
 $subpath = (count($urlparts) > 3) ? $urlparts[3] : null;
 
+$page = empty($_GET['page']) ? null : $_GET['page'];
+if (!is_numeric($page) or $page < 1) $page = "1";
+
 if (!$subpath) {
 	if (array_key_exists("slug", $_GET)) {
 		header("Location: /collections/${_GET["slug"]}");
@@ -19,7 +22,7 @@ if (!$subpath) {
 	} elseif ($slug == "new") {
 		newCollectionForm();
 	} elseif ($slug) {
-		viewCollection($slug);
+		viewCollection($slug, $page);
 	} else {
 		listCollections();
 	}
