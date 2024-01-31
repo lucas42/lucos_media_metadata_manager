@@ -148,9 +148,11 @@
 					>
 					<?php
 					foreach ($field["values"] as $groupname => $options) {
-					?>
+						if (!empty($groupname)) {
+							?>
 					<optgroup label="<?=htmlspecialchars($groupname)?>">
-					<?php
+							<?php
+						}
 						foreach ($options as $option => $name) {
 					?>
 						<option value="<?=htmlspecialchars($option)?>"<?=in_array($option, $values)?" selected":""?>>
@@ -158,9 +160,11 @@
 						</option>
 					<?php
 						}
-					?>
+						if (!empty($groupname)) {
+							?>
 					</optgroup>
-					<?php
+							<?php
+						}
 					}
 					?>
 				</select><?php

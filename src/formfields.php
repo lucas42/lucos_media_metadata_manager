@@ -152,6 +152,21 @@ function getTagFields() {
 			],
 			"hint" => "Where this track was sourced from", // Not covering the entire provenance chain, just how it arrived in this collection.
 		],
+		"offence" => [
+			"type" => "multigroupselect",
+			"values" => [
+				"" => [
+					"swearing" => "Swearing",
+					"slurs" => "Slurs",
+					"heresy" => "Heresy",
+					"threat" => "Threatening Behaviour",
+					"bestiality" => "Bestiality",
+					"lèse-majesté" => "Lèse-majesté",
+					"jingoism" => "Jingoism",
+				],
+			],
+			"hint" => "Things in this track which may offend some people",
+		],
 		"comment" => [
 			"type" => "textarea",
 		],
