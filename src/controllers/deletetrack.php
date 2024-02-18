@@ -8,7 +8,7 @@ require_once("../controllers/error.php");
  **/
 function deleteTrack($trackid) {
 	try {
-		$response = fetchFromApi("/v2/tracks/${trackid}", "DELETE");
+		$response = fetchFromApi("/v2/tracks/{$trackid}", "DELETE");
 		header("Location: /?deleted=track", true, 303);
 	} catch (ApiError $error) {
 		displayError(502, "Error deleting track in API.\n\n".$response);

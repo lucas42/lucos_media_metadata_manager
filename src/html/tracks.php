@@ -11,7 +11,7 @@ $trackid = (count($urlparts) > 2) ? $urlparts[2] : null;
 $subpath = (count($urlparts) > 3) ? $urlparts[3] : null;
 
 if (array_key_exists("trackid", $_GET)) {
-	header("Location: /tracks/${_GET["trackid"]}");
+	header("Location: /tracks/{$_GET["trackid"]}");
 } elseif (array_key_exists("random", $_POST)) {
 	pickRandomTrack();
 } elseif (!is_numeric($trackid)) {

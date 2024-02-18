@@ -4,7 +4,7 @@ require_once("../controllers/error.php");
 
 function searchTracks($params, $page) {
 	$basequerystring = http_build_query($params);
-	$path = "/v2/tracks?${basequerystring}&page=${page}";
+	$path = "/v2/tracks?{$basequerystring}&page={$page}";
 	try {
 		$data = fetchFromApi($path);
 		$tracks = summariseTracks($data["tracks"]);

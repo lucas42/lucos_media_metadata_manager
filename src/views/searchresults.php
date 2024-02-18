@@ -31,13 +31,13 @@
 $nextpage = $page + 1;
 $prevpage = $page - 1;
 if ($prevpage > 0) {
-	?><a href="<?=htmlspecialchars("/search?${basequerystring}&page=${prevpage}")?>">&lt;- Prev</a> | <?php
+	?><a href="<?=htmlspecialchars("/search?{$basequerystring}&page={$prevpage}")?>">&lt;- Prev</a> | <?php
 }
 ?>
 Page <?=$page?> out of <?=$totalPages?>
 <?php if ($page < $totalPages) {
 ?>
-	| <a href="<?=htmlspecialchars("/search?${basequerystring}&page=${nextpage}")?>">Next -&gt;</a>
+	| <a href="<?=htmlspecialchars("/search?{$basequerystring}&page={$nextpage}")?>">Next -&gt;</a>
 <?php
 }
 ?>

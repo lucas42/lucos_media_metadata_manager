@@ -46,13 +46,13 @@
 			$nextpage = $page + 1;
 			$prevpage = $page - 1;
 			if ($prevpage > 0) {
-				?><a href="<?=htmlspecialchars("/collections/".urlencode($data["slug"])."?page=${prevpage}")?>">&lt;- Prev</a> | <?php
+				?><a href="<?=htmlspecialchars("/collections/".urlencode($data["slug"])."?page={$prevpage}")?>">&lt;- Prev</a> | <?php
 			}
 			?>
 			Page <?=$page?> out of <?=$totalPages?>
 			<?php if ($page < $totalPages) {
 			?>
-				| <a href="<?=htmlspecialchars("/collections/".urlencode($data["slug"])."?page=${nextpage}")?>">Next -&gt;</a>
+				| <a href="<?=htmlspecialchars("/collections/".urlencode($data["slug"])."?page={$nextpage}")?>">Next -&gt;</a>
 			<?php
 			}
 			?>

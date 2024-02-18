@@ -16,7 +16,7 @@ if (!is_numeric($page) or $page < 1) $page = "1";
 
 if (!$subpath) {
 	if (array_key_exists("slug", $_GET)) {
-		header("Location: /collections/${_GET["slug"]}");
+		header("Location: /collections/{$_GET["slug"]}");
 	} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		updateCollection($slug, $_POST);
 	} elseif ($slug == "new") {

@@ -8,13 +8,13 @@ require_once("../controllers/searchtracks.php");
  */
 function viewCollection($slug, $page) {
 	try {
-		$data = fetchFromApi("/v2/collections/".urlencode($slug)."?page=${page}");
+		$data = fetchFromApi("/v2/collections/".urlencode($slug)."?page={$page}");
 		$tracks = summariseTracks($data["tracks"]);
 		$totalPages = $data["totalPages"];
 		require("../views/collection.php");
 	} catch (ApiError $error) {
 		if ($error->getCode() == 404) {
-			displayError(404, "Collection ${slug} Not Found");
+			displayError(404, "Collection {$slug} Not Found");
 		} else {
 			displayError(502, "Can't fetch collection from API.\n\n".$error->getMessage());
 		}
