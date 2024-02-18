@@ -1,4 +1,5 @@
 <?php
+require_once("../api.php");
 require_once("../controllers/error.php");
 
 
@@ -9,19 +10,10 @@ function deleteCollection($slug) {
 	if (!$slug or $slug == 'new') {
 		displayError(400, "Invalid collection slug $slug to delete");
 	}
-
-	$collectionurl = "https://media-api.l42.eu/v2/collections/".urlencode($slug);
-	$context = stream_context_create([
-		"http" => [
-			"method" => "DELETE",
-			"ignore_errors" => true,
-		],
-	]);
-	
-	$response = file_get_contents($collectionurl, false, $context);
-	if (str_ends_with($http_response_header[0], "204 No Content")) {
+	try {
+		$response = fetchFromApi("/v2/collections/".urlencode($slug), "DELETE");
 		header("Location: /collections/?deleted=collection", true, 303);
-	} else {
+	} catch (ApiError $error) {
 		displayError(502, "Error deleting collection in API.\n\n".$response);
 	}
 }

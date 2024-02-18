@@ -1,5 +1,6 @@
 <?php
 require_once("../formfields.php");
+require_once("../api.php");
 
 /**
  * Updates the metadata of tracks matching the given search paramaters
@@ -8,7 +9,7 @@ require_once("../formfields.php");
 function bulkUpdateTracks($params, $currentpage, $postdata) {
 	$basequerystring = http_build_query($params);
 	$targetPage = !empty($postdata['page']) ? $postdata['page'] : $currentpage;
-	$apiurl = "https://media-api.l42.eu/v2/tracks?{$basequerystring}&page={$targetPage}";
+	$path = "/v2/tracks?{$basequerystring}&page={$targetPage}";
 
 	$api_data = array();
 	if (isset($postdata["collections"])) {
@@ -35,20 +36,13 @@ function bulkUpdateTracks($params, $currentpage, $postdata) {
 	}
 	if (!empty($tags)) $api_data["tags"] = $tags; // Avoid including an empty associative array, as php's json will encode it as an array, not an object
 
-	$headers = ["Content-Type: application/json"];
+	$headers = [];
 	if (!empty($postdata['missing-only'])) {
-		array_push($headers, "If-None-Match: *");
+		$headers[] = "If-None-Match: *";
 	}
-	$context = stream_context_create([
-		"http" => [
-			"method" => "PATCH",
-			"header" => $headers,
-			"content" => json_encode($api_data),
-			"ignore_errors" => true,
-		],
-	]);
-	$response = file_get_contents($apiurl, false, $context);
-	if (!str_ends_with($http_response_header[0], "200 OK")) {
+	try {
+		fetchFromApi($path, "PATCH", $api_data, $headers);
+	} catch (ApiError $error) {
 		throw new Exception("Failed to bulk update tracks in API.\n\n{$error}\n\n{$response}", 502);
 	}
 	header("Location: /search?{$basequerystring}&page={$currentpage}&saved=true", true, 303);

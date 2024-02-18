@@ -1,21 +1,20 @@
 <?php
+require_once("../api.php");
 require_once("../controllers/error.php");
 
 function searchTracks($params, $page) {
 	$basequerystring = http_build_query($params);
-	$apiurl = "https://media-api.l42.eu/v2/tracks?${basequerystring}&page=${page}";
-	$response = @file_get_contents($apiurl);
-	if ($response === false) {
-		$error = error_get_last()["message"];
-		displayError(502, "Can't fetch search results from API.\n\n".$error);
-	} else {
-		$data = json_decode($response, true);
+	$path = "/v2/tracks?${basequerystring}&page=${page}";
+	try {
+		$data = fetchFromApi($path);
 		$tracks = summariseTracks($data["tracks"]);
 		$totalPages = $data["totalPages"];
 
 		require_once("../formfields.php");
 		$form_fields = getFormFields();
 		require("../views/searchresults.php");
+	} catch (ApiError $error) {
+		displayError(502, "Can't fetch search results from API.\n\n".$error->getMessage());
 	}
 }
 

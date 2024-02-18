@@ -1,5 +1,6 @@
 <?php
 require_once("../formfields.php");
+require_once("../api.php");
 require_once("../controllers/error.php");
 
 
@@ -12,22 +13,10 @@ function updateCollection($slug, $postdata) {
 		$slug = $postdata['slug'];
 	}
 
-	$collectionurl = "https://media-api.l42.eu/v2/collections/".urlencode($slug);
-	$context = stream_context_create([
-		"http" => [
-			"method" => "PUT",
-			"header" => "Content-Type: application/json",
-			"content" => json_encode($postdata),
-			"ignore_errors" => true,
-		],
-	]);
-	
-	$response = file_get_contents($collectionurl, false, $context);
-	if (str_ends_with($http_response_header[0], "200 OK")) {
+	try {
+		$collections = fetchFromApi("/v2/collections/".urlencode($slug), "PUT", $postdata);
 		header("Location: /collections/${slug}?saved=true", true, 303);
-	} elseif (str_ends_with($http_response_header[0], "400 Bad Request")) {
-		displayError(400, $response);
-	} else {
-		displayError(502, "Error updating collection in API.\n\n".$response);
+	} catch (ApiError $error) {
+		displayError(502, "Error updating collection in API.\n\n".$error->getMessage());
 	}
 }

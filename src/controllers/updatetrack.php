@@ -1,5 +1,6 @@
 <?php
 require_once("../formfields.php");
+require_once("../api.php");
 
 /**
  * Updates the metadata of a given track id
@@ -22,14 +23,11 @@ function updateTrack($trackid, $postdata) {
 		else $tags[$key] = $postdata[$key];
 	}
 	$api_data["tags"] = $tags;
-	$trackurl = "https://media-api.l42.eu/v2/tracks/${trackid}";
-	$context = stream_context_create([
-		"http" => [
-			"method" => "PATCH",
-			"header" => "Content-Type: application/json",
-			"content" => json_encode($api_data),
-		],
-	]);
-	file_get_contents($trackurl, false, $context);
-	header("Location: /tracks/${trackid}?saved=true", true, 303);
+
+	try {
+		$collections = fetchFromApi("/v2/tracks/${trackid}", "PATCH", $api_data);
+		header("Location: /tracks/${trackid}?saved=true", true, 303);
+	} catch (ApiError $error) {
+		displayError(502, "Error updating track in API.\n\n".$error->getMessage());
+	}
 }

@@ -1,4 +1,5 @@
 <?php
+require_once("../api.php");
 require_once("../controllers/error.php");
 require_once("../controllers/searchtracks.php");
 
@@ -6,20 +7,17 @@ require_once("../controllers/searchtracks.php");
  * Fetches metadata about the given track and displays it in a html form
  */
 function viewCollection($slug, $page) {
-	$apiurl = "https://media-api.l42.eu/v2/collections/".urlencode($slug)."?page=${page}";
-	$response = @file_get_contents($apiurl);
-	if ($response === false) {
-		$error = error_get_last()["message"];
-		if (str_contains($error, "404 Not Found")) {
-			displayError(404, "Collection ${slug} Not Found");
-		} else {
-			displayError(502, "Can't fetch collection from API.\n\n".$error);
-		}
-	} else {
-		$data = json_decode($response, true);
+	try {
+		$data = fetchFromApi("/v2/collections/".urlencode($slug)."?page=${page}");
 		$tracks = summariseTracks($data["tracks"]);
 		$totalPages = $data["totalPages"];
 		require("../views/collection.php");
+	} catch (ApiError $error) {
+		if ($error->getCode() == 404) {
+			displayError(404, "Collection ${slug} Not Found");
+		} else {
+			displayError(502, "Can't fetch collection from API.\n\n".$error->getMessage());
+		}
 	}
 }
 

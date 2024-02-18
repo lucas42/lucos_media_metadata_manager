@@ -179,13 +179,7 @@ function getTagFields() {
  * @return an array of collections, each an associative array containing "slug" and "name" keys
  */
 function getCollections() {
-	$apiurl = "https://media-api.l42.eu/v2/collections/";
-	$response = @file_get_contents($apiurl);
-	if ($response === false) {
-		$error = error_get_last()["message"];
-		throw new Exception("Can't fetch collections from API.\n\n$error", 502);
-	}
-	return json_decode($response, true);
+	return fetchFromApi("/v2/collections");
 }
 
 /**
