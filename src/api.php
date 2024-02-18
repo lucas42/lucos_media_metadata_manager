@@ -17,11 +17,13 @@ function fetchFromApi($path, $method="GET", $data=null, $headers=[]) {
 		"http" => $http_params
 	]);
 	$responseBody = @file_get_contents($url, false, $context);
+	if (empty($http_response_header)) {
+		throw new ApiError(error_get_last()["message"]);
+	}
 	preg_match('/([0-9])\d+/', $http_response_header[0], $status_matches);
   	$responseCode = intval($status_matches[0]);
 	if ($responseCode >= 300) {
-		$errorMessage = error_get_last()["message"];
-		throw new ApiError($errorMessage, $responseCode);
+		throw new ApiError("API returned unexpected status code {$responseCode}", $responseCode);
 	}
 	$response_data = json_decode($responseBody, true);
 	return $response_data;
