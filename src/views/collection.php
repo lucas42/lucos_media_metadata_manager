@@ -29,39 +29,40 @@
 				<input type="submit" value="Save" class="primary-submit" />
 			</form>
 
-			<h2>Tracks</h2>
-			<ul id="results">
-			<?php foreach ($tracks as $track) {
-				?><li>
-					<h3><a href="/tracks/<?=$track["id"]?>"><?=htmlspecialchars($track["title"])?></a></h3>
-					<queue-controls
-						data-trackurl="<?=htmlspecialchars($track["url"])?>"
-						data-trackid="<?=$track["id"]?>" />
-				</li><?php
-			}
-			?>
-			</ul>
-			<div class="pagination">
-			<?php
-			$nextpage = $page + 1;
-			$prevpage = $page - 1;
-			if ($prevpage > 0) {
-				?><a href="<?=htmlspecialchars("/collections/".urlencode($data["slug"])."?page={$prevpage}")?>">&lt;- Prev</a> | <?php
-			}
-			?>
-			Page <?=$page?> out of <?=$totalPages?>
-			<?php if ($page < $totalPages) {
-			?>
-				| <a href="<?=htmlspecialchars("/collections/".urlencode($data["slug"])."?page={$nextpage}")?>">Next -&gt;</a>
-			<?php
-			}
-			?>
-			</div>
-			<collection-controls slug="<?=htmlspecialchars(urlencode($data["slug"]))?>"></collection-controls>
-			<form method="post" action="/collections/<?=htmlspecialchars(urlencode($data["slug"]))?>/delete" data-confirm="Are you sure you want to delete collection <?=htmlspecialchars($data['name'])?>?">
-				<input type="submit" value="Delete Whole Collection" class="standalone danger" />
-			</form>
-
+			<?php if (!empty($data["slug"])) { ?>
+				<h2>Tracks</h2>
+				<ul id="results">
+				<?php foreach ($tracks as $track) {
+					?><li>
+						<h3><a href="/tracks/<?=$track["id"]?>"><?=htmlspecialchars($track["title"])?></a></h3>
+						<queue-controls
+							data-trackurl="<?=htmlspecialchars($track["url"])?>"
+							data-trackid="<?=$track["id"]?>" />
+					</li><?php
+				}
+				?>
+				</ul>
+				<div class="pagination">
+				<?php
+				$nextpage = $page + 1;
+				$prevpage = $page - 1;
+				if ($prevpage > 0) {
+					?><a href="<?=htmlspecialchars("/collections/".urlencode($data["slug"])."?page={$prevpage}")?>">&lt;- Prev</a> | <?php
+				}
+				?>
+				Page <?=$page?> out of <?=$totalPages?>
+				<?php if ($page < $totalPages) {
+				?>
+					| <a href="<?=htmlspecialchars("/collections/".urlencode($data["slug"])."?page={$nextpage}")?>">Next -&gt;</a>
+				<?php
+				}
+				?>
+				</div>
+				<collection-controls slug="<?=htmlspecialchars(urlencode($data["slug"]))?>"></collection-controls>
+				<form method="post" action="/collections/<?=htmlspecialchars(urlencode($data["slug"]))?>/delete" data-confirm="Are you sure you want to delete collection <?=htmlspecialchars($data['name'])?>?">
+					<input type="submit" value="Delete Whole Collection" class="standalone danger" />
+				</form>
+			<?php } ?>
 		</div>
 		<script src="/lucos_navbar.js" type="text/javascript"></script>
 </body>
