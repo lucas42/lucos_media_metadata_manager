@@ -26,14 +26,6 @@ function getTagFields() {
 		"rating" => [
 			"type" => "range",
 		],
-		"format" => [
-			"type" => "select",
-			"values" => [
-				"speech" => "🗣️ Speech",
-				"fx" => "🔊 Sound Effect",
-				"podcast" => "🎙️ Podcast",
-			],
-		],
 		"singalong" => [
 			"type" => "discrete-range",
 			"values" => [
