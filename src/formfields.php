@@ -164,6 +164,7 @@ function getTagFields() {
 					"bestiality" => "Bestiality",
 					"lèse-majesté" => "Lèse-majesté",
 					"jingoism" => "Jingoism",
+					"smut" => "Smut",
 				],
 			],
 			"hint" => "Things in this track which may offend some people",
