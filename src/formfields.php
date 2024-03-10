@@ -137,6 +137,7 @@ function getTagFields() {
 				"charity-auction" => "Charity Auction",
 				"download" => "Download", // For example, free download from the artist's website
 				"7digital" => "7 Digital",
+				"amazon" => "Amazon Music",
 				"radio" => "Recorded from Radio",
 				"live" => "Live recording",
 				"audio-software" => "Produced using audio software", // For example, an original composition created using musescore or audacity
