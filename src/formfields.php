@@ -158,6 +158,8 @@ function getTagFields() {
 					"lèse-majesté" => "Lèse-majesté",
 					"jingoism" => "Jingoism",
 					"smut" => "Smut",
+					"alcohol" => "Alcohol",
+					"drugs" => "Drugs",
 				],
 			],
 			"hint" => "Things in this track which may offend some people",
