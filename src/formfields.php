@@ -152,9 +152,7 @@ function getTagFields() {
 				"" => [
 					"swearing" => "Swearing",
 					"slurs" => "Slurs",
-					"blasphemy" => "Blasphemy",
 					"sacrilege" => "Sacrilege",
-					"threat" => "Threatening Behaviour",
 					"violence" => "Violence",
 					"bestiality" => "Bestiality",
 					"lèse-majesté" => "Lèse-majesté",
