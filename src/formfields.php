@@ -160,6 +160,7 @@ function getTagFields() {
 					"smut" => "Smut",
 					"alcohol" => "Alcohol",
 					"drugs" => "Drugs",
+					"kink" => "Kink",
 				],
 			],
 			"hint" => "Things in this track which may offend some people",
