@@ -143,6 +143,7 @@ function getTagFields() {
 				"audio-software" => "Produced using audio software", // For example, an original composition created using musescore or audacity
 				"ambiguous" => "Ambiguous", // The source of this track isn't entirely clear
 				"game" => "Game Soundtrack", // For example, included in the resources folder of a computer game
+				"newgrounds" => "Newgrounds",
 			],
 			"hint" => "Where this track was sourced from", // Not covering the entire provenance chain, just how it arrived in this collection.
 		],
