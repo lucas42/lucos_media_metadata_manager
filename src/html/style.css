@@ -193,6 +193,13 @@ input[type=range][data-disposition=bad] {
 	height: 102px; /* Found using trial and error, may not apply to other ranges */
 	width: 30px;
 	float: left;
+	/*
+	  Chrome 123 has sporadic behaviour for vertical ranges with ltr direction.
+		So set the direction to rtl (as that has consistent behaviour) and then
+		flip it so it looks like ltr will do in Chrome 124
+	*/
+	direction: rtl;
+	transform: scale(1, -1);
 }
 .labeled-range datalist {
 	display: block;
