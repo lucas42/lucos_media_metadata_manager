@@ -73,6 +73,7 @@ function getTagFields() {
 					"es" => "Spanish",
 					"pt" => "Portuguese",
 					"la" => "Latin",
+					"ro" => "Romanian",
 				],
 				"Germanic Languages" => [
 					"de" => "German",
