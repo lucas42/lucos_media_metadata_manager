@@ -65,6 +65,7 @@ function getTagFields() {
 					"cy" => "Welsh",
 					"gd" => "Scottish Gaelic",
 					"br" => "Breton",
+					"kw" => "Cornish",
 					"owl" => "Old Welsh",
 				],
 				"Romance Languages" => [
