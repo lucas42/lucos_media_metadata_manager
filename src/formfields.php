@@ -127,6 +127,7 @@ function getTagFields() {
 				"Disco" => "Disco",
 				"Bhangra" => "Bhangra",
 				"Bossa Nova" => "Bossa Nova",
+				"Mambo" => "Mambo",
 				"bespoke" => "Track has its own dance",
 			],
 			"hint" => "Style of dance which goes with this track",
