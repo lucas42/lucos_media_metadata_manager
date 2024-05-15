@@ -176,9 +176,6 @@ input[type=submit].loading {
 	0% { background-position:  -100%; }
 	100% { background-position: 100%; }
 }
-select {
-	text-transform: capitalize;
-}
 input[type=range] {
 	accent-color: #000060;
 }
