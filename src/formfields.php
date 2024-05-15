@@ -149,6 +149,7 @@ function getTagFields() {
 				"ambiguous" => "Ambiguous", // The source of this track isn't entirely clear
 				"game" => "Game Soundtrack", // For example, included in the resources folder of a computer game
 				"newgrounds" => "Newgrounds",
+				"itunes" => "iTunes",
 			],
 			"hint" => "Where this track was sourced from", // Not covering the entire provenance chain, just how it arrived in this collection.
 		],
