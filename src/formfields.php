@@ -171,6 +171,7 @@ function getTagFields() {
 					"kink" => "Kink",
 					"arson" => "Arson",
 					"domestic-abuse" => "Domestic Abuse",
+					"colonialism" => "Colonialism",
 				],
 			],
 			"hint" => "Things in this track which may offend some people",
