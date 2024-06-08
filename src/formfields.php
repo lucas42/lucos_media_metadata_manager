@@ -151,6 +151,7 @@ function getTagFields() {
 				"game" => "Game Soundtrack", // For example, included in the resources folder of a computer game
 				"newgrounds" => "Newgrounds",
 				"itunes" => "iTunes",
+				"vinyl" => "Recorded from a vinyl record",
 			],
 			"hint" => "Where this track was sourced from", // Not covering the entire provenance chain, just how it arrived in this collection.
 		],
