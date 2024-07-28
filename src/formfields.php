@@ -84,6 +84,7 @@ function getTagFields() {
 					"is" => "Icelandic",
 					"da" => "Danish",
 					"emen" => "Early Modern English",
+					"vls" => "Flemish",
 				],
 				"Other Languages" => [
 					"ru" => "Russian",
