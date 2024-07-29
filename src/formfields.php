@@ -56,17 +56,17 @@ function getTagFields() {
 		"language" => [
 			"type" => "multigroupselect",
 			"values" => [
-				"Common Languages" => [
+				"Common Languages" => [ // Put the ones I use the most at the top
 					"en" => "English",
 					"ga" => "Irish",
 					"zxx" => "Instrumental / No Language",
 				],
 				"Celtic Languages" => [
-					"cy" => "Welsh",
-					"gd" => "Scottish Gaelic",
-					"br" => "Breton",
-					"kw" => "Cornish",
-					"owl" => "Old Welsh",
+					"gd" => "Scottish Gaelic", // Goidelic
+					"cy" => "Welsh",           // Brythonic
+					"br" => "Breton",          // Brythonic
+					"kw" => "Cornish",         // Brythonic
+					"owl" => "Old Welsh",      // Brythonic
 				],
 				"Romance Languages" => [
 					"fr" => "French",
@@ -77,35 +77,41 @@ function getTagFields() {
 					"ro" => "Romanian",
 				],
 				"Germanic Languages" => [
-					"de" => "German",
-					"nl" => "Dutch",
-					"sco" => "Scots",
-					"sv" => "Swedish",
-					"is" => "Icelandic",
-					"da" => "Danish",
-					"emen" => "Early Modern English",
-					"vls" => "Flemish",
+					"de" => "German",                 // West Germanic
+					"nl" => "Dutch",                  // West Germanic
+					"vls" => "Flemish",               // West Germanic
+					"emen" => "Early Modern English", // West Germanic
+					"sco" => "Scots",                 // West Germanic
+					"sv" => "Swedish",                // North Germanic
+					"is" => "Icelandic",              // North Germanic
+					"da" => "Danish",                 // North Germanic
 				],
-				"Other Languages" => [
-					"ru" => "Russian",
-					"he" => "Hebrew",
-					"pa" => "Punjabi",
-					"chr" => "Cherokee",
-					"mjy" => "Mohican",
-					"cmn" => "Mandarin",
-					"ja" => "Japanese",
+				"Bantu Languaes" => [
 					"sw" => "Swahili",
 					"zu" => "Zulu",
-					"mn" => "Mongolian",
-					"emk" => "Maninka",
-					"ar" => "Arabic",
-					"hi" => "Hindi",
-					"lt" => "Lithuanian",
-					"uk" => "Ukrainian",
 					"nd" => "Northern Ndebele",
-					"art-x-von" => "Hopelandic", // Fictional language created and used by Sigur Rós, also known as Vonlenska
+				],
+				"Balto-Slavic Languages" => [
+					"lt" => "Lithuanian", // Baltic
+					"ru" => "Russian",    // Slavic
+					"uk" => "Ukrainian",  // Slavic
+				],
+				"Other Languages" => [
+					"ar" => "Arabic",    // Semitic language
+					"he" => "Hebrew",    // Semitic language
+					"pa" => "Punjabi",   // Indo-Aryan language
+					"hi" => "Hindi",     // Indo-Aryan language
+					"chr" => "Cherokee", // Iroquoian language
+					"mjy" => "Mohican",  // Algic language
+					"cmn" => "Mandarin", // Sinitic language
+					"ja" => "Japanese",  // Japonic language
+					"mn" => "Mongolian", // Mongolic language
+					"emk" => "Maninka",  // Mande language
+				],
+				"Fictional Languages" => [
+					"art-x-von" => "Hopelandic",  // Fictional language created and used by Sigur Rós, also known as Vonlenska
 					"art-x-simlish" => "Simlish", // Fictional language used in The Sims in-game universe
-					"art-x-navi" => "Na'vi", // Fictional language used in the Avatar franchise, spoken by the Na'vi race
+					"art-x-navi" => "Na'vi",      // Fictional language used in the Avatar franchise, spoken by the Na'vi race
 				],
 			],
 			"hint" => "The language(s) used for lyrics in this track",
