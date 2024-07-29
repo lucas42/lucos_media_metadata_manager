@@ -11,10 +11,12 @@
 	</head>
 	<body>
 		<lucos-navbar bg-colour="#000020"><a href="/" id="lucos_navbar_title">Metadata Manager - track <?=$trackid?></a></lucos-navbar>
-		<div id="content">
+		<div id="content" class="trackpage">
 <form method="post" id="trackform">
-	<input type="submit" value="Save" class="primary-submit" />
-	<h2>Metadata</h2>
+	<header>
+		<input type="submit" value="Save" class="primary-submit" />
+		<h2>Metadata</h2>
+	</header>
 <?php foreach ($form_fields as $key => $field) {
 	if (array_key_exists($key, $data["tags"])) {
 		$value = $data["tags"][$key];
@@ -35,7 +37,7 @@
 <?php
 }
 ?>
-	<input type="submit" value="Save" class="primary-submit" />
+	<footer><input type="submit" value="Save" class="primary-submit" /></footer>
 </form>
 <h2>Additional Details</h2>
 <div id="details">

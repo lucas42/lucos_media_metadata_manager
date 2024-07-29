@@ -11,6 +11,10 @@ body {
 	display: flex;
 	flex-direction: column;
 }
+#content header, #content footer {
+	padding: 0.1px 0; /** This stops floats falling through the bottom of the header **/
+	column-span: all; /** Ensures header and footer span all columns, regardless of page width **/
+}
 .content_container {
 	display: flex;
 	flex-direction: column;
@@ -61,6 +65,14 @@ body {
 	}
 	.content_container #content h2 {
 		margin-top: 0;
+	}
+
+	/** On track page, let content flow into 2 columns (2x425=850) **/
+	#content.trackpage {
+		max-width: 850px;
+	}
+	#content.trackpage > #trackform {
+		column-count: 2;
 	}
 }
 h2 {
