@@ -102,6 +102,7 @@ function getTagFields() {
 					"hi" => "Hindi",
 					"lt" => "Lithuanian",
 					"uk" => "Ukrainian",
+					"nd" => "Northern Ndebele",
 					"art-x-von" => "Hopelandic", // Fictional language created and used by Sigur Rós, also known as Vonlenska
 					"art-x-simlish" => "Simlish", // Fictional language used in The Sims in-game universe
 					"art-x-navi" => "Na'vi", // Fictional language used in the Avatar franchise, spoken by the Na'vi race
