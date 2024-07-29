@@ -74,6 +74,9 @@ body {
 	#content.trackpage > #trackform {
 		column-count: 2;
 	}
+	.trackpage #details .value {
+		width: 710px;
+	}
 }
 h2 {
 	color: #000020;
