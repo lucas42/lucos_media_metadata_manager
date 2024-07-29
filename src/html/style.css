@@ -116,6 +116,12 @@ a:hover, a:active {
 	vertical-align: middle;
 	font-size: 19px;
 }
+.form-input > textarea {
+	height: 5em;
+}
+.form-input > select[multiple] {
+	height: 10em;
+}
 .form-field .form-input .preview {
 	margin-left: 0.5em;
 	width: 1.5em;
