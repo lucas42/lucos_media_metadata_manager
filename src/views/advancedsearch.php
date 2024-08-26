@@ -15,9 +15,9 @@
 			<small>Attempts to find term across any tags on the track, including substrings.  Case insensitive.</small>
 			<form method="get" action="/search">
 				<div class="form-field">
-					<label for="trackid" class="key-label medium-key">Search Term</label>
+					<label for="basic-input" class="key-label medium-key">Search Term</label>
 					<span class="form-input">
-						<input type="text" name="q" autofocus/>
+						<input type="text" name="q" id="basic-input" autofocus/>
 					</span>
 					<input type="submit" value="Search" />
 				</div>
