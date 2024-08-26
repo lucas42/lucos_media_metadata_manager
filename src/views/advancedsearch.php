@@ -17,7 +17,7 @@
 				<div class="form-field">
 					<label for="trackid" class="key-label medium-key">Search Term</label>
 					<span class="form-input">
-						<input type="text" name="q"/>
+						<input type="text" name="q" autofocus/>
 					</span>
 					<input type="submit" value="Search" />
 				</div>
