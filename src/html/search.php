@@ -20,7 +20,6 @@ if (array_key_exists('q', $_GET)) {
 		$key = str_replace('p_', 'p.', $key);
 		if (!str_starts_with($key, 'p.')) continue;
 		if (str_ends_with($key, '_null')) continue;
-		$key = str_replace('_', ' ', $key);
 		if (is_array($val)) $val = implode(",", $val);
 		if (is_null($val) or $val === "") continue;
 
