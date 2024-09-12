@@ -82,6 +82,7 @@ function getTagFields() {
 					"vls" => "Flemish",               // West Germanic
 					"emen" => "Early Modern English", // West Germanic
 					"sco" => "Scots",                 // West Germanic
+					"yi" => "Yiddish",                // West Germanic
 					"sv" => "Swedish",                // North Germanic
 					"is" => "Icelandic",              // North Germanic
 					"da" => "Danish",                 // North Germanic
