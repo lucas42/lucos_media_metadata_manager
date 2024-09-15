@@ -38,12 +38,9 @@ class CollectionControls extends HTMLElement {
 		component.label = document.createTextNode("⏹ Clear Collection");
 		actionButton.appendChild(component.label);
 		actionButton.addEventListener("click", async event => {
-			const params = new URLSearchParams({
-				slug: component.getAttribute("slug") || "",
-			});
-			const reqURL = "https://ceol.l42.eu/collection?"+params.toString();
+			const reqURL = "https://ceol.l42.eu/v3/current-collection";
 			actionButton.dataset.disabled = true;
-			await fetch(reqURL, {method: "POST"});
+			await fetch(reqURL, {method: "PUT", body: component.getAttribute("slug")});
 			delete actionButton.dataset.disabled;
 			actionButton.dataset.success = true;
 			actionButton.offsetHeight; // Force a repaint for the transition effect to take place
@@ -54,7 +51,7 @@ class CollectionControls extends HTMLElement {
 	attributeChangedCallback(name, oldValue, newValue) {
 		switch (name) {
 			case "slug":
-				this.label.textContent = newValue ? "▶ Play Collection" : "⏹ Clear Collection";
+				this.label.textContent = (newValue === "all") ? "⏹ Clear Collection" : "▶ Play Collection";
 				break;
 		}
 	}

@@ -42,13 +42,11 @@ class QueueControls extends HTMLElement {
 			actionButton.appendChild(document.createTextNode(label));
 			actionButton.addEventListener("click", async event => {
 				const params = new URLSearchParams({
-					url: component.dataset.trackurl,
-					trackid: component.dataset.trackid,
-					pos: position,
-				})
-				const reqURL = "https://ceol.l42.eu/queue?"+params.toString();
+					position,
+				});
+				const reqURL = "https://ceol.l42.eu/v3/queue-track?"+params.toString();
 				actionButton.dataset.disabled = true;
-				await fetch(reqURL, {method: "POST"});
+				await fetch(reqURL, {method: "POST", body: component.dataset.trackurl});
 				delete actionButton.dataset.disabled;
 				actionButton.dataset.success = true;
 				actionButton.offsetHeight; // Force a repaint for the transition effect to take place

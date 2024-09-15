@@ -26,7 +26,7 @@
 			?>
 			</ul>
 			<h2>Non-Collection</h2>
-				<collection-controls></collection-controls>
+				<collection-controls slug="all"></collection-controls>
 		</div>
 		<script src="/lucos_navbar.js" type="text/javascript"></script>
 </body>
