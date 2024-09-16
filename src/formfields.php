@@ -189,6 +189,8 @@ function getTagFields() {
 					"sex-work" => "Sex Work",
 					"animal-cruelty" => "Animal Cruelty",
 					"fascism" => "Fascism",
+					"racism" => "Racism",
+					"religious-discrimination" => "Religious Discrimination (Including Antisemitism & Islamophobia)",
 				],
 			],
 			"hint" => "Things in this track which may offend some people",
