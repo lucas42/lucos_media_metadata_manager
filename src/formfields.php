@@ -187,6 +187,7 @@ function getTagFields() {
 					"colonialism" => "Colonialism",
 					"sexual-assault" => "Sexual Assault",
 					"sex-work" => "Sex Work",
+					"animal-cruelty" => "Animal Cruelty",
 				],
 			],
 			"hint" => "Things in this track which may offend some people",
