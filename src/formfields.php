@@ -175,7 +175,6 @@ function getTagFields() {
 					"slurs" => "Slurs",
 					"sacrilege" => "Sacrilege",
 					"violence" => "Violence",
-					"bestiality" => "Bestiality",
 					"lèse-majesté" => "Lèse-majesté",
 					"jingoism" => "Jingoism",
 					"smut" => "Smut",
