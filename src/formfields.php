@@ -188,6 +188,7 @@ function getTagFields() {
 					"sexual-assault" => "Sexual Assault",
 					"sex-work" => "Sex Work",
 					"animal-cruelty" => "Animal Cruelty",
+					"fascism" => "Fascism",
 				],
 			],
 			"hint" => "Things in this track which may offend some people",
