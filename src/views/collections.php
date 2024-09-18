@@ -8,6 +8,10 @@
 		<meta name="mobile-web-app-capable" content="yes">
 		<script src="/deletion-success.js"></script>
 		<script src="/collection-controls.js"></script>
+		<script type="text/javascript">
+			const mediaManager = "<?=htmlspecialchars(getenv('MEDIA_MANAGER_URL'))?>";
+			const mediaManager_apiKey = "<?=htmlspecialchars(getenv('KEY_LUCOS_MEDIA_MANAGER'))?>";
+		</script>
 	</head>
 	<body>
 		<lucos-navbar bg-colour="#000020"><a href="/" id="lucos_navbar_title">Metadata Manager - Collections</a></lucos-navbar>

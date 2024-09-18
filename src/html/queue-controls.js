@@ -44,9 +44,15 @@ class QueueControls extends HTMLElement {
 				const params = new URLSearchParams({
 					position,
 				});
-				const reqURL = "https://ceol.l42.eu/v3/queue-track?"+params.toString();
+				const reqURL = mediaManager+"v3/queue-track?"+params.toString();
 				actionButton.dataset.disabled = true;
-				await fetch(reqURL, {method: "POST", body: component.dataset.trackurl});
+				await fetch(reqURL, {
+					method: "POST",
+					body: component.dataset.trackurl,
+					headers:{
+						Authorization: "Key "+mediaManager_apiKey,
+					}
+				});
 				delete actionButton.dataset.disabled;
 				actionButton.dataset.success = true;
 				actionButton.offsetHeight; // Force a repaint for the transition effect to take place

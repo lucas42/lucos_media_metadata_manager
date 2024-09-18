@@ -38,9 +38,15 @@ class CollectionControls extends HTMLElement {
 		component.label = document.createTextNode("⏹ Clear Collection");
 		actionButton.appendChild(component.label);
 		actionButton.addEventListener("click", async event => {
-			const reqURL = "https://ceol.l42.eu/v3/current-collection";
+			const reqURL = mediaManager+"v3/current-collection";
 			actionButton.dataset.disabled = true;
-			await fetch(reqURL, {method: "PUT", body: component.getAttribute("slug")});
+			await fetch(reqURL, {
+				method: "PUT",
+				body: component.getAttribute("slug"),
+				headers:{
+					Authorization: "Key "+mediaManager_apiKey,
+				},
+			});
 			delete actionButton.dataset.disabled;
 			actionButton.dataset.success = true;
 			actionButton.offsetHeight; // Force a repaint for the transition effect to take place
