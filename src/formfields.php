@@ -96,6 +96,7 @@ function getTagFields() {
 					"lt" => "Lithuanian", // Baltic
 					"ru" => "Russian",    // Slavic
 					"uk" => "Ukrainian",  // Slavic
+					"bg" => "Bulgarian",  // Slavic
 				],
 				"Other Languages" => [
 					"ar" => "Arabic",    // Semitic language
@@ -108,6 +109,7 @@ function getTagFields() {
 					"ja" => "Japanese",  // Japonic language
 					"mn" => "Mongolian", // Mongolic language
 					"emk" => "Maninka",  // Mande language
+					"el" => "Greek",     // Hellenic language
 				],
 				"Fictional Languages" => [
 					"art-x-von" => "Hopelandic",  // Fictional language created and used by Sigur Rós, also known as Vonlenska
