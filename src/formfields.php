@@ -193,6 +193,7 @@ function getTagFields() {
 					"fascism" => "Fascism",
 					"racism" => "Racism",
 					"religious-discrimination" => "Religious Discrimination (Including Antisemitism & Islamophobia)",
+					"self-harm" => "Self Harm (including suicide)",
 				],
 			],
 			"hint" => "Things in this track which may offend some people",
