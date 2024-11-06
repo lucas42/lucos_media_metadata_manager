@@ -97,6 +97,7 @@ function getTagFields() {
 					"ru" => "Russian",    // Slavic
 					"uk" => "Ukrainian",  // Slavic
 					"bg" => "Bulgarian",  // Slavic
+					"pl" => "Polish",     // Slavic
 				],
 				"Other Languages" => [
 					"ar" => "Arabic",    // Semitic language
