@@ -105,6 +105,7 @@ function getTagFields() {
 					"pa" => "Punjabi",   // Indo-Aryan language
 					"hi" => "Hindi",     // Indo-Aryan language
 					"chr" => "Cherokee", // Iroquoian language
+					"wdt" => "Wendat",   // Iroquoian language
 					"mjy" => "Mohican",  // Algic language
 					"cmn" => "Mandarin", // Sinitic language
 					"ja" => "Japanese",  // Japonic language
