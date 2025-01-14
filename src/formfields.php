@@ -193,9 +193,15 @@ function getTagFields() {
 					"sex-work" => "Sex Work",
 					"animal-cruelty" => "Animal Cruelty",
 					"fascism" => "Fascism",
-					"racism" => "Racism",
-					"religious-discrimination" => "Religious Discrimination (Including Antisemitism & Islamophobia)",
 					"self-harm" => "Self Harm (including suicide)",
+
+					/* Types of Discrimination */
+					"racism" => "Racism",
+					"religious-discrimination" => "Religious Discrimination", // Includes Antisemitism, Islamophobia and others
+					"sexism" => "Sexism",
+					"ableism" => "Ableism", // Includes physical and mental
+					"homophobia" => "Homophobia",
+					"transphobia" => "Transpohbia",
 				],
 			],
 			"hint" => "Things in this track which may offend some people",
