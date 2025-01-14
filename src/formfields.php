@@ -201,7 +201,7 @@ function getTagFields() {
 					"sexism" => "Sexism",
 					"ableism" => "Ableism", // Includes physical and mental
 					"homophobia" => "Homophobia",
-					"transphobia" => "Transpohbia",
+					"transphobia" => "Transphobia",
 				],
 			],
 			"hint" => "Things in this track which may offend some people",
