@@ -171,6 +171,17 @@ function getTagFields() {
 			],
 			"hint" => "Where this track was sourced from", // Not covering the entire provenance chain, just how it arrived in this collection.
 		],
+		"availability" => [
+			"type" => "discrete-range",
+			"values" => [
+				0 => "I have the canoncial copy", // For example, I've recorded myself playing
+				1 => "Likely can't find elsewhere", // For example, a song which was never published, by a band which is now defunct
+				2 => "Would need research to find", // For example, had been published on vinyl, but no longer published and not available digitally
+				3 => "Could find after nontrivial searching", // For example, available on a single digital music platform
+				4 => "Ubiquitous", // For example, available in multiple compilation albums
+			],
+			"hint" => "How easy it would be to replace this track if something happened to my collection",
+		],
 		"offence" => [
 			"type" => "multigroupselect",
 			"values" => [

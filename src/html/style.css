@@ -105,6 +105,7 @@ a:hover, a:active {
 	text-transform: capitalize;
 	white-space: nowrap;
 	margin-right: 5px;
+	flex-shrink: 0;
 }
 .form-field .key-label[title] {
 	cursor: help;
@@ -122,14 +123,17 @@ a:hover, a:active {
 	font-size: 8px;
 }
 .form-field .form-input {
-	width: 310px;
+	flex-basis: 310px;
+	flex-grow: 1;
 	display: flex;
 	margin-right: 4px;
+	min-width: 0;
 }
 .form-field .form-input > input, .form-field .form-input > select, .form-field .form-input > textarea {
-	width: 100%;
+	flex-basis: 100%;
 	vertical-align: middle;
 	font-size: 19px;
+	min-width: 0;
 }
 .form-input > textarea {
 	height: 5em;
@@ -146,7 +150,6 @@ a:hover, a:active {
 	font-size: small;
 	color: #999;
 	margin-left: 10px;
-	width: 60px;
 	display: inline-block;
 	white-space: nowrap;
 }
@@ -206,9 +209,12 @@ input[type=range][data-disposition=good] {
 input[type=range][data-disposition=bad] {
 	accent-color: #990000;
 }
+.labeled-range {
+	min-width: 0;
+	flex-grow: 1;
+}
 .labeled-range input[type=range] {
 	writing-mode: vertical-lr;
-	height: 102px; /* Found using trial and error, may not apply to other ranges */
 	width: 30px;
 	float: left;
 	/*
@@ -218,6 +224,23 @@ input[type=range][data-disposition=bad] {
 	*/
 	direction: rtl;
 	transform: scale(1, -1);
+}
+/* The heights of each range size.
+  Found using trial and error. */
+.labeled-range input[type="range"][min="0"][max="1"][step="1"] {
+	height: 32px;
+}
+.labeled-range input[type="range"][min="0"][max="2"][step="1"] {
+	height: 50px;
+}
+.labeled-range input[type="range"][min="0"][max="3"][step="1"] {
+	height: 67px;
+}
+.labeled-range input[type="range"][min="0"][max="4"][step="1"] {
+	height: 85px;
+}
+.labeled-range input[type="range"][min="0"][max="5"][step="1"] {
+	height: 102px;
 }
 .labeled-range datalist {
 	display: block;
