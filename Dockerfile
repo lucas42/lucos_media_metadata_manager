@@ -1,4 +1,4 @@
-FROM lucas42/lucos_navbar:latest as navbar
+FROM lucas42/lucos_navbar:latest AS navbar
 FROM php:8-apache
 
 WORKDIR /srv/metadata_manager
