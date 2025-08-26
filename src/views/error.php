@@ -9,7 +9,8 @@
 		<script src="/form-ui.js"></script>
 	</head>
 	<body>
-		<lucos-navbar bg-colour="#000020"><a href="/" id="lucos_navbar_title">Metadata Manager</a></lucos-navbar>
+		<lucos-navbar bg-colour="#000020">Metadata Manager</lucos-navbar>
+		<a href="/" class="mock-button nav-home">&lt;- Home </a>
 		<div id="content">
 			<h1>An error occured</h1>
 			<pre style="white-space: break-spaces;"><?=htmlspecialchars($errorMessage)?></pre>

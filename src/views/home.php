@@ -10,7 +10,7 @@
 		<script src="/deletion-success.js"></script>
 	</head>
 	<body>
-		<lucos-navbar bg-colour="#000020"><a href="/" id="lucos_navbar_title">Metadata Manager</a></lucos-navbar>
+		<lucos-navbar bg-colour="#000020">Metadata Manager</lucos-navbar>
 		<div id="content">
 			<h2>Tracks</h2>
 			<form method="get" action="/search">

@@ -15,9 +15,9 @@
 		</script>
 	</head>
 	<body>
-		<lucos-navbar bg-colour="#000020"><a href="/" id="lucos_navbar_title">Metadata Manager - <?=htmlspecialchars($data['name'])?> Collection</a></lucos-navbar>
+		<lucos-navbar bg-colour="#000020">Metadata Manager - <?=htmlspecialchars($data['name'])?> Collection</lucos-navbar>
+		<a href="/collections" class="mock-button nav-home">&lt;- All Collections </a>
 		<div id="content">
-			<a href="/collections" class="standalone">&lt;— View All Collections</a>
 			<h2>Collection Metadata</h2>
 			<form method="post" id="collectionform">
 				<div class="form-field">

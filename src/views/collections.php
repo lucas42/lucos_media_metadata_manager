@@ -14,7 +14,8 @@
 		</script>
 	</head>
 	<body>
-		<lucos-navbar bg-colour="#000020"><a href="/" id="lucos_navbar_title">Metadata Manager - Collections</a></lucos-navbar>
+		<lucos-navbar bg-colour="#000020">Metadata Manager - Collections</lucos-navbar>
+		<a href="/" class="mock-button nav-home">&lt;- Home </a>
 		<div id="content">
 			<form method="get" action="/collections/new">
 				<input type="submit" value="Create New Collection" class="standalone" />

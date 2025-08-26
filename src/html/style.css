@@ -88,6 +88,11 @@ a {
 a:hover, a:active {
 	text-decoration: underline;
 }
+.nav-home {
+	position: absolute;
+	left: 5px;
+	top: 35px;
+}
 #trackform {
 	margin-bottom: 5em;
 }
@@ -159,7 +164,7 @@ a:hover, a:active {
 .form-field .isnull :checked + label, .form-field .blank :checked + label {
 	color: #000;
 }
-input[type=submit] {
+input[type=submit], .mock-button {
 	background-color: #000060;
 	color: white;
 	border-radius: 8px;
@@ -167,11 +172,13 @@ input[type=submit] {
 	border: outset;
 	transition: background-color 10s ease-out;
 	height: fit-content;
+	display: inline-block;
+	font-size: 13px;
 }
 input[type=submit].danger {
 	background-color: #900000;
 }
-input[type=submit]:active{
+input[type=submit]:active, .mock-button:active {
 	border: inset;
 }
 input[type=submit].primary-submit {
@@ -195,6 +202,9 @@ input[type=submit].loading {
 	background: linear-gradient(-55deg, #555 0%, #555 20%, #888 40%, #7e8888 55%, #555 80%);
 	background-size: 200%;
 	text-shadow: 1px 1px #555;
+}
+a.mock-button:hover, a.mock-button:active {
+	text-decoration: none;
 }
 @keyframes backgroundScroll {
 	0% { background-position:  -100%; }
