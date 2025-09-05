@@ -112,6 +112,7 @@ function getTagFields() {
 					"mn" => "Mongolian", // Mongolic language
 					"emk" => "Maninka",  // Mande language
 					"el" => "Greek",     // Hellenic language
+					"lkt" => "Lakota",   // Siouan lanuage
 				],
 				"Fictional Languages" => [
 					"art-x-von" => "Hopelandic",  // Fictional language created and used by Sigur Rós, also known as Vonlenska
