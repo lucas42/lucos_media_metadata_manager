@@ -4,6 +4,7 @@
 		<title>Lucos Media Metadata Manager - Collections</title>
 		<link href="/style.css" rel="stylesheet">
 		<link rel="icon" href="/icon" />
+		<link rel="manifest" href="/manifest.json" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="mobile-web-app-capable" content="yes">
 		<script src="/deletion-success.js"></script>

@@ -1,0 +1,23 @@
+{
+	"name": "lucOS Media Metadata Manager",
+	"short_name": "Media Metadata Manager",
+	"start_url": "/",
+	"scope": "/",
+	"display": "standalone",
+	"theme_color": "#000020",
+	"background_color": "#ddeeff",
+	"icons":[
+		{
+			"src": "/icon",
+			"sizes": "200x255",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "/maskable_icon.png",
+			"sizes": "392x392",
+			"type": "image/png",
+			"purpose": "maskable"
+		}
+	]
+}
