@@ -7,8 +7,6 @@
 		<link rel="manifest" href="/manifest.json" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="mobile-web-app-capable" content="yes">
-		<script src="/deletion-success.js"></script>
-		<script src="/collection-controls.js"></script>
 		<script type="text/javascript">
 			const mediaManager = "<?=htmlspecialchars(getenv('MEDIA_MANAGER_URL'))?>";
 			const mediaManager_apiKey = "<?=htmlspecialchars(getenv('KEY_LUCOS_MEDIA_MANAGER'))?>";
@@ -34,6 +32,6 @@
 			<h2>Non-Collection</h2>
 				<collection-controls slug="all"></collection-controls>
 		</div>
-		<script src="/lucos_navbar.js" type="text/javascript"></script>
+		<script src="/script.js" type="text/javascript"></script>
 </body>
 </html>

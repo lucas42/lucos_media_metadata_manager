@@ -1,0 +1,11 @@
+{
+  "name": "lucos_media_metadata_manager",
+  "type": "module",
+  "scripts": {
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "lucos_navbar": "^2.0.12",
+    "webpack-cli": "^6.0.1"
+  }
+}

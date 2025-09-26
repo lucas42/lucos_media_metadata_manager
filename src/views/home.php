@@ -7,8 +7,6 @@
 		<link rel="manifest" href="/manifest.json" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="mobile-web-app-capable" content="yes">
-		<script src="/form-ui.js"></script>
-		<script src="/deletion-success.js"></script>
 	</head>
 	<body>
 		<lucos-navbar bg-colour="#000020">Metadata Manager</lucos-navbar>
@@ -51,6 +49,6 @@
 				<input type="submit" value="List All Collections" class="standalone" />
 			</form>
 		</div>
-		<script src="/lucos_navbar.js" type="text/javascript"></script>
+		<script src="/script.js" type="text/javascript"></script>
 	</body>
 </html>
