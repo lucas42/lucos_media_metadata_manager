@@ -221,6 +221,14 @@ function getTagFields() {
 		"comment" => [
 			"type" => "textarea",
 		],
+		"about" => [
+			"type" => "search",
+			"beta" => true,
+		],
+		"mentions" => [
+			"type" => "search",
+			"beta" => true,
+		],
 	];
 }
 /**

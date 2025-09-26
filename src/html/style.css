@@ -127,6 +127,13 @@ a:hover, a:active {
 .form-field .key-label.long-key{
 	font-size: 8px;
 }
+.form-field .key-label.beta:after {
+	content: "Beta";
+	font-size: 0.5em;
+	vertical-align: top;
+	color: #fffe00;
+	text-shadow: 0 0 8px #000000;
+}
 .form-field .form-input {
 	flex-basis: 310px;
 	flex-grow: 1;
@@ -134,7 +141,7 @@ a:hover, a:active {
 	margin-right: 4px;
 	min-width: 0;
 }
-.form-field .form-input > input, .form-field .form-input > select, .form-field .form-input > textarea {
+.form-field .form-input > input, .form-field .form-input > select, .form-field .form-input > textarea, .form-field .form-input > .ts-wrapper {
 	flex-basis: 100%;
 	vertical-align: middle;
 	font-size: 19px;

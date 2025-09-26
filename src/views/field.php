@@ -14,6 +14,9 @@
 	} elseif (mb_strlen($key) > 9) {
 		$class .= " medium-key";
 	}
+	if (!empty($field["beta"])) {
+		$class .= " beta";
+	}
 ?>
 		<label
 			for="<?=htmlspecialchars($key)?>"
@@ -174,6 +177,26 @@
 				<textarea
 					id="<?=htmlspecialchars($key)?>"
 					name="<?=htmlspecialchars($key)?>"><?=htmlspecialchars($value)?></textarea>
+				<?php
+				break;
+			case "search":
+				$values = explode(",", $value)
+				?>
+				<select
+					is="lucos-search"
+					id="<?=htmlspecialchars($key)?>"
+					name="<?=htmlspecialchars($key)?>[]"
+					api-key="<?=htmlspecialchars(getenv('KEY_LUCOS_ARACHNE'))?>"
+					multiple
+					>
+					<?php
+					foreach ($values as $val) {
+					?>
+						<option value="<?=htmlspecialchars($val)?>" selected>
+							<?=htmlspecialchars($val)?>
+						</option><?php
+					}?>
+				</select>
 				<?php
 				break;
 			default:

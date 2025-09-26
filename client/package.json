@@ -6,6 +6,7 @@
   },
   "devDependencies": {
     "lucos_navbar": "^2.0.12",
+    "lucos_search_component": "^0.0.5",
     "webpack-cli": "^6.0.1"
   }
 }
