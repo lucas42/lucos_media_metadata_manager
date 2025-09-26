@@ -186,7 +186,7 @@
 					is="lucos-search"
 					id="<?=htmlspecialchars($key)?>"
 					name="<?=htmlspecialchars($key)?>[]"
-					api-key="<?=htmlspecialchars(getenv('KEY_LUCOS_ARACHNE'))?>"
+					data-api-key="<?=htmlspecialchars(getenv('KEY_LUCOS_ARACHNE'))?>"
 					multiple
 					>
 					<?php
