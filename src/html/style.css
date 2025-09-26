@@ -348,3 +348,20 @@ small {
 	height: 0;
 	transition: height 2s 5s;
 }
+
+/**
+ * Tom-select specifies a line-height, but that doesn't impact empty options, which look short in comparison
+ * Set the min-height of the line to match that line-height
+ */
+.ts-dropdown .option {
+	min-height: 18px;
+}
+
+.form-field .ts-wrapper.multi .ts-control [data-value] {
+	background-image: linear-gradient(to bottom, #ffffff63, #24232347);
+	background-color: #000060;
+	border-color: #000020;
+}
+.form-field .ts-wrapper.multi .ts-control [data-value] .remove {
+	border-left-color: #000020;
+}

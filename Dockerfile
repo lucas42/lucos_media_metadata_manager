@@ -18,7 +18,7 @@ RUN echo "ServerName localhost\nServerAdmin webmaster@localhost" >> /etc/apache2
 COPY vhost.conf /etc/apache2/sites-available/000-default.conf
 
 COPY src .
-COPY --from=js-build /srv/client/dist/script.js html/
+COPY --from=js-build /srv/client/dist/script.js* html/
 
 ENV PORT 80
 EXPOSE $PORT

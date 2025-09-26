@@ -1,3 +1,6 @@
+import TomSelect from 'tom-select';
+import tomSelectStylesheet from 'tom-select/dist/css/tom-select.default.css';
+
 /**
  * Range elements have a separate toggle to indicate a null value
  * This gets sent to the server by disabling the range input and enabling a hidden input of the same name
@@ -162,5 +165,23 @@ window.addEventListener('DOMContentLoaded', loadedEvent => {
 				submitEvent.preventDefault();
 			}
 		});
+	});
+});
+
+/**
+ * Use tom-select for nicer UX on select fields
+ */
+window.addEventListener('DOMContentLoaded', event => {
+	document.querySelectorAll(".form-field select:not([is])").forEach(select => {
+		const config = {
+			plugins: {},
+			onItemAdd: function() { // Workaround until https://github.com/orchidjs/tom-select/issues/854 is merged/released
+				this.setTextboxValue('');
+				this.refreshOptions();
+			},
+		};
+		if (select.hasAttribute("multiple")) config.plugins.remove_button = { title:'Remove this item' }
+		else config.allowEmptyOption = true
+		new TomSelect(select, config);
 	});
 });
