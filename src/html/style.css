@@ -357,11 +357,34 @@ small {
 	min-height: 18px;
 }
 
-.form-field .ts-wrapper.multi .ts-control [data-value] {
-	background-image: linear-gradient(to bottom, #ffffff63, #24232347);
-	background-color: #000060;
-	border-color: #000020;
+/* Override the tom-select colour settings which ones which are easily configurable for each field */
+.ts-wrapper.multi.select-field .ts-control [data-value] {
+	background-image: linear-gradient(to bottom, #ffffff63, #24232347) !important;
+	background-color: var(--select-field-background) !important;
+	border-color: var(--select-field-border) !important;
+	color: var(--select-field-text) !important;
 }
-.form-field .ts-wrapper.multi .ts-control [data-value] .remove {
-	border-left-color: #000020;
+.ts-wrapper.multi.select-field .ts-control [data-value] .remove {
+	border-left-color: var(--select-field-border) !important;
+}
+/* Set some default colours */
+.select-field {
+	--select-field-background: #000060;
+	--select-field-border: #000020;
+	--select-field-text: #ffffff;
+}
+.select-field-collections {
+	--select-field-background: #ffffff;
+	--select-field-border: #000000;
+	--select-field-text: #000000;
+}
+.select-field-language {
+	--select-field-background: #8affe7;
+	--select-field-border: #068900;
+	--select-field-text: #000000;
+}
+.select-field-offence {
+	--select-field-background: #010102;
+	--select-field-border: #000020;
+	--select-field-text: #ffffff;
 }

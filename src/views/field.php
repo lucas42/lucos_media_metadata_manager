@@ -114,7 +114,11 @@
 				break;
 			case "select":
 				?> 
-				<select id="<?=htmlspecialchars($key)?>" name="<?=htmlspecialchars($key)?>">
+				<select
+					id="<?=htmlspecialchars($key)?>"
+					name="<?=htmlspecialchars($key)?>"
+					class="select-field select-field-<?=htmlspecialchars($key)?>"
+					>
 						<option></option><?php 
 					foreach ($field["values"] as $option => $label) {
 					?> 
@@ -130,6 +134,7 @@
 				<select
 					id="<?=htmlspecialchars($key)?>"
 					name="<?=htmlspecialchars($key)?>[]"
+					class="select-field select-field-<?=htmlspecialchars($key)?>"
 					multiple
 					>
 					<?php
@@ -147,6 +152,7 @@
 				<select
 					id="<?=htmlspecialchars($key)?>"
 					name="<?=htmlspecialchars($key)?>[]"
+					class="select-field select-field-<?=htmlspecialchars($key)?>"
 					multiple
 					>
 					<?php
