@@ -187,6 +187,7 @@
 					id="<?=htmlspecialchars($key)?>"
 					name="<?=htmlspecialchars($key)?>[]"
 					data-api-key="<?=htmlspecialchars(getenv('KEY_LUCOS_ARACHNE'))?>"
+					data-exclude_types="Track"
 					multiple
 					>
 					<?php
