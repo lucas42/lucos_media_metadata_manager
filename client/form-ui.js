@@ -174,7 +174,9 @@ window.addEventListener('DOMContentLoaded', loadedEvent => {
 window.addEventListener('DOMContentLoaded', event => {
 	document.querySelectorAll(".form-field select:not([is])").forEach(select => {
 		const config = {
-			plugins: {},
+			plugins: {
+				drag_drop: {},
+			},
 			onItemAdd: function() { // Workaround until https://github.com/orchidjs/tom-select/issues/854 is merged/released
 				this.setTextboxValue('');
 				this.refreshOptions();
