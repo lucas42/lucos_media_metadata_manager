@@ -357,6 +357,12 @@ small {
 	min-height: 18px;
 }
 
+/* Ensure dropdowns don't end up in a different column to their field */
+.ts-dropdown-content {
+	position: absolute;
+	width: 100%;
+	background: #fff;
+}
 /* Override the tom-select colour settings which ones which are easily configurable for each field */
 .ts-wrapper.multi.select-field .ts-control [data-value] {
 	background-image: linear-gradient(to bottom, #ffffff63, #24232347) !important;
