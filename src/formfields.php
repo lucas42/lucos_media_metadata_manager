@@ -19,9 +19,11 @@ function getTagFields() {
 		],
 		"composer" => [
 			"type" => "text",
+			"delimiter" => ",",
 		],
 		"producer" => [
 			"type" => "text",
+			"delimiter" => ",",
 		],
 		"rating" => [
 			"type" => "range",

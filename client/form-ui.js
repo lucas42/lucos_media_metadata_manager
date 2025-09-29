@@ -187,3 +187,24 @@ window.addEventListener('DOMContentLoaded', event => {
 		new TomSelect(select, config);
 	});
 });
+
+/**
+ * Use tom-select on text inputs with delimiter attribute
+ */
+window.addEventListener('DOMContentLoaded', event => {
+	document.querySelectorAll(".form-field input[data-delimiter]").forEach(select => {
+		const config = {
+			plugins: {
+				drag_drop: {},
+				remove_button: { title:'Remove this item' },
+			},
+			delimiter: select.dataset.delimiter,
+			onItemAdd: function() { // Workaround until https://github.com/orchidjs/tom-select/issues/854 is merged/released
+				this.setTextboxValue('');
+				this.refreshOptions();
+			},
+			create: true,
+		};
+		new TomSelect(select, config);
+	});
+});

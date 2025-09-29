@@ -36,6 +36,8 @@
 					id="<?=htmlspecialchars($key)?>"
 					name="<?=htmlspecialchars($key)?>"
 					value="<?=htmlspecialchars($value)?>"
+					class="input-field input-field-<?=htmlspecialchars($key)?>"
+					<?=empty($field["delimiter"]) ? "" : "data-delimiter=\"{$field["delimiter"]}\""?>
 					<?=empty($disabled) ? "" : "disabled"?> />
 				<?php
 				break;

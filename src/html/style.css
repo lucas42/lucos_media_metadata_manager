@@ -364,17 +364,17 @@ small {
 	background: #fff;
 }
 /* Override the tom-select colour settings which ones which are easily configurable for each field */
-.ts-wrapper.multi.select-field .ts-control [data-value] {
+.ts-wrapper.multi.select-field .ts-control [data-value], .ts-wrapper.multi.input-field .ts-control [data-value] {
 	background-image: linear-gradient(to bottom, #ffffff63, #24232347) !important;
 	background-color: var(--select-field-background) !important;
 	border-color: var(--select-field-border) !important;
 	color: var(--select-field-text) !important;
 }
-.ts-wrapper.multi.select-field .ts-control [data-value] .remove {
+.ts-wrapper.select-field .ts-control [data-value] .remove, .ts-wrapper.input-field .ts-control [data-value] .remove {
 	border-left-color: var(--select-field-border) !important;
 }
 /* Set some default colours */
-.select-field {
+.select-field, .input-field {
 	--select-field-background: #000060;
 	--select-field-border: #000020;
 	--select-field-text: #ffffff;
@@ -392,5 +392,10 @@ small {
 .select-field-offence {
 	--select-field-background: #010102;
 	--select-field-border: #000020;
+	--select-field-text: #ffffff;
+}
+.input-field-composer, .input-field-producer {
+	--select-field-background: #044E00;
+	--select-field-border: #033100;
 	--select-field-text: #ffffff;
 }
