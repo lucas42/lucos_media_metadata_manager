@@ -190,22 +190,24 @@
 			case "search":
 				$values = explode(",", $value)
 				?>
-				<select
+				<span
 					is="lucos-search"
-					id="<?=htmlspecialchars($key)?>"
-					name="<?=htmlspecialchars($key)?>[]"
 					data-api-key="<?=htmlspecialchars(getenv('KEY_LUCOS_ARACHNE'))?>"
-					data-exclude_types="Track"
-					multiple
-					>
-					<?php
-					foreach ($values as $val) {
-					?>
-						<option value="<?=htmlspecialchars($val)?>" selected>
-							<?=htmlspecialchars($val)?>
-						</option><?php
-					}?>
-				</select>
+					data-exclude_types="Track">
+					<select
+						id="<?=htmlspecialchars($key)?>"
+						name="<?=htmlspecialchars($key)?>[]"
+						multiple
+						>
+						<?php
+						foreach ($values as $val) {
+						?>
+							<option value="<?=htmlspecialchars($val)?>" selected>
+								<?=htmlspecialchars($val)?>
+							</option><?php
+						}?>
+					</select>
+				</span>
 				<?php
 				break;
 			default:

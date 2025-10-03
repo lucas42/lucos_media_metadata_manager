@@ -5,8 +5,9 @@
     "build": "webpack"
   },
   "devDependencies": {
+    "css-loader": "^7.1.2",
     "lucos_navbar": "^2.0.12",
-    "lucos_search_component": "^0.0.9",
+    "lucos_search_component": "^0.0.11",
     "style-loader": "^4.0.0",
     "tom-select": "^2.4.3",
     "webpack-cli": "^6.0.1"
