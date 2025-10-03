@@ -349,6 +349,10 @@ small {
 	transition: height 2s 5s;
 }
 
+.form-input [is=lucos-search] {
+	flex: 1;
+}
+
 /**
  * Tom-select specifies a line-height, but that doesn't impact empty options, which look short in comparison
  * Set the min-height of the line to match that line-height

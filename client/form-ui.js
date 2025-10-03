@@ -133,7 +133,7 @@ window.addEventListener('DOMContentLoaded', event => {
 	if (!primaryform ) return;
 
 	// When a form input changes, set the form to pending to highlight there's unsaved changes
-	document.querySelectorAll(".form-field .form-input > input, .form-field .form-input > select, .form-field .form-input > textarea").forEach(input => {
+	document.querySelectorAll(".form-field .form-input > input, .form-field .form-input select, .form-field .form-input > textarea").forEach(input => {
 		input.addEventListener('change', () => {
 			primaryform.dataset.pending = true;
 		});
@@ -172,7 +172,7 @@ window.addEventListener('DOMContentLoaded', loadedEvent => {
  * Use tom-select for nicer UX on select fields
  */
 window.addEventListener('DOMContentLoaded', event => {
-	document.querySelectorAll(".form-field select:not([is])").forEach(select => {
+	document.querySelectorAll(".form-field .select-field").forEach(select => {
 		const config = {
 			plugins: {
 				drag_drop: {},
