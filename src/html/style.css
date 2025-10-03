@@ -358,10 +358,22 @@ small {
 }
 
 /* Ensure dropdowns don't end up in a different column to their field */
-.ts-dropdown-content {
+.form-input .ts-dropdown-content {
 	position: absolute;
 	width: 100%;
+
+	/* Given .ts-dropdown-content is now positioned asolutely, the following things need moved across from .ts-dropdown */
 	background: #fff;
+	border: 1px solid #d0d0d0;
+	margin: 0.25rem 0 0;
+	border-top: 0 none;
+	box-sizing: border-box;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	border-radius: 0 0 3px 3px;
+}
+.form-input .ts-dropdown {
+	border: none;
+	margin: -3px 0 0 0;
 }
 /* Override the tom-select colour settings which ones which are easily configurable for each field */
 .ts-wrapper.multi.select-field .ts-control [data-value], .ts-wrapper.multi.input-field .ts-control [data-value] {
