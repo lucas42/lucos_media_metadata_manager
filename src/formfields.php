@@ -102,19 +102,20 @@ function getTagFields() {
 					"pl" => "Polish",     // Slavic
 				],
 				"Other Languages" => [
-					"ar" => "Arabic",    // Semitic language
-					"he" => "Hebrew",    // Semitic language
-					"pa" => "Punjabi",   // Indo-Aryan language
-					"hi" => "Hindi",     // Indo-Aryan language
-					"chr" => "Cherokee", // Iroquoian language
-					"wdt" => "Wendat",   // Iroquoian language
-					"mjy" => "Mohican",  // Algic language
-					"cmn" => "Mandarin", // Sinitic language
-					"ja" => "Japanese",  // Japonic language
-					"mn" => "Mongolian", // Mongolic language
-					"emk" => "Maninka",  // Mande language
-					"el" => "Greek",     // Hellenic language
-					"lkt" => "Lakota",   // Siouan lanuage
+					"ar"  => "Arabic",        // Semitic language
+					"he"  => "Hebrew",        // Semitic language
+					"pa"  => "Punjabi",       // Indo-Aryan language
+					"hi"  => "Hindi",         // Indo-Aryan language
+					"chr" => "Cherokee",      // Iroquoian language
+					"wdt" => "Wendat",        // Iroquoian language
+					"mjy" => "Mohican",       // Algic language
+					"cmn" => "Mandarin",      // Sinitic language
+					"ja"  => "Japanese",      // Japonic language
+					"mn"  => "Mongolian",     // Mongolic language
+					"emk" => "Maninka",       // Mande language
+					"el"  => "Greek",         // Hellenic language
+					"lkt" => "Lakota",        // Siouan language
+					"bo"  => "Lhasa Tibetan", // Tibetic language
 				],
 				"Fictional Languages" => [
 					"art-x-von" => "Hopelandic",  // Fictional language created and used by Sigur Rós, also known as Vonlenska
