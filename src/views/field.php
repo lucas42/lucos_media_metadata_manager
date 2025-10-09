@@ -210,6 +210,31 @@
 				</span>
 				<?php
 				break;
+			case "language":
+				$values = explode(",", $value)
+				?>
+				<span
+					is="lucos-lang"
+					data-api-key="<?=htmlspecialchars(getenv('KEY_LUCOS_ARACHNE'))?>"
+					data-no-lang="Instrumental / No Language"
+					data-common="en,ga,zxx"
+					>
+					<select
+						id="<?=htmlspecialchars($key)?>"
+						name="<?=htmlspecialchars($key)?>[]"
+						multiple
+						>
+						<?php
+						foreach ($values as $val) {
+						?>
+							<option value="<?=htmlspecialchars($val)?>" selected>
+								<?=htmlspecialchars($val)?>
+							</option><?php
+						}?>
+					</select>
+				</span>
+				<?php
+				break;
 			default:
 				?>Unknown type "<?=$field["type"]?>"<?php
 		}?> 

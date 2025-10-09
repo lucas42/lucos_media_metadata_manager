@@ -349,7 +349,7 @@ small {
 	transition: height 2s 5s;
 }
 
-.form-input [is=lucos-search] {
+.form-input [is=lucos-search], .form-input [is=lucos-lang] {
 	flex: 1;
 }
 

@@ -56,73 +56,8 @@ function getTagFields() {
 			"type" => "textarea",
 		],
 		"language" => [
-			"type" => "multigroupselect",
-			"values" => [
-				"Common Languages" => [ // Put the ones I use the most at the top
-					"en" => "English",
-					"ga" => "Irish",
-					"zxx" => "Instrumental / No Language",
-				],
-				"Celtic Languages" => [
-					"gd" => "Scottish Gaelic", // Goidelic
-					"cy" => "Welsh",           // Brythonic
-					"br" => "Breton",          // Brythonic
-					"kw" => "Cornish",         // Brythonic
-					"owl" => "Old Welsh",      // Brythonic
-				],
-				"Romance Languages" => [
-					"fr" => "French",
-					"it" => "Italian",
-					"es" => "Spanish",
-					"pt" => "Portuguese",
-					"la" => "Latin",
-					"ro" => "Romanian",
-				],
-				"Germanic Languages" => [
-					"de" => "German",                 // West Germanic
-					"nl" => "Dutch",                  // West Germanic
-					"vls" => "Flemish",               // West Germanic
-					"emen" => "Early Modern English", // West Germanic
-					"sco" => "Scots",                 // West Germanic
-					"yi" => "Yiddish",                // West Germanic
-					"sv" => "Swedish",                // North Germanic
-					"is" => "Icelandic",              // North Germanic
-					"da" => "Danish",                 // North Germanic
-				],
-				"Bantu Languaes" => [
-					"sw" => "Swahili",
-					"zu" => "Zulu",
-					"nd" => "Northern Ndebele",
-				],
-				"Balto-Slavic Languages" => [
-					"lt" => "Lithuanian", // Baltic
-					"ru" => "Russian",    // Slavic
-					"uk" => "Ukrainian",  // Slavic
-					"bg" => "Bulgarian",  // Slavic
-					"pl" => "Polish",     // Slavic
-				],
-				"Other Languages" => [
-					"ar"  => "Arabic",        // Semitic language
-					"he"  => "Hebrew",        // Semitic language
-					"pa"  => "Punjabi",       // Indo-Aryan language
-					"hi"  => "Hindi",         // Indo-Aryan language
-					"chr" => "Cherokee",      // Iroquoian language
-					"wdt" => "Wendat",        // Iroquoian language
-					"mjy" => "Mohican",       // Algic language
-					"cmn" => "Mandarin",      // Sinitic language
-					"ja"  => "Japanese",      // Japonic language
-					"mn"  => "Mongolian",     // Mongolic language
-					"emk" => "Maninka",       // Mande language
-					"el"  => "Greek",         // Hellenic language
-					"lkt" => "Lakota",        // Siouan language
-					"bo"  => "Lhasa Tibetan", // Tibetic language
-				],
-				"Fictional Languages" => [
-					"art-x-von" => "Hopelandic",  // Fictional language created and used by Sigur Rós, also known as Vonlenska
-					"art-x-simlish" => "Simlish", // Fictional language used in The Sims in-game universe
-					"art-x-navi" => "Na'vi",      // Fictional language used in the Avatar franchise, spoken by the Na'vi race
-				],
-			],
+			"type" => "language",
+			"beta" => true,
 			"hint" => "The language(s) used for lyrics in this track",
 		],
 		"dance" => [
