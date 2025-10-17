@@ -1,4 +1,4 @@
-FROM node:24-alpine AS js-build
+FROM node:25-alpine AS js-build
 
 WORKDIR /srv/client
 COPY client/package* ./
