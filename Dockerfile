@@ -7,7 +7,7 @@ COPY client/*.js ./
 
 RUN npm run build
 
-FROM php:8.4.13-apache-trixie
+FROM php:8.4.14-apache-trixie
 
 WORKDIR /srv/metadata_manager
 
