@@ -11,3 +11,8 @@ updates:
   schedule:
     interval: daily
     time: "07:00"
+- package-ecosystem: npm
+  directory: "/client"
+  schedule:
+    interval: daily
+    time: "07:00"
