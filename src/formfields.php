@@ -104,6 +104,7 @@ function getTagFields() {
 				"itunes" => "iTunes",
 				"live" => "Live recording",
 				"newgrounds" => "Newgrounds",
+				"qobuz" => "Qobuz",
 				"radio" => "Recorded from Radio",
 				"sample" => "Free Sample", // For example, included when purchasing a new mp3 player
 				"vinyl" => "Recorded from a vinyl record",
