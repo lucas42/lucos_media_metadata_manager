@@ -28,6 +28,11 @@
 					include 'field.php';
 				?>
 				</div>
+				<div class="form-field">
+				<?php $key = "icon"; $value = $data["icon"]; $field = ["type" => "text", "hint" => "Unicode Emoji used as a shorthand for this collection"]; $disabled = false;
+					include 'field.php';
+				?>
+				</div>
 				<input type="submit" value="Save" class="primary-submit" />
 			</form>
 
