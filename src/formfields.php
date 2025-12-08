@@ -192,7 +192,7 @@ function getFormFields() {
 		"hint" => "The collections this track is part of",
 	];
 	foreach (getCollections() as $collection) {
-		$form_fields["collections"]["values"][$collection["slug"]] = $collection["name"];
+		$form_fields["collections"]["values"][$collection["slug"]] = "${collection['icon']} ${collection['name']}";
 	}
 	return $form_fields;
 }
