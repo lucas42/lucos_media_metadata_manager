@@ -3,7 +3,7 @@ services:
     build: .
     container_name: media_metadata_manager
     ports:
-      - "8020:80"
+      - $PORT:80
     image: lucas42/lucos_media_metadata_manager
     restart: always
     environment:
