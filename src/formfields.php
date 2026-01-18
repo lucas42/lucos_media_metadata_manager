@@ -57,7 +57,6 @@ function getTagFields() {
 		],
 		"language" => [
 			"type" => "language",
-			"beta" => true,
 			"hint" => "The language(s) used for lyrics in this track",
 		],
 		"dance" => [
@@ -162,11 +161,9 @@ function getTagFields() {
 		],
 		"about" => [
 			"type" => "search",
-			"beta" => true,
 		],
 		"mentions" => [
 			"type" => "search",
-			"beta" => true,
 		],
 	];
 }
