@@ -7,7 +7,7 @@
   "devDependencies": {
     "css-loader": "^7.1.3",
     "lucos_navbar": "^2.0.20",
-    "lucos_search_component": "^1.0.9",
+    "lucos_search_component": "^1.0.10",
     "style-loader": "^4.0.0",
     "tom-select": "^2.4.3",
     "webpack-cli": "^6.0.1"
