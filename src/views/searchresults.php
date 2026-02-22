@@ -33,10 +33,10 @@
 				<?php foreach ($tracks as $track) {
 ?>
 				<li>
-					<h3><a href="/tracks/<?= $track[" id"]?>">
+					<h3><a href="/tracks/<?= $track["id"]?>">
 							<?= htmlspecialchars($track["title"])?>
 						</a></h3>
-					<queue-controls data-trackurl="<?= htmlspecialchars($track[" url"])?>"
+					<queue-controls data-trackurl="<?= htmlspecialchars($track["url"])?>"
 						data-trackid="
 						<?= $track["id"]?>" />
 				</li>
@@ -58,7 +58,7 @@ if ($prevpage > 0) {
 				<?= $totalPages?>
 				<?php if ($page < $totalPages) {
 ?>
-				| <a href="<?= htmlspecialchars(" /search?{$basequerystring}&page={$nextpage}")?>">Next -&gt;</a>
+				| <a href="<?= htmlspecialchars("/search?{$basequerystring}&page={$nextpage}")?>">Next -&gt;</a>
 				<?php
 }
 ?>

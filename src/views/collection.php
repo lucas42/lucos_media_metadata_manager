@@ -65,10 +65,10 @@ include 'field.php';
 			<?php foreach ($tracks as $track) {
 ?>
 			<li>
-				<h3><a href="/tracks/<?= $track[" id"]?>">
+				<h3><a href="/tracks/<?= $track["id"]?>">
 						<?= htmlspecialchars($track["title"])?>
 					</a></h3>
-				<queue-controls data-trackurl="<?= htmlspecialchars($track[" url"])?>"
+				<queue-controls data-trackurl="<?= htmlspecialchars($track["url"])?>"
 					data-trackid="
 					<?= $track["id"]?>" />
 			</li>
@@ -96,8 +96,8 @@ include 'field.php';
 	}
 ?>
 		</div>
-		<collection-controls slug="<?= htmlspecialchars(urlencode($data[" slug"]))?>"></collection-controls>
-		<form method="post" action="/collections/<?= htmlspecialchars(urlencode($data[" slug"]))?>/delete"
+		<collection-controls slug="<?= htmlspecialchars(urlencode($data["slug"]))?>"></collection-controls>
+		<form method="post" action="/collections/<?= htmlspecialchars(urlencode($data["slug"]))?>/delete"
 			data-confirm="Are you sure you want to delete collection
 			<?= htmlspecialchars($data['name'])?>?">
 			<input type="submit" value="Delete Whole Collection" class="standalone danger" />
