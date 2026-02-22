@@ -3,7 +3,7 @@ A UI for editing metadata of tracks in the lucos media system
 
 ## Dependencies
 * docker
-* docker-compose
+* docker compose
 
 ## Running
-`nice -19 docker-compose up -d --no-build`
+`nice -19 docker compose up -d --no-build`
