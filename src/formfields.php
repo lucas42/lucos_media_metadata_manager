@@ -4,9 +4,10 @@
  * Returns hardcoded fields used for tags
  * The API doesn't validate tags, any key/value pair is allowed.
  * So any values here are only enforced by the UI.
- * @return associative array where the key is the name of the tag and value is an associative array of settings about that field
+ * @return array<string, array> associative array where the key is the name of the tag and value is an array of settings about that field
  */
-function getTagFields() {
+function getTagFields()
+{
 	return [
 		"title" => [
 			"type" => "text",
@@ -169,19 +170,21 @@ function getTagFields() {
 }
 /**
  * Get a dynamic list of collections from the API
- * @throws an exception if the request to the API fails
- * @return an array of collections, each an associative array containing "slug" and "name" keys
+ * @throws Exception if the request to the API fails
+ * @return array[] array of collections, each an associative array containing "slug" and "name" keys
  */
-function getCollections() {
+function getCollections()
+{
 	return fetchFromApi("/v2/collections");
 }
 
 /**
  * Returns a list of fields for use in the UI, containing both tags and a collections fields
- * @throws an exception if the request to the API for collections fails
- * @return associative array where the key is the name of the field and value is an associative array of settings about that field
+ * @throws Exception if the request to the API for collections fails
+ * @return array<string, array> associative array where the key is the name of the field and value is an array of settings about that field
  */
-function getFormFields() {
+function getFormFields()
+{
 	$form_fields = getTagFields();
 	$form_fields["collections"] = [
 		"type" => "multiselect",
@@ -197,8 +200,9 @@ function getFormFields() {
 /**
  * Give the names of all tags managed through the UI
  * (Doesn't touch collections)
- * @return An array of strings
+ * @return string[] An array of strings
  */
-function getTagKeys() {
+function getTagKeys()
+{
 	return array_keys(getTagFields());
 }
