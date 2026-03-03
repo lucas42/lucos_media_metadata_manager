@@ -4,6 +4,9 @@
   "scripts": {
     "build": "webpack"
   },
+  "overrides": {
+    "serialize-javascript": "^7.0.3"
+  },
   "devDependencies": {
     "css-loader": "^7.1.4",
     "lucos_navbar": "^2.1.2",
