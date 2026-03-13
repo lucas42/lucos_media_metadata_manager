@@ -7,7 +7,7 @@ services:
     image: lucas42/lucos_media_metadata_manager
     restart: always
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:80/_info"]
+      test: ["CMD", "curl", "-fs", "http://127.0.0.1:80/_info"]
       interval: 10s
       timeout: 5s
       retries: 3
