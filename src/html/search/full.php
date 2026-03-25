@@ -49,6 +49,13 @@ require("../../authentication.php");
 		let currentQuery = '';
 		let activeFacets = {};
 
+		// Sanitise a Typesense highlight snippet: escape all HTML, then re-allow only <mark> tags
+		function sanitiseSnippet(snippet) {
+			const div = document.createElement('div');
+			div.textContent = snippet;
+			return div.innerHTML.replace(/&lt;mark&gt;/g, '<mark>').replace(/&lt;\/mark&gt;/g, '</mark>');
+		}
+
 		// Extract track ID from the Typesense document id (a URI like https://host/tracks/123)
 		function extractTrackId(uri) {
 			const match = uri.match(/\/tracks\/(\d+)$/);
@@ -68,7 +75,7 @@ require("../../authentication.php");
 			const filterParts = [];
 			for (const [field, values] of Object.entries(activeFacets)) {
 				if (values.length > 0) {
-					const escaped = values.map(v => '`' + v + '`');
+					const escaped = values.map(v => '`' + v.replace(/`/g, '\\`') + '`');
 					filterParts.push(field + ':=[' + escaped.join(',') + ']');
 				}
 			}
@@ -121,9 +128,9 @@ require("../../authentication.php");
 					}
 				}
 
-				// Use innerHTML only for Typesense highlights (which escape HTML except <mark> tags)
+				// Use innerHTML only for Typesense highlights, with sanitisation to allow only <mark> tags
 				if (hasHighlight) {
-					a.innerHTML = displayTitle;
+					a.innerHTML = sanitiseSnippet(displayTitle);
 				} else {
 					a.textContent = displayTitle;
 				}
