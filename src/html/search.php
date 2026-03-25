@@ -10,7 +10,7 @@ if (!is_numeric($page) or $page < 1) $page = "1";
 
 // If there's a search query, that takes precendence
 if (array_key_exists('q', $_GET)) {
-	$params['q'] = $_GET['q'];
+	$params['q'] = trim($_GET['q']);
 
 // Without a search query, look for all the non-empty predicates (keys start with 'p.') and use them to search
 } else {
@@ -23,7 +23,7 @@ if (array_key_exists('q', $_GET)) {
 		if (is_array($val)) $val = implode(",", $val);
 		if (is_null($val) or $val === "") continue;
 
-		$params[$key] = $val;
+		$params[$key] = trim($val);
 	}
 }
 try {
