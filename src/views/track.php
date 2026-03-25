@@ -37,6 +37,9 @@
 	<?php } else { ?>
 		<span class='predicate-search disabled'>🔍</span>
 	<?php } ?>
+	<?php if (!empty($field["eolas_add_url"])) { ?>
+		<a href="<?=htmlspecialchars($field["eolas_add_url"])?>" class='eolas-add' target="_blank" title='Add a new <?=htmlspecialchars($key)?> in eolas'>➕</a>
+	<?php } ?>
 	</div>
 <?php
 }
