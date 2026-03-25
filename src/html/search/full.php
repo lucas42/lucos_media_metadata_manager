@@ -101,24 +101,32 @@ require("../../authentication.php");
 				a.href = '/tracks/' + trackId;
 
 				// Build display title: "Artist - Title" or just "Title"
+				// Check for highlighted text from Typesense (contains <mark> tags, other HTML is escaped)
+				let hasHighlight = false;
 				let displayTitle = doc.title;
 				if (doc.artist && doc.artist.length > 0) {
 					displayTitle = doc.artist.join(', ') + ' - ' + displayTitle;
 				}
 
-				// Use highlighted text if available
 				if (hit.highlights) {
 					const titleHighlight = hit.highlights.find(h => h.field === 'title');
 					const artistHighlight = hit.highlights.find(h => h.field === 'artist');
 					if (titleHighlight && titleHighlight.snippet) {
 						displayTitle = (doc.artist && doc.artist.length > 0 ? doc.artist.join(', ') + ' - ' : '') + titleHighlight.snippet;
+						hasHighlight = true;
 					}
 					if (artistHighlight && artistHighlight.snippet) {
 						displayTitle = artistHighlight.snippet + ' - ' + doc.title;
+						hasHighlight = true;
 					}
 				}
 
-				a.innerHTML = displayTitle;
+				// Use innerHTML only for Typesense highlights (which escape HTML except <mark> tags)
+				if (hasHighlight) {
+					a.innerHTML = displayTitle;
+				} else {
+					a.textContent = displayTitle;
+				}
 				h3.appendChild(a);
 				li.appendChild(h3);
 
