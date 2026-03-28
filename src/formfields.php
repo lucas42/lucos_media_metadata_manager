@@ -59,6 +59,7 @@ function getTagFields()
 		"language" => [
 			"type" => "language",
 			"hint" => "The language(s) used for lyrics in this track",
+			"eolas_add_url" => "https://eolas.l42.eu/metadata/language/add/",
 		],
 		"dance" => [
 			"type" => "select",
@@ -162,9 +163,11 @@ function getTagFields()
 		],
 		"about" => [
 			"type" => "search",
+			"eolas_add_url" => "https://eolas.l42.eu/",
 		],
 		"mentions" => [
 			"type" => "search",
+			"eolas_add_url" => "https://eolas.l42.eu/",
 		],
 	];
 }

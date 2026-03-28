@@ -312,7 +312,7 @@ ul {
 #content > queue-controls {
 	margin: 2em 0;
 }
-.predicate-search:hover {
+.predicate-search:hover, .eolas-add:hover {
 	text-decoration: none;
 	transform: scale(2);
 }
