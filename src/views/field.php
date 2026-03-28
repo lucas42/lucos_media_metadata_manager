@@ -5,6 +5,7 @@
 	 * @var array $field
 	 * @var bool|null $disabled
 	 * @var bool|null $blank
+	 * @var bool|null $missing
 	 */
 
 	$class = "key-label";
@@ -255,6 +256,16 @@
 						name="<?=htmlspecialchars($key)?>_blank"
 						/>
 					<label for="<?=htmlspecialchars($key)?>_blank">Blank</label>
+				</span>
+			<?php }?>
+			<?php if(!empty($missing)) {?>
+				<span class="ismissing" title="Search for tracks missing this field">
+					<input
+						type="checkbox"
+						id="<?=htmlspecialchars($key)?>_missing"
+						name="<?=htmlspecialchars($key)?>_missing"
+						/>
+					<label for="<?=htmlspecialchars($key)?>_missing">Missing</label>
 				</span>
 			<?php }?>
 		</span>

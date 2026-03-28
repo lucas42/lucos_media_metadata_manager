@@ -158,17 +158,17 @@ a:hover, a:active {
 	width: 1.5em;
 	text-align: center;
 }
-.form-field .isnull, .form-field .blank {
+.form-field .isnull, .form-field .blank, .form-field .ismissing {
 	font-size: small;
 	color: #999;
 	margin-left: 10px;
 	display: inline-block;
 	white-space: nowrap;
 }
-.form-field .isnull input, .form-field .blank input {
+.form-field .isnull input, .form-field .blank input, .form-field .ismissing input {
 	width: 8px;
 }
-.form-field .isnull :checked + label, .form-field .blank :checked + label {
+.form-field .isnull :checked + label, .form-field .blank :checked + label, .form-field .ismissing :checked + label {
 	color: #000;
 }
 input[type=submit], .mock-button {
