@@ -30,6 +30,7 @@
 			<?php foreach ($form_fields as $key => $field) {
 				$key = 'p.'.$key;
 				$value = null;
+				$missing = true;
 			?>
 				<div class="form-field">
 				<?php

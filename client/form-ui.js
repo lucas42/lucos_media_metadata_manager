@@ -10,12 +10,14 @@ window.addEventListener('DOMContentLoaded', event => {
 		const row = range.closest(".form-field")
 		const blankInput = row.querySelector(".blank > input");
 		const nullInput = row.querySelector(".isnull > input");
+		const missingInput = row.querySelector(".ismissing > input");
 		const preview = row.querySelector(".preview");
 		const hidden = row.querySelector("input[type=hidden]");
 		updatePreview();
 		row.addEventListener("click", () => {
 			nullInput.checked = false;
 			if (blankInput) blankInput.checked = false;
+			if (missingInput) missingInput.checked = false;
 			updatePreview();
 			range.focus();
 		});
@@ -30,6 +32,12 @@ window.addEventListener('DOMContentLoaded', event => {
 			});
 			blankInput.addEventListener("change", updatePreview);
 		}
+		if (missingInput) {
+			missingInput.parentElement.addEventListener("click", event => {
+				event.stopPropagation();
+			});
+			missingInput.addEventListener("change", updatePreview);
+		}
 		if (range.hasAttribute("list")) {
 			const list = document.getElementById(range.getAttribute("list"));
 			list.querySelectorAll("option").forEach(option => {
@@ -43,14 +51,20 @@ window.addEventListener('DOMContentLoaded', event => {
 		}
 		function updatePreview(event) {
 			if (event) {
-				if (event.target == nullInput && nullInput.checked && blankInput) {
-					blankInput.checked = false;
+				if (event.target == nullInput && nullInput.checked) {
+					if (blankInput) blankInput.checked = false;
+					if (missingInput) missingInput.checked = false;
 				}
 				if (event.target == blankInput && blankInput.checked) {
 					nullInput.checked = false;
+					if (missingInput) missingInput.checked = false;
+				}
+				if (event.target == missingInput && missingInput?.checked) {
+					nullInput.checked = false;
+					if (blankInput) blankInput.checked = false;
 				}
 			}
-			const fieldDisabled = nullInput.checked || blankInput?.checked;
+			const fieldDisabled = nullInput.checked || blankInput?.checked || missingInput?.checked;
 			let val = Number(range.value).toFixed(1);
 			if (fieldDisabled) val = " - ";
 			if (preview) preview.innerText = val;
@@ -83,23 +97,41 @@ window.addEventListener('DOMContentLoaded', event => {
 	document.querySelectorAll(".form-field").forEach(row => {
 		const mainInput = row.querySelector(".form-input > :first-child");
 		const blankInput = row.querySelector(".blank > input");
-		if (!mainInput || !blankInput) return;
+		const missingInput = row.querySelector(".ismissing > input");
+		if (!mainInput || (!blankInput && !missingInput)) return;
 
 		// If there's also a null input, then that'll have been handled by the range input logic
 		if (row.querySelector(".isnull > input")) return;
 		updateState();
 		row.addEventListener("click", () => {
-			blankInput.checked = false;
+			if (blankInput) blankInput.checked = false;
+			if (missingInput) missingInput.checked = false;
 			updateState();
 		});
 		mainInput.addEventListener("input", updateState);
-		blankInput.addEventListener("change", updateState);
-		blankInput.parentElement.addEventListener("click", event => {
-			event.stopPropagation();
-		});
-		function updateState() {
-			const isblank = blankInput.checked;
-			mainInput.disabled = isblank;
+		if (blankInput) {
+			blankInput.addEventListener("change", updateState);
+			blankInput.parentElement.addEventListener("click", event => {
+				event.stopPropagation();
+			});
+		}
+		if (missingInput) {
+			missingInput.addEventListener("change", updateState);
+			missingInput.parentElement.addEventListener("click", event => {
+				event.stopPropagation();
+			});
+		}
+		function updateState(event) {
+			if (event) {
+				if (event.target == blankInput && blankInput?.checked && missingInput) {
+					missingInput.checked = false;
+				}
+				if (event.target == missingInput && missingInput?.checked && blankInput) {
+					blankInput.checked = false;
+				}
+			}
+			const fieldDisabled = blankInput?.checked || missingInput?.checked;
+			mainInput.disabled = fieldDisabled;
 
 			/**
 			 * Weird hack to make it easy to re-enable element when disabled
@@ -108,7 +140,7 @@ window.addEventListener('DOMContentLoaded', event => {
 			 * But need to set it to 'auto' when enabled, so clicking actually moves the range
 			 * Don't understand why CSS is solution here, but seems to work on Chrome 110
 			 **/
-			mainInput.style.pointerEvents = isblank ? 'none' : 'auto';
+			mainInput.style.pointerEvents = fieldDisabled ? 'none' : 'auto';
 		}
 	});
 });

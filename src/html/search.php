@@ -20,6 +20,13 @@ if (array_key_exists('q', $_GET)) {
 		$key = str_replace('p_', 'p.', $key);
 		if (!str_starts_with($key, 'p.')) continue;
 		if (str_ends_with($key, '_null')) continue;
+
+		// When a _missing checkbox is checked, include the field with an empty value to search for tracks missing this tag
+		if (str_ends_with($key, '_missing')) {
+			$fieldKey = substr($key, 0, -8); // Strip '_missing' suffix
+			$params[$fieldKey] = "";
+			continue;
+		}
 		if (is_array($val)) $val = implode(",", $val);
 		if (is_null($val) or $val === "") continue;
 
