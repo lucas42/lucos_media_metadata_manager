@@ -12,7 +12,7 @@
 		<lucos-navbar bg-colour="#000020">Metadata Manager</lucos-navbar>
 		<div id="content">
 			<h2>Tracks</h2>
-			<form method="get" action="/search">
+			<form method="get" action="/search/full">
 				<div class="form-field">
 					<label for="trackid" class="key-label">Search Term</label>
 					<span class="form-input">
@@ -34,7 +34,7 @@
 				<input type="hidden" name="random" value="true"/>
 				<input type="submit" value="View Random Track" class="standalone" />
 			</form>
-			<a href="/search#advanced" class="standalone">Advanced Search</a>
+			<a href="/search#advanced" class="standalone">Advanced Search / Bulk Edit</a>
 			<h2>Collections</h2>
 			<form method="get" action="/collections">
 				<div class="form-field">

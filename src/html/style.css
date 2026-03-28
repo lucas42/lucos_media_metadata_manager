@@ -312,6 +312,47 @@ ul {
 #content > queue-controls {
 	margin: 2em 0;
 }
+.result-meta {
+	margin: 2px 0 8px 0;
+}
+.result-chip {
+	display: inline-block;
+	background: #ccddee;
+	border-radius: 4px;
+	padding: 1px 6px;
+	font-size: 13px;
+	margin-right: 4px;
+	text-transform: capitalize;
+}
+.facet-group {
+	padding: 4px 0;
+	font-size: 14px;
+}
+.facet-label {
+	text-transform: capitalize;
+	font-weight: bold;
+	margin-right: 4px;
+}
+.facet-btn {
+	background: #d2ddff;
+	border: 1px solid #000060;
+	border-radius: 4px;
+	padding: 2px 8px;
+	margin: 2px;
+	cursor: pointer;
+	font-size: 13px;
+}
+.facet-btn.active {
+	background: #000060;
+	color: white;
+	border-color: #000040;
+}
+.facet-btn:hover {
+	background: #dde;
+}
+.facet-btn.active:hover {
+	background: #000080;
+}
 .predicate-search:hover, .eolas-add:hover {
 	text-decoration: none;
 	transform: scale(2);
