@@ -1,7 +1,7 @@
 services:
   media_manager:
     build: .
-    container_name: media_metadata_manager
+    container_name: lucos_media_metadata_manager
     ports:
       - $PORT:80
     image: lucas42/lucos_media_metadata_manager
