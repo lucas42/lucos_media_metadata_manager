@@ -10,7 +10,7 @@ function bulkUpdateTracks($params, $currentpage, $postdata)
 {
 	$basequerystring = http_build_query($params);
 	$targetPage = !empty($postdata['page']) ? $postdata['page'] : $currentpage;
-	$path = "/v2/tracks?{$basequerystring}&page={$targetPage}";
+	$path = "/v3/tracks?{$basequerystring}&page={$targetPage}";
 
 	$api_data = array();
 	if (isset($postdata["collections"])) {
@@ -28,17 +28,14 @@ function bulkUpdateTracks($params, $currentpage, $postdata)
 	$tags = array();
 	foreach (getTagKeys() as $key) {
 		if (!is_null($postdata[$key]) and $postdata[$key] !== "") {
-			if (is_array($postdata[$key]))
-				$tags[$key] = implode(",", $postdata[$key]);
-			else
-				$tags[$key] = $postdata[$key];
+			$tags[$key] = $postdata[$key];
 		}
 		if (!empty($postdata["{$key}_blank"])) {
 			$tags[$key] = "";
 		}
 	}
 	if (!empty($tags))
-		$api_data["tags"] = $tags; // Avoid including an empty associative array, as php's json will encode it as an array, not an object
+		$api_data["tags"] = tagsToV3Format($tags, getTagFields());
 
 	$headers = [];
 	if (!empty($postdata['missing-only'])) {

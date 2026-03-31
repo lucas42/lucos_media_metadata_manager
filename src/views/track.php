@@ -77,9 +77,9 @@
 	</div>
 	<queue-controls
 		data-trackurl="<?=htmlspecialchars($data["url"])?>"
-		data-trackid="<?=$data["trackid"]?>" />
+		data-trackid="<?=$data["id"]?>" />
 	</div>
-	<form method="post" action="/tracks/<?=$data["trackid"]?>/delete" data-confirm="Are you sure you want to delete track <?=$trackid?>?">
+	<form method="post" action="/tracks/<?=$data["id"]?>/delete" data-confirm="Are you sure you want to delete track <?=$trackid?>?">
 		<input type="submit" value="Delete Track" class="standalone danger" />
 	</form>
 </div>

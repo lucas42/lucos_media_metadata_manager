@@ -4,7 +4,7 @@ require_once("../controllers/error.php");
 
 function searchTracks($params, $page) {
 	$basequerystring = http_build_query($params);
-	$path = "/v2/tracks?{$basequerystring}&page={$page}";
+	$path = "/v3/tracks?{$basequerystring}&page={$page}";
 	try {
 		$data = fetchFromApi($path);
 		$tracks = summariseTracks($data["tracks"]);
@@ -20,8 +20,9 @@ function searchTracks($params, $page) {
 
 function summariseTracks($tracks) {
 	return array_map(function ($track) {
-		if (!empty($track["tags"]["title"])) {
-			$title = $track["tags"]["title"];
+		$tags = normalizeV3Tags($track["tags"]);
+		if (!empty($tags["title"])) {
+			$title = $tags["title"];
 
 		// If track has no title, base it on URL
 		} else {
@@ -36,11 +37,11 @@ function summariseTracks($tracks) {
 		}
 
 		// Prefix the tile with the artist, if one is given
-		if (!empty($track["tags"]["artist"])) {
-			$title = $track["tags"]["artist"]." - ".$title;
+		if (!empty($tags["artist"])) {
+			$title = $tags["artist"]." - ".$title;
 		}
 		return [
-			"id" => $track["trackid"],
+			"id" => $track["id"],
 			"title" => $title,
 			"url" => $track["url"],
 		];

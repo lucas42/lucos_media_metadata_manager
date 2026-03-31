@@ -7,8 +7,8 @@ require_once("../controllers/error.php");
  */
 function pickRandomTrack() {
 	try {
-		$data = fetchFromApi("/v2/tracks/random");
-		$trackid = $data["tracks"][0]["trackid"]; // Just look at the first track in the list
+		$data = fetchFromApi("/v3/tracks/random");
+		$trackid = $data["tracks"][0]["id"]; // Just look at the first track in the list
 		header("Location: /tracks/{$trackid}");
 	} catch (ApiError $error) {
 		displayError(502, "Can't fetch random tracks from API.\n\n".$error->getMessage());

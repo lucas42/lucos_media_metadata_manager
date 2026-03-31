@@ -14,7 +14,7 @@ $output = [
 	],
 ];
 try {
-	fetchFromApi("/v2/tracks");
+	fetchFromApi("/v3/tracks");
 	$output["checks"]["metadata-api"]["ok"] = true;
 } catch (ApiError $error) {
 	$output["checks"]["metadata-api"]["ok"] = false;

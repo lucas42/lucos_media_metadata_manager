@@ -19,13 +19,12 @@ function updateTrack($trackid, $postdata) {
 	}
 	$tags = array();
 	foreach (getTagKeys() as $key) {
-		if (is_array($postdata[$key])) $tags[$key] = implode(",", $postdata[$key]);
-		else $tags[$key] = $postdata[$key];
+		$tags[$key] = $postdata[$key];
 	}
-	$api_data["tags"] = $tags;
+	$api_data["tags"] = tagsToV3Format($tags, getTagFields());
 
 	try {
-		fetchFromApi("/v2/tracks/{$trackid}", "PATCH", $api_data);
+		fetchFromApi("/v3/tracks/{$trackid}", "PATCH", $api_data);
 		header("Location: /tracks/{$trackid}?saved=true", true, 303);
 	} catch (ApiError $error) {
 		displayError(502, "Error updating track in API.\n\n".$error->getMessage());

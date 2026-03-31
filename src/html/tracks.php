@@ -7,7 +7,7 @@ $trackid = (count($urlparts) > 2) ? $urlparts[2] : null;
 $subpath = (count($urlparts) > 3) ? $urlparts[3] : null;
 
 if (is_numeric($trackid) and choose_rdf_over_html()) {
-	header("Location: " . getenv("MEDIA_API") . "/v2/tracks/{$trackid}");
+	header("Location: " . getenv("MEDIA_API") . "/v3/tracks/{$trackid}");
 	exit;
 }
 
