@@ -22,10 +22,10 @@
 	$value = null;
 	if (!empty($values)) {
 		$names = array_filter(array_map(function($v) { return $v["name"] ?? null; }, $values), function($n) { return $n !== null; });
-		if (count($names) === 1) {
+		if ($field["type"] === "text" && !empty($field["delimiter"])) {
+			$value = implode($field["delimiter"], $names);
+		} elseif (!empty($names)) {
 			$value = reset($names);
-		} elseif (count($names) > 1) {
-			$value = implode(",", $names);
 		}
 	}
 ?>
@@ -41,16 +41,40 @@
 		<span class="form-input"><?php
 		switch($field["type"]) {
 			case "text":
-				?>
-				<input
-					type="text"
-					id="<?=htmlspecialchars($key)?>"
-					name="<?=htmlspecialchars($key)?>"
-					value="<?=htmlspecialchars((string)$value)?>"
-					class="input-field input-field-<?=htmlspecialchars($key)?>"
-					<?=empty($field["delimiter"]) ? "" : "data-delimiter=\"{$field["delimiter"]}\""?>
-					<?=empty($disabled) ? "" : "disabled"?> />
-				<?php
+				if (!empty($field["multi-text"])) {
+					?>
+					<select
+						id="<?=htmlspecialchars($key)?>"
+						name="<?=htmlspecialchars($key)?>[]"
+						class="select-field select-field-<?=htmlspecialchars($key)?>"
+						multiple
+						data-create="true"
+						<?=empty($disabled) ? "" : "disabled"?>
+						>
+						<?php
+						if (!empty($values)) {
+							foreach ($values as $tagValue) {
+								$name = $tagValue["name"] ?? "";
+								if ($name === "") continue;
+						?>
+							<option value="<?=htmlspecialchars($name)?>" selected>
+								<?=htmlspecialchars($name)?>
+							</option><?php
+							}
+						}?>
+					</select>
+					<?php
+				} else {
+					?>
+					<input
+						type="text"
+						id="<?=htmlspecialchars($key)?>"
+						name="<?=htmlspecialchars($key)?>"
+						value="<?=htmlspecialchars((string)$value)?>"
+						class="input-field input-field-<?=htmlspecialchars($key)?>"
+						<?=empty($disabled) ? "" : "disabled"?> />
+					<?php
+				}
 				break;
 			case "range":
 				?>
@@ -222,7 +246,7 @@
 				<span
 					is="lucos-search"
 					data-api-key="<?=htmlspecialchars((string)getenv('KEY_LUCOS_ARACHNE'))?>"
-					data-exclude_types="Track">
+					<?=!empty($field["types"]) ? "data-types=\"".htmlspecialchars($field["types"])."\"" : "data-exclude_types=\"Track\""?>>
 					<select
 						id="<?=htmlspecialchars($key)?>"
 						name="<?=htmlspecialchars($key)?>[]"
@@ -235,46 +259,6 @@
 								$displayName = $tagValue["name"] ?? $tagValue["uri"] ?? "";
 						?>
 							<option value="<?=htmlspecialchars((string)$optionValue)?>" selected>
-								<?=htmlspecialchars((string)$displayName)?>
-							</option><?php
-							}
-						}?>
-					</select>
-				</span>
-				<?php
-				break;
-			case "language":
-				// Language fields use code as <option value> (matching TomSelect valueField:'code')
-				// and name as display text
-				?>
-				<span
-					is="lucos-lang"
-					data-api-key="<?=htmlspecialchars((string)getenv('KEY_LUCOS_ARACHNE'))?>"
-					data-no-lang="Instrumental / No Language"
-					data-common="en,ga,zxx"
-					>
-					<select
-						id="<?=htmlspecialchars($key)?>"
-						name="<?=htmlspecialchars($key)?>[]"
-						multiple
-						>
-						<?php
-						if (!empty($values)) {
-							foreach ($values as $tagValue) {
-								$uri = $tagValue["uri"] ?? "";
-								$name = $tagValue["name"] ?? "";
-								// Extract language code from URI for TomSelect compatibility
-								// URI format: https://eolas.l42.eu/entity/{code}/Language
-								$code = $name;
-								if (!empty($uri)) {
-									$uriParts = explode("/", rtrim($uri, "/"));
-									if (count($uriParts) >= 2) {
-										$code = $uriParts[count($uriParts) - 2];
-									}
-								}
-								$displayName = $name ?: $code;
-						?>
-							<option value="<?=htmlspecialchars((string)$code)?>" selected>
 								<?=htmlspecialchars((string)$displayName)?>
 							</option><?php
 							}

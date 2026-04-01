@@ -20,11 +20,11 @@ function getTagFields()
 		],
 		"composer" => [
 			"type" => "text",
-			"delimiter" => ",",
+			"multi-text" => true,
 		],
 		"producer" => [
 			"type" => "text",
-			"delimiter" => ",",
+			"multi-text" => true,
 		],
 		"rating" => [
 			"type" => "range",
@@ -57,7 +57,8 @@ function getTagFields()
 			"type" => "textarea",
 		],
 		"language" => [
-			"type" => "language",
+			"type" => "search",
+			"types" => "Language",
 			"hint" => "The language(s) used for lyrics in this track",
 			"eolas_add_url" => "https://eolas.l42.eu/metadata/language/add/",
 		],

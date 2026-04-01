@@ -7,16 +7,15 @@ require_once("../api.php");
  * Each field type determines how values map to {"name": ..., "uri": ...} objects.
  *
  * Search fields: form sends URIs, JS adds names → {"name": name, "uri": uri}
- * Language fields: form sends codes, JS adds names and URIs → {"name": name, "uri": uri}
- * Other fields: form sends names → {"name": value}
- * Delimiter fields: split into multiple tag values
+ * Multi-text fields: form sends arrays of names → [{"name": name}, ...]
+ * Other fields: form sends a single name → [{"name": value}]
  *
  * $names and $uris are parallel arrays from hidden inputs added by form-ui.js
  * on form submission. If JS fails, we fall back to using the form value for both.
  */
 function formValueToV3($value, $fieldConfig, $names = null, $uris = null) {
 	$type = $fieldConfig["type"] ?? "text";
-	$isUriField = in_array($type, ["search", "language"]);
+	$isUriField = $type === "search";
 
 	if (is_array($value)) {
 		$result = [];
@@ -24,7 +23,6 @@ function formValueToV3($value, $fieldConfig, $names = null, $uris = null) {
 		foreach ($values as $idx => $v) {
 			if ($v === "") continue;
 			if ($isUriField) {
-				// Use JS-provided name and URI when available, fall back to form value
 				$name = (!empty($names) && isset($names[$idx])) ? $names[$idx] : $v;
 				$uri = (!empty($uris) && isset($uris[$idx])) ? $uris[$idx] : $v;
 				$result[] = ["name" => $name, "uri" => $uri];
@@ -37,15 +35,6 @@ function formValueToV3($value, $fieldConfig, $names = null, $uris = null) {
 
 	if ($value === "" || $value === null) {
 		return [];
-	}
-
-	// Delimiter-separated text fields (e.g. composer)
-	if (!empty($fieldConfig["delimiter"])) {
-		$parts = array_map('trim', explode($fieldConfig["delimiter"], $value));
-		$parts = array_filter($parts, function($v) { return $v !== ""; });
-		return array_values(array_map(function($v) {
-			return ["name" => $v];
-		}, $parts));
 	}
 
 	if ($isUriField) {
