@@ -244,7 +244,8 @@
 				<?php
 				break;
 			case "language":
-				// Language fields use uri as <option value> and name as display text
+				// Language fields use code as <option value> (matching TomSelect valueField:'code')
+				// and name as display text
 				?>
 				<span
 					is="lucos-lang"
@@ -260,10 +261,20 @@
 						<?php
 						if (!empty($v3Values)) {
 							foreach ($v3Values as $tagValue) {
-								$optionValue = $tagValue["uri"] ?? $tagValue["name"] ?? "";
-								$displayName = $tagValue["name"] ?? $tagValue["uri"] ?? "";
+								$uri = $tagValue["uri"] ?? "";
+								$name = $tagValue["name"] ?? "";
+								// Extract language code from URI for TomSelect compatibility
+								// URI format: https://eolas.l42.eu/entity/{code}/Language
+								$code = $name;
+								if (!empty($uri)) {
+									$uriParts = explode("/", rtrim($uri, "/"));
+									if (count($uriParts) >= 2) {
+										$code = $uriParts[count($uriParts) - 2];
+									}
+								}
+								$displayName = $name ?: $code;
 						?>
-							<option value="<?=htmlspecialchars((string)$optionValue)?>" selected>
+							<option value="<?=htmlspecialchars((string)$code)?>" selected>
 								<?=htmlspecialchars((string)$displayName)?>
 							</option><?php
 							}

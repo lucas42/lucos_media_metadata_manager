@@ -171,8 +171,43 @@ window.addEventListener('DOMContentLoaded', event => {
 		});
 	});
 
-	// When the form is submitted, disable the submit button(s)
+	// When the form is submitted, capture display names and URIs for search/language fields,
+	// then disable the submit button(s)
 	primaryform.addEventListener("submit", () => {
+		// For search and language selects, add hidden inputs with names and URIs
+		// so the server can write complete V3 tag objects (both name and uri)
+		primaryform.querySelectorAll('span[is="lucos-search"] select, span[is="lucos-lang"] select').forEach(select => {
+			const baseName = select.name.replace('[]', '');
+			const isLang = select.closest('span[is="lucos-lang"]') !== null;
+			const ts = select.tomselect;
+
+			// Clean up any previously added hidden inputs
+			primaryform.querySelectorAll(`input[name="${baseName}_names[]"], input[name="${baseName}_uris[]"]`).forEach(el => el.remove());
+
+			Array.from(select.selectedOptions).forEach(option => {
+				// Add display name
+				const nameInput = document.createElement('input');
+				nameInput.type = 'hidden';
+				nameInput.name = `${baseName}_names[]`;
+				nameInput.value = option.text.trim();
+				primaryform.appendChild(nameInput);
+
+				// Add URI
+				const uriInput = document.createElement('input');
+				uriInput.type = 'hidden';
+				uriInput.name = `${baseName}_uris[]`;
+				if (isLang && ts) {
+					// Language: option value is code, full URI is in TomSelect data
+					const data = ts.options[option.value];
+					uriInput.value = data?.url || '';
+				} else {
+					// Search: option value IS the URI
+					uriInput.value = option.value;
+				}
+				primaryform.appendChild(uriInput);
+			});
+		});
+
 		primaryform.querySelectorAll("input[type=submit]").forEach(submitButton => {
 			submitButton.disabled = true;
 			submitButton.classList.add("loading");
