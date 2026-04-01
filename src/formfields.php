@@ -178,7 +178,7 @@ function getTagFields()
  */
 function getCollections()
 {
-	return fetchFromApi("/v2/collections");
+	return fetchFromApi("/v3/collections");
 }
 
 /**

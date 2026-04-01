@@ -29,7 +29,7 @@
 			<form method="get" action="/search">
 			<?php foreach ($form_fields as $key => $field) {
 				$key = 'p.'.$key;
-				$value = null;
+				$v3Values = null;
 				$missing = true;
 			?>
 				<div class="form-field">

@@ -20,7 +20,9 @@ function searchTracks($params, $page) {
 
 function summariseTracks($tracks) {
 	return array_map(function ($track) {
-		$title_value = extractFormValue($track["tags"]["title"] ?? []);
+		// Extract name from V3 tag arrays directly
+		$titleValues = $track["tags"]["title"] ?? [];
+		$title_value = !empty($titleValues) ? ($titleValues[0]["name"] ?? null) : null;
 		if (!empty($title_value)) {
 			$title = $title_value;
 
@@ -36,8 +38,9 @@ function summariseTracks($tracks) {
 			$title = implode(".", $filename_parts);
 		}
 
-		// Prefix the tile with the artist, if one is given
-		$artist_value = extractFormValue($track["tags"]["artist"] ?? []);
+		// Prefix the title with the artist, if one is given
+		$artistValues = $track["tags"]["artist"] ?? [];
+		$artist_value = !empty($artistValues) ? ($artistValues[0]["name"] ?? null) : null;
 		if (!empty($artist_value)) {
 			$title = $artist_value." - ".$title;
 		}

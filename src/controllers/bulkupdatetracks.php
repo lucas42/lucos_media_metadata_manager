@@ -1,6 +1,7 @@
 <?php
 require_once("../formfields.php");
 require_once("../api.php");
+require_once("../controllers/updatetrack.php");
 
 /**
  * Updates the metadata of tracks matching the given search paramaters
@@ -26,16 +27,17 @@ function bulkUpdateTracks($params, $currentpage, $postdata)
 	}
 
 	$tags = array();
+	$fieldConfig = getTagFields();
 	foreach (getTagKeys() as $key) {
 		if (!is_null($postdata[$key]) and $postdata[$key] !== "") {
-			$tags[$key] = $postdata[$key];
+			$tags[$key] = formValueToV3($postdata[$key], $fieldConfig[$key] ?? []);
 		}
 		if (!empty($postdata["{$key}_blank"])) {
-			$tags[$key] = "";
+			$tags[$key] = [];
 		}
 	}
 	if (!empty($tags))
-		$api_data["tags"] = tagsToV3Format($tags, getTagFields());
+		$api_data["tags"] = $tags;
 
 	$headers = [];
 	if (!empty($postdata['missing-only'])) {

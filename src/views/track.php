@@ -22,18 +22,17 @@
 		<h2>Metadata</h2>
 	</header>
 <?php foreach ($form_fields as $key => $field) {
-	if (array_key_exists($key, $data["tags"])) {
-		$value = extractFormValue($data["tags"][$key], $field);
-	} else {
-		$value = null;
-	}
+	// Pass V3 tag arrays directly — field.php handles rendering per field type
+	$v3Values = $data["tags"][$key] ?? null;
 ?>
 	<div class="form-field">
 <?php
 	include 'field.php';
 
-	if (!is_null($value) and !is_array($value)) {?>
-		<a href="/search?p.<?=htmlspecialchars($key)?>=<?=htmlspecialchars(urlencode($value))?>" class='predicate-search' target="_blank" title='Find all tracks with <?=htmlspecialchars($key)?> "<?=htmlspecialchars($value)?>"'>🔍</a>
+	// Show search link for simple single-value tags
+	$searchValue = (!empty($v3Values) && count($v3Values) === 1) ? ($v3Values[0]["name"] ?? null) : null;
+	if (!is_null($searchValue)) {?>
+		<a href="/search?p.<?=htmlspecialchars($key)?>=<?=htmlspecialchars(urlencode($searchValue))?>" class='predicate-search' target="_blank" title='Find all tracks with <?=htmlspecialchars($key)?> "<?=htmlspecialchars($searchValue)?>"'>🔍</a>
 	<?php } else { ?>
 		<span class='predicate-search disabled'>🔍</span>
 	<?php } ?>
@@ -48,10 +47,11 @@
 </form>
 <h2>Additional Details</h2>
 <div id="details">
-<?php 
+<?php
 	$unknown_tag_keys = array_diff_key($data["tags"], $form_fields);
 	foreach ($unknown_tag_keys as $key => $v3Values) {
-		$val = extractFormValue($v3Values);
+		$displayValues = array_map(function($v) { return $v["name"] ?? $v["uri"] ?? ""; }, $v3Values);
+		$val = implode(", ", array_filter($displayValues));
 ?>
 	<div class="detail">
 		<span class="key"><?=htmlspecialchars(str_replace('_', ' ', $key))?></span>
