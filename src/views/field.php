@@ -1,7 +1,7 @@
 <?php
 	/**
 	 * @var string $key
-	 * @var array|null $v3Values  V3 tag array e.g. [{"name":"...", "uri":"..."}], or null
+	 * @var array|null $values  Tag values array e.g. [{"name":"...", "uri":"..."}], or null
 	 * @var array $field
 	 * @var bool|null $disabled
 	 * @var bool|null $blank
@@ -20,8 +20,8 @@
 
 	// Extract a simple string value for field types that need one
 	$value = null;
-	if (!empty($v3Values)) {
-		$names = array_filter(array_map(function($v) { return $v["name"] ?? null; }, $v3Values), function($n) { return $n !== null; });
+	if (!empty($values)) {
+		$names = array_filter(array_map(function($v) { return $v["name"] ?? null; }, $values), function($n) { return $n !== null; });
 		if (count($names) === 1) {
 			$value = reset($names);
 		} elseif (count($names) > 1) {
@@ -148,8 +148,8 @@
 			case "multiselect":
 				// For multiselect, extract names as an array
 				$selectedValues = [];
-				if (!empty($v3Values)) {
-					$selectedValues = array_filter(array_map(function($v) { return $v["name"] ?? null; }, $v3Values), function($n) { return $n !== null; });
+				if (!empty($values)) {
+					$selectedValues = array_filter(array_map(function($v) { return $v["name"] ?? null; }, $values), function($n) { return $n !== null; });
 				}
 				?>
 				<select
@@ -172,8 +172,8 @@
 			case "multigroupselect":
 				// For multigroupselect, extract names as values
 				$selectedValues = [];
-				if (!empty($v3Values)) {
-					$selectedValues = array_filter(array_map(function($v) { return $v["name"] ?? null; }, $v3Values), function($n) { return $n !== null; });
+				if (!empty($values)) {
+					$selectedValues = array_filter(array_map(function($v) { return $v["name"] ?? null; }, $values), function($n) { return $n !== null; });
 				}
 				?>
 				<select
@@ -229,8 +229,8 @@
 						multiple
 						>
 						<?php
-						if (!empty($v3Values)) {
-							foreach ($v3Values as $tagValue) {
+						if (!empty($values)) {
+							foreach ($values as $tagValue) {
 								$optionValue = $tagValue["uri"] ?? $tagValue["name"] ?? "";
 								$displayName = $tagValue["name"] ?? $tagValue["uri"] ?? "";
 						?>
@@ -259,8 +259,8 @@
 						multiple
 						>
 						<?php
-						if (!empty($v3Values)) {
-							foreach ($v3Values as $tagValue) {
+						if (!empty($values)) {
+							foreach ($values as $tagValue) {
 								$uri = $tagValue["uri"] ?? "";
 								$name = $tagValue["name"] ?? "";
 								// Extract language code from URI for TomSelect compatibility

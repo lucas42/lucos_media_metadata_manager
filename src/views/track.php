@@ -23,14 +23,14 @@
 	</header>
 <?php foreach ($form_fields as $key => $field) {
 	// Pass V3 tag arrays directly — field.php handles rendering per field type
-	$v3Values = $data["tags"][$key] ?? null;
+	$values = $data["tags"][$key] ?? null;
 ?>
 	<div class="form-field">
 <?php
 	include 'field.php';
 
 	// Show search link for simple single-value tags
-	$searchValue = (!empty($v3Values) && count($v3Values) === 1) ? ($v3Values[0]["name"] ?? null) : null;
+	$searchValue = (!empty($values) && count($values) === 1) ? ($values[0]["name"] ?? null) : null;
 	if (!is_null($searchValue)) {?>
 		<a href="/search?p.<?=htmlspecialchars($key)?>=<?=htmlspecialchars(urlencode($searchValue))?>" class='predicate-search' target="_blank" title='Find all tracks with <?=htmlspecialchars($key)?> "<?=htmlspecialchars($searchValue)?>"'>🔍</a>
 	<?php } else { ?>
@@ -49,8 +49,8 @@
 <div id="details">
 <?php
 	$unknown_tag_keys = array_diff_key($data["tags"], $form_fields);
-	foreach ($unknown_tag_keys as $key => $v3Values) {
-		$displayValues = array_map(function($v) { return $v["name"] ?? $v["uri"] ?? ""; }, $v3Values);
+	foreach ($unknown_tag_keys as $key => $values) {
+		$displayValues = array_map(function($v) { return $v["name"] ?? $v["uri"] ?? ""; }, $values);
 		$val = implode(", ", array_filter($displayValues));
 ?>
 	<div class="detail">

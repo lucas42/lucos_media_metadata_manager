@@ -34,7 +34,7 @@
 		<form method="post" id="collectionform">
 			<div class="form-field">
 				<?php $key = "slug";
-$v3Values = !empty($data["slug"]) ? [["name" => $data["slug"]]] : null;
+$values = !empty($data["slug"]) ? [["name" => $data["slug"]]] : null;
 $field = ["type" => "text", "hint" => "Unique string to use for this collection in URLs etc."];
 $disabled = !empty($data["slug"]);
 include 'field.php';
@@ -42,7 +42,7 @@ include 'field.php';
 			</div>
 			<div class="form-field">
 				<?php $key = "name";
-$v3Values = !empty($data["name"]) ? [["name" => $data["name"]]] : null;
+$values = !empty($data["name"]) ? [["name" => $data["name"]]] : null;
 $field = ["type" => "text", "hint" => "Unique human-readable name for this collection"];
 $disabled = false;
 include 'field.php';
@@ -50,7 +50,7 @@ include 'field.php';
 			</div>
 			<div class="form-field">
 				<?php $key = "icon";
-$v3Values = !empty($data["icon"]) ? [["name" => $data["icon"]]] : null;
+$values = !empty($data["icon"]) ? [["name" => $data["icon"]]] : null;
 $field = ["type" => "text", "hint" => "Unicode Emoji used as a shorthand for this collection"];
 $disabled = false;
 include 'field.php';
