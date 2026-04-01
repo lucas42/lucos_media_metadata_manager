@@ -30,37 +30,42 @@ function fetchFromApi($path, $method="GET", $data=null, $headers=[]) {
 }
 
 /**
- * Normalizes V3 tag format for display in views.
- * V3 tags are maps of predicate to arrays of {"name": ..., "uri": ...} objects.
- * This converts them to simple strings (single-value) or comma-separated strings (multi-value),
- * matching the format the existing views expect.
+ * Extracts the form-appropriate value from a V3 tag array.
+ * V3 tags are arrays of {"name": ..., "uri": ...} objects.
  *
- * @param array $tags V3 tag data (e.g. {"title": [{"name": "Song"}], "composer": [{"name": "A"}, {"name": "B"}]})
- * @return array Normalized tags (e.g. {"title": "Song", "composer": "A,B"})
+ * For URI-based fields (search, language), returns comma-separated URIs.
+ * For other fields, returns the name(s) as a string.
+ *
+ * @param array $v3Values V3 tag array (e.g. [{"name": "March", "uri": "https://..."}])
+ * @param array $fieldConfig Field config from getTagFields() (optional)
+ * @return string|null The form value
  */
-function normalizeV3Tags($tags) {
-	$result = [];
-	foreach ($tags as $key => $values) {
-		if (!is_array($values)) {
-			$result[$key] = $values;
-			continue;
-		}
-		$names = array_map(function($v) { return $v["name"] ?? ""; }, $values);
-		$names = array_filter($names, function($v) { return $v !== ""; });
-		if (empty($names)) {
-			$result[$key] = null;
-		} elseif (count($names) === 1) {
-			$result[$key] = reset($names);
-		} else {
-			$result[$key] = implode(",", $names);
+function extractFormValue($v3Values, $fieldConfig = []) {
+	if (!is_array($v3Values) || empty($v3Values)) {
+		return null;
+	}
+	$useUri = in_array($fieldConfig["type"] ?? "", ["search", "language"]);
+	$extracted = [];
+	foreach ($v3Values as $v) {
+		if ($useUri && !empty($v["uri"])) {
+			$extracted[] = $v["uri"];
+		} elseif (!empty($v["name"]) || $v["name"] === "0") {
+			$extracted[] = $v["name"];
 		}
 	}
-	return $result;
+	if (empty($extracted)) {
+		return null;
+	}
+	if (count($extracted) === 1) {
+		return $extracted[0];
+	}
+	return implode(",", $extracted);
 }
 
 /**
  * Converts form tag data to V3 format for API writes.
- * Each tag value becomes an array of {"name": ...} objects.
+ * URI-based fields (search, language) use the "uri" property.
+ * Other fields use the "name" property.
  *
  * @param array $tags Tag data from form (strings or arrays)
  * @param array $fieldConfig Form field configuration from getTagFields()
@@ -69,25 +74,26 @@ function normalizeV3Tags($tags) {
 function tagsToV3Format($tags, $fieldConfig = []) {
 	$result = [];
 	foreach ($tags as $key => $value) {
+		$config = $fieldConfig[$key] ?? [];
+		$useUri = in_array($config["type"] ?? "", ["search", "language"]);
 		if (is_array($value)) {
 			// Multi-select fields already provide arrays
-			$result[$key] = array_values(array_map(function($v) {
-				return ["name" => $v];
+			$result[$key] = array_values(array_map(function($v) use ($useUri) {
+				return $useUri ? ["uri" => $v] : ["name" => $v];
 			}, array_filter($value, function($v) { return $v !== ""; })));
 		} elseif ($value === "" || $value === null) {
 			// Empty string means clear the tag
 			$result[$key] = [];
 		} else {
 			// Check if the field uses a delimiter (e.g. comma-separated text)
-			$config = $fieldConfig[$key] ?? null;
-			if ($config && !empty($config["delimiter"])) {
+			if (!empty($config["delimiter"])) {
 				$parts = array_map('trim', explode($config["delimiter"], $value));
 				$parts = array_filter($parts, function($v) { return $v !== ""; });
-				$result[$key] = array_values(array_map(function($v) {
-					return ["name" => $v];
+				$result[$key] = array_values(array_map(function($v) use ($useUri) {
+					return $useUri ? ["uri" => $v] : ["name" => $v];
 				}, $parts));
 			} else {
-				$result[$key] = [["name" => $value]];
+				$result[$key] = [$useUri ? ["uri" => $value] : ["name" => $value]];
 			}
 		}
 	}

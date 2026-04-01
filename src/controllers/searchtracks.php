@@ -20,9 +20,9 @@ function searchTracks($params, $page) {
 
 function summariseTracks($tracks) {
 	return array_map(function ($track) {
-		$tags = normalizeV3Tags($track["tags"]);
-		if (!empty($tags["title"])) {
-			$title = $tags["title"];
+		$title_value = extractFormValue($track["tags"]["title"] ?? []);
+		if (!empty($title_value)) {
+			$title = $title_value;
 
 		// If track has no title, base it on URL
 		} else {
@@ -37,8 +37,9 @@ function summariseTracks($tracks) {
 		}
 
 		// Prefix the tile with the artist, if one is given
-		if (!empty($tags["artist"])) {
-			$title = $tags["artist"]." - ".$title;
+		$artist_value = extractFormValue($track["tags"]["artist"] ?? []);
+		if (!empty($artist_value)) {
+			$title = $artist_value." - ".$title;
 		}
 		return [
 			"id" => $track["id"],

@@ -23,7 +23,7 @@
 	</header>
 <?php foreach ($form_fields as $key => $field) {
 	if (array_key_exists($key, $data["tags"])) {
-		$value = $data["tags"][$key];
+		$value = extractFormValue($data["tags"][$key], $field);
 	} else {
 		$value = null;
 	}
@@ -50,7 +50,8 @@
 <div id="details">
 <?php 
 	$unknown_tag_keys = array_diff_key($data["tags"], $form_fields);
-	foreach ($unknown_tag_keys as $key => $val) {
+	foreach ($unknown_tag_keys as $key => $v3Values) {
+		$val = extractFormValue($v3Values);
 ?>
 	<div class="detail">
 		<span class="key"><?=htmlspecialchars(str_replace('_', ' ', $key))?></span>

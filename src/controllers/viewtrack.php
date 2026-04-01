@@ -9,7 +9,6 @@ require_once("../controllers/error.php");
 function viewTrack($trackid) {
 	try {
 		$data = fetchFromApi("/v3/tracks/{$trackid}");
-		$data["tags"] = normalizeV3Tags($data["tags"]);
 		$form_fields = getFormFields();
 		$data["tags"]["collections"] = [];
 		foreach ($data["collections"] as $collection) {
