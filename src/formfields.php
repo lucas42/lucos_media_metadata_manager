@@ -19,12 +19,10 @@ function getTagFields()
 			"type" => "text",
 		],
 		"composer" => [
-			"type" => "text",
-			"multi-text" => true,
+			"type" => "multi-text",
 		],
 		"producer" => [
-			"type" => "text",
-			"multi-text" => true,
+			"type" => "multi-text",
 		],
 		"rating" => [
 			"type" => "range",

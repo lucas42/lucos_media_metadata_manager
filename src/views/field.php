@@ -17,17 +17,6 @@
 	if (!empty($field["beta"])) {
 		$class .= " beta";
 	}
-
-	// Extract a simple string value for field types that need one
-	$value = null;
-	if (!empty($values)) {
-		$names = array_filter(array_map(function($v) { return $v["name"] ?? null; }, $values), function($n) { return $n !== null; });
-		if ($field["type"] === "text" && !empty($field["delimiter"])) {
-			$value = implode($field["delimiter"], $names);
-		} elseif (!empty($names)) {
-			$value = reset($names);
-		}
-	}
 ?>
 		<label
 			for="<?=htmlspecialchars($key)?>"
@@ -41,42 +30,43 @@
 		<span class="form-input"><?php
 		switch($field["type"]) {
 			case "text":
-				if (!empty($field["multi-text"])) {
-					?>
-					<select
-						id="<?=htmlspecialchars($key)?>"
-						name="<?=htmlspecialchars($key)?>[]"
-						class="select-field select-field-<?=htmlspecialchars($key)?>"
-						multiple
-						data-create="true"
-						<?=empty($disabled) ? "" : "disabled"?>
-						>
-						<?php
-						if (!empty($values)) {
-							foreach ($values as $tagValue) {
-								$name = $tagValue["name"] ?? "";
-								if ($name === "") continue;
-						?>
-							<option value="<?=htmlspecialchars($name)?>" selected>
-								<?=htmlspecialchars($name)?>
-							</option><?php
-							}
-						}?>
-					</select>
+				$value = (!empty($values) && isset($values[0]["name"])) ? $values[0]["name"] : null;
+				?>
+				<input
+					type="text"
+					id="<?=htmlspecialchars($key)?>"
+					name="<?=htmlspecialchars($key)?>"
+					value="<?=htmlspecialchars((string)$value)?>"
+					class="input-field input-field-<?=htmlspecialchars($key)?>"
+					<?=empty($disabled) ? "" : "disabled"?> />
+				<?php
+				break;
+			case "multi-text":
+				?>
+				<select
+					id="<?=htmlspecialchars($key)?>"
+					name="<?=htmlspecialchars($key)?>[]"
+					class="select-field select-field-<?=htmlspecialchars($key)?>"
+					multiple
+					data-create="true"
+					<?=empty($disabled) ? "" : "disabled"?>
+					>
 					<?php
-				} else {
+					if (!empty($values)) {
+						foreach ($values as $tagValue) {
+							$name = $tagValue["name"] ?? "";
+							if ($name === "") continue;
 					?>
-					<input
-						type="text"
-						id="<?=htmlspecialchars($key)?>"
-						name="<?=htmlspecialchars($key)?>"
-						value="<?=htmlspecialchars((string)$value)?>"
-						class="input-field input-field-<?=htmlspecialchars($key)?>"
-						<?=empty($disabled) ? "" : "disabled"?> />
-					<?php
-				}
+						<option value="<?=htmlspecialchars($name)?>" selected>
+							<?=htmlspecialchars($name)?>
+						</option><?php
+						}
+					}?>
+				</select>
+				<?php
 				break;
 			case "range":
+				$value = (!empty($values) && isset($values[0]["name"])) ? $values[0]["name"] : null;
 				?>
 				<input
 					type="range"
@@ -110,6 +100,7 @@
 				<?php
 				break;
 			case "discrete-range":
+				$value = (!empty($values) && isset($values[0]["name"])) ? $values[0]["name"] : null;
 				?>
 				<span class="labeled-range">
 					<input
@@ -152,6 +143,7 @@
 				<?php
 				break;
 			case "select":
+				$value = (!empty($values) && isset($values[0]["name"])) ? $values[0]["name"] : null;
 				?>
 				<select
 					id="<?=htmlspecialchars($key)?>"
@@ -234,6 +226,7 @@
 				</select><?php
 				break;
 			case "textarea":
+				$value = (!empty($values) && isset($values[0]["name"])) ? $values[0]["name"] : null;
 				?>
 				<textarea
 					id="<?=htmlspecialchars($key)?>"
