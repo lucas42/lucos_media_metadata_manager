@@ -11,7 +11,7 @@ function deleteCollection($slug) {
 		displayError(400, "Invalid collection slug $slug to delete");
 	}
 	try {
-		$response = fetchFromApi("/v2/collections/".urlencode($slug), "DELETE");
+		$response = fetchFromApi("/v3/collections/".urlencode($slug), "DELETE");
 		header("Location: /collections/?deleted=collection", true, 303);
 	} catch (ApiError $error) {
 		displayError(502, "Error deleting collection in API.\n\n".$response);

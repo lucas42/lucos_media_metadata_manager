@@ -1,7 +1,7 @@
 <?php
 	/**
 	 * @var string $key
-	 * @var string|null $value
+	 * @var array|null $values  Tag values array e.g. [{"name":"...", "uri":"..."}], or null
 	 * @var array $field
 	 * @var bool|null $disabled
 	 * @var bool|null $blank
@@ -30,21 +30,46 @@
 		<span class="form-input"><?php
 		switch($field["type"]) {
 			case "text":
+				$value = (!empty($values) && isset($values[0]["name"])) ? $values[0]["name"] : null;
 				?>
-				<input 
-					type="text" 
+				<input
+					type="text"
 					id="<?=htmlspecialchars($key)?>"
 					name="<?=htmlspecialchars($key)?>"
 					value="<?=htmlspecialchars((string)$value)?>"
 					class="input-field input-field-<?=htmlspecialchars($key)?>"
-					<?=empty($field["delimiter"]) ? "" : "data-delimiter=\"{$field["delimiter"]}\""?>
 					<?=empty($disabled) ? "" : "disabled"?> />
 				<?php
 				break;
+			case "multi-text":
+				?>
+				<select
+					id="<?=htmlspecialchars($key)?>"
+					name="<?=htmlspecialchars($key)?>[]"
+					class="select-field select-field-<?=htmlspecialchars($key)?>"
+					multiple
+					data-create="true"
+					<?=empty($disabled) ? "" : "disabled"?>
+					>
+					<?php
+					if (!empty($values)) {
+						foreach ($values as $tagValue) {
+							$name = $tagValue["name"] ?? "";
+							if ($name === "") continue;
+					?>
+						<option value="<?=htmlspecialchars($name)?>" selected>
+							<?=htmlspecialchars($name)?>
+						</option><?php
+						}
+					}?>
+				</select>
+				<?php
+				break;
 			case "range":
+				$value = (!empty($values) && isset($values[0]["name"])) ? $values[0]["name"] : null;
 				?>
 				<input
-					type="range" 
+					type="range"
 					id="<?=htmlspecialchars($key)?>"
 					name="<?=htmlspecialchars($key)?>"
 					value="<?=htmlspecialchars((string)$value)?>"
@@ -75,10 +100,11 @@
 				<?php
 				break;
 			case "discrete-range":
+				$value = (!empty($values) && isset($values[0]["name"])) ? $values[0]["name"] : null;
 				?>
 				<span class="labeled-range">
 					<input
-						type="range" 
+						type="range"
 						id="<?=htmlspecialchars($key)?>"
 						name="<?=htmlspecialchars($key)?>"
 						value="<?=htmlspecialchars((string)$value)?>"
@@ -117,25 +143,30 @@
 				<?php
 				break;
 			case "select":
-				?> 
+				$value = (!empty($values) && isset($values[0]["name"])) ? $values[0]["name"] : null;
+				?>
 				<select
 					id="<?=htmlspecialchars($key)?>"
 					name="<?=htmlspecialchars($key)?>"
 					class="select-field select-field-<?=htmlspecialchars($key)?>"
 					>
-						<option></option><?php 
+						<option></option><?php
 					if (is_array($field["values"])) {
 						foreach ($field["values"] as $option => $label) {
-						?> 
+						?>
 							<option value="<?=htmlspecialchars((string)$option)?>"<?=(strval($option) === $value)?" selected":""?>>
-								<?=htmlspecialchars((string)$label)?> 
+								<?=htmlspecialchars((string)$label)?>
 							</option><?php
 						}
-					}?> 
+					}?>
 				</select><?php
 				break;
 			case "multiselect":
-				if (empty($value)) $value = [];
+				// For multiselect, extract names as an array
+				$selectedValues = [];
+				if (!empty($values)) {
+					$selectedValues = array_filter(array_map(function($v) { return $v["name"] ?? null; }, $values), function($n) { return $n !== null; });
+				}
 				?>
 				<select
 					id="<?=htmlspecialchars($key)?>"
@@ -147,7 +178,7 @@
 					if (is_array($field["values"])) {
 						foreach ($field["values"] as $option => $name) {
 						?>
-							<option value="<?=htmlspecialchars((string)$option)?>"<?=in_array($option, (array)$value)?" selected":""?>>
+							<option value="<?=htmlspecialchars((string)$option)?>"<?=in_array($option, $selectedValues)?" selected":""?>>
 								<?=htmlspecialchars((string)$name)?>
 							</option><?php
 						}
@@ -155,7 +186,11 @@
 				</select><?php
 				break;
 			case "multigroupselect":
-				$values = explode(",", (string)$value);
+				// For multigroupselect, extract names as values
+				$selectedValues = [];
+				if (!empty($values)) {
+					$selectedValues = array_filter(array_map(function($v) { return $v["name"] ?? null; }, $values), function($n) { return $n !== null; });
+				}
 				?>
 				<select
 					id="<?=htmlspecialchars($key)?>"
@@ -174,7 +209,7 @@
 							if (is_array($options)) {
 								foreach ($options as $option => $name) {
 								?>
-									<option value="<?=htmlspecialchars((string)$option)?>"<?=in_array($option, $values)?" selected":""?>>
+									<option value="<?=htmlspecialchars((string)$option)?>"<?=in_array($option, $selectedValues)?" selected":""?>>
 										<?=htmlspecialchars((string)$name)?>
 									</option>
 								<?php
@@ -191,6 +226,7 @@
 				</select><?php
 				break;
 			case "textarea":
+				$value = (!empty($values) && isset($values[0]["name"])) ? $values[0]["name"] : null;
 				?>
 				<textarea
 					id="<?=htmlspecialchars($key)?>"
@@ -198,48 +234,27 @@
 				<?php
 				break;
 			case "search":
-				$values = explode(",", (string)$value);
+				// Search fields use uri as <option value> and name as display text
 				?>
 				<span
 					is="lucos-search"
 					data-api-key="<?=htmlspecialchars((string)getenv('KEY_LUCOS_ARACHNE'))?>"
-					data-exclude_types="Track">
+					<?=!empty($field["types"]) ? "data-types=\"".htmlspecialchars($field["types"])."\"" : "data-exclude_types=\"Track\""?>>
 					<select
 						id="<?=htmlspecialchars($key)?>"
 						name="<?=htmlspecialchars($key)?>[]"
 						multiple
 						>
 						<?php
-						foreach ($values as $val) {
+						if (!empty($values)) {
+							foreach ($values as $tagValue) {
+								$optionValue = $tagValue["uri"] ?? $tagValue["name"] ?? "";
+								$displayName = $tagValue["name"] ?? $tagValue["uri"] ?? "";
 						?>
-							<option value="<?=htmlspecialchars((string)$val)?>" selected>
-								<?=htmlspecialchars((string)$val)?>
+							<option value="<?=htmlspecialchars((string)$optionValue)?>" selected>
+								<?=htmlspecialchars((string)$displayName)?>
 							</option><?php
-						}?>
-					</select>
-				</span>
-				<?php
-				break;
-			case "language":
-				$values = explode(",", (string)$value);
-				?>
-				<span
-					is="lucos-lang"
-					data-api-key="<?=htmlspecialchars((string)getenv('KEY_LUCOS_ARACHNE'))?>"
-					data-no-lang="Instrumental / No Language"
-					data-common="en,ga,zxx"
-					>
-					<select
-						id="<?=htmlspecialchars($key)?>"
-						name="<?=htmlspecialchars($key)?>[]"
-						multiple
-						>
-						<?php
-						foreach ($values as $val) {
-						?>
-							<option value="<?=htmlspecialchars((string)$val)?>" selected>
-								<?=htmlspecialchars((string)$val)?>
-							</option><?php
+							}
 						}?>
 					</select>
 				</span>
@@ -247,7 +262,7 @@
 				break;
 			default:
 				?>Unknown type "<?=htmlspecialchars((string)$field["type"])?>"<?php
-		}?> 
+		}?>
 			<?php if(!empty($blank)) {?>
 				<span class="blank" title="Blank out this field for all tracks">
 					<input

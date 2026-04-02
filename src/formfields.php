@@ -19,12 +19,10 @@ function getTagFields()
 			"type" => "text",
 		],
 		"composer" => [
-			"type" => "text",
-			"delimiter" => ",",
+			"type" => "multi-text",
 		],
 		"producer" => [
-			"type" => "text",
-			"delimiter" => ",",
+			"type" => "multi-text",
 		],
 		"rating" => [
 			"type" => "range",
@@ -57,7 +55,8 @@ function getTagFields()
 			"type" => "textarea",
 		],
 		"language" => [
-			"type" => "language",
+			"type" => "search",
+			"types" => "Language",
 			"hint" => "The language(s) used for lyrics in this track",
 			"eolas_add_url" => "https://eolas.l42.eu/metadata/language/add/",
 		],
@@ -178,7 +177,7 @@ function getTagFields()
  */
 function getCollections()
 {
-	return fetchFromApi("/v2/collections");
+	return fetchFromApi("/v3/collections");
 }
 
 /**

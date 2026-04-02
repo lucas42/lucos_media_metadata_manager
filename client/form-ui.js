@@ -171,8 +171,34 @@ window.addEventListener('DOMContentLoaded', event => {
 		});
 	});
 
-	// When the form is submitted, disable the submit button(s)
+	// When the form is submitted, capture display names and URIs for search/language fields,
+	// then disable the submit button(s)
 	primaryform.addEventListener("submit", () => {
+		// For search and language selects, add hidden inputs with names and URIs
+		// so the server can write complete V3 tag objects (both name and uri)
+		primaryform.querySelectorAll('span[is="lucos-search"] select').forEach(select => {
+			const baseName = select.name.replace('[]', '');
+
+			// Clean up any previously added hidden inputs
+			primaryform.querySelectorAll(`input[name="${baseName}_names[]"], input[name="${baseName}_uris[]"]`).forEach(el => el.remove());
+
+			Array.from(select.selectedOptions).forEach(option => {
+				// Add display name
+				const nameInput = document.createElement('input');
+				nameInput.type = 'hidden';
+				nameInput.name = `${baseName}_names[]`;
+				nameInput.value = option.text.trim();
+				primaryform.appendChild(nameInput);
+
+				// Add URI (option value IS the URI for search fields)
+				const uriInput = document.createElement('input');
+				uriInput.type = 'hidden';
+				uriInput.name = `${baseName}_uris[]`;
+				uriInput.value = option.value;
+				primaryform.appendChild(uriInput);
+			});
+		});
+
 		primaryform.querySelectorAll("input[type=submit]").forEach(submitButton => {
 			submitButton.disabled = true;
 			submitButton.classList.add("loading");
@@ -214,29 +240,13 @@ window.addEventListener('DOMContentLoaded', event => {
 				this.refreshOptions();
 			},
 		};
-		if (select.hasAttribute("multiple")) config.plugins.remove_button = { title:'Remove this item' }
-		else config.allowEmptyOption = true
+		if (select.hasAttribute("multiple")) {
+			config.plugins.remove_button = { title:'Remove this item' }
+			if (select.dataset.create) config.create = true
+		} else {
+			config.allowEmptyOption = true
+		}
 		new TomSelect(select, config);
 	});
 });
 
-/**
- * Use tom-select on text inputs with delimiter attribute
- */
-window.addEventListener('DOMContentLoaded', event => {
-	document.querySelectorAll(".form-field input[data-delimiter]").forEach(select => {
-		const config = {
-			plugins: {
-				drag_drop: {},
-				remove_button: { title:'Remove this item' },
-			},
-			delimiter: select.dataset.delimiter,
-			onItemAdd: function() { // Workaround until https://github.com/orchidjs/tom-select/issues/854 is merged/released
-				this.setTextboxValue('');
-				this.refreshOptions();
-			},
-			create: true,
-		};
-		new TomSelect(select, config);
-	});
-});

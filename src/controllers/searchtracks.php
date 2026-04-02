@@ -4,7 +4,7 @@ require_once("../controllers/error.php");
 
 function searchTracks($params, $page) {
 	$basequerystring = http_build_query($params);
-	$path = "/v2/tracks?{$basequerystring}&page={$page}";
+	$path = "/v3/tracks?{$basequerystring}&page={$page}";
 	try {
 		$data = fetchFromApi($path);
 		$tracks = summariseTracks($data["tracks"]);
@@ -20,8 +20,11 @@ function searchTracks($params, $page) {
 
 function summariseTracks($tracks) {
 	return array_map(function ($track) {
-		if (!empty($track["tags"]["title"])) {
-			$title = $track["tags"]["title"];
+		// Extract name from V3 tag arrays directly
+		$titleValues = $track["tags"]["title"] ?? [];
+		$title_value = !empty($titleValues) ? ($titleValues[0]["name"] ?? null) : null;
+		if (!empty($title_value)) {
+			$title = $title_value;
 
 		// If track has no title, base it on URL
 		} else {
@@ -35,12 +38,14 @@ function summariseTracks($tracks) {
 			$title = implode(".", $filename_parts);
 		}
 
-		// Prefix the tile with the artist, if one is given
-		if (!empty($track["tags"]["artist"])) {
-			$title = $track["tags"]["artist"]." - ".$title;
+		// Prefix the title with the artist, if one is given
+		$artistValues = $track["tags"]["artist"] ?? [];
+		$artist_value = !empty($artistValues) ? ($artistValues[0]["name"] ?? null) : null;
+		if (!empty($artist_value)) {
+			$title = $artist_value." - ".$title;
 		}
 		return [
-			"id" => $track["trackid"],
+			"id" => $track["id"],
 			"title" => $title,
 			"url" => $track["url"],
 		];

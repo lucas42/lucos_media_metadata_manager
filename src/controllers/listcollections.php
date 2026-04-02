@@ -7,7 +7,7 @@ require_once("../controllers/error.php");
  */
 function listCollections() {
 	try {
-		$collections = fetchFromApi("/v2/collections");
+		$collections = fetchFromApi("/v3/collections");
 		require("../views/collections.php");
 	} catch (ApiError $error) {
 		displayError(502, "Can't fetch collections from API.\n\n".$error->getMessage());

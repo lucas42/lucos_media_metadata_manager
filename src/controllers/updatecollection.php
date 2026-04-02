@@ -14,7 +14,7 @@ function updateCollection($slug, $postdata) {
 	}
 
 	try {
-		$collections = fetchFromApi("/v2/collections/".urlencode($slug), "PUT", $postdata);
+		$collections = fetchFromApi("/v3/collections/".urlencode($slug), "PUT", $postdata);
 		header("Location: /collections/{$slug}?saved=true", true, 303);
 	} catch (ApiError $error) {
 		displayError(502, "Error updating collection in API.\n\n".$error->getMessage());

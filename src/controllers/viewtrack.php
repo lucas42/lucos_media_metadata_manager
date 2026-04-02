@@ -8,7 +8,7 @@ require_once("../controllers/error.php");
  */
 function viewTrack($trackid) {
 	try {
-		$data = fetchFromApi("/v2/tracks/{$trackid}");
+		$data = fetchFromApi("/v3/tracks/{$trackid}");
 		$form_fields = getFormFields();
 		$data["tags"]["collections"] = [];
 		foreach ($data["collections"] as $collection) {

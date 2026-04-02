@@ -3,7 +3,7 @@
 function fetchFromApi($path, $method="GET", $data=null, $headers=[]) {
 	$url = getenv("MEDIA_API") . $path;
 	$apikey = getenv("KEY_LUCOS_MEDIA_METADATA_API");
-	$headers[] = "Authorization: key $apikey";
+	$headers[] = "Authorization: Bearer $apikey";
 	$http_params = [
 		"method" => $method,
 		"header" => $headers,

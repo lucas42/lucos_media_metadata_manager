@@ -8,7 +8,7 @@ require_once("../controllers/searchtracks.php");
  */
 function viewCollection($slug, $page) {
 	try {
-		$data = fetchFromApi("/v2/collections/".urlencode($slug)."?page={$page}");
+		$data = fetchFromApi("/v3/collections/".urlencode($slug)."?page={$page}");
 		$tracks = summariseTracks($data["tracks"]);
 		$totalPages = $data["totalPages"];
 		require("../views/collection.php");
@@ -28,6 +28,7 @@ function newCollectionForm() {
 	$data = [
 		'slug' => null,
 		'name' => null,
+		'icon' => null,
 	];
 	$tracks = [];
 	require("../views/collection.php");
