@@ -1,6 +1,6 @@
 <?php
 
-function fetchFromApi($path, $method="GET", $data=null, $headers=[]) {
+function fetchFromApi($path, $method="GET", $data=null, $headers=[], $timeout=null) {
 	$url = getenv("MEDIA_API") . $path;
 	$apikey = getenv("KEY_LUCOS_MEDIA_METADATA_API");
 	$headers[] = "Authorization: Bearer $apikey";
@@ -9,6 +9,9 @@ function fetchFromApi($path, $method="GET", $data=null, $headers=[]) {
 		"header" => $headers,
 		"ignore_errors" => true,
 	];
+	if ($timeout !== null) {
+		$http_params["timeout"] = $timeout;
+	}
 	if ($data !== null) {
 		$http_params["content"] = json_encode($data);
 		$http_params["header"][] = "Content-Type: application/json";
