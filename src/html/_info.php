@@ -13,15 +13,11 @@ $output = [
 			"techDetail" => "Can connect to lucos media metadata API",
 		]
 	],
-	"metrics" => [],
+	"metrics" => (object)[],
 ];
 try {
-	$tracks = fetchFromApi("/v3/tracks", timeout: 0.5);
+	fetchFromApi("/v3/tracks/1", timeout: 0.5);
 	$output["checks"]["metadata-api"]["ok"] = true;
-	$output["metrics"]["track-count"] = [
-		"value" => $tracks["totalTracks"] ?? 0,
-		"techDetail" => "Total number of tracks in the metadata API",
-	];
 } catch (ApiError $error) {
 	$output["checks"]["metadata-api"]["ok"] = false;
 	$output["checks"]["metadata-api"]["debug"] = $error->getMessage();
