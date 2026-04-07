@@ -66,7 +66,7 @@ function updateTrack($trackid, $postdata) {
 	foreach (getTagKeys() as $key) {
 		$names = $postdata["{$key}_names"] ?? null;
 		$uris = $postdata["{$key}_uris"] ?? null;
-		$tags[$key] = formValueToV3($postdata[$key], $fieldConfig[$key] ?? [], $names, $uris);
+		$tags[$key] = formValueToV3($postdata[$key] ?? null, $fieldConfig[$key] ?? [], $names, $uris);
 	}
 	$api_data["tags"] = $tags;
 
