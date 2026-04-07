@@ -25,9 +25,6 @@ function formValueToV3($value, $fieldConfig) {
 				$name = $v['name'] ?? $uri;
 				if ($uri === '') continue;
 				$result[] = ["name" => $name, "uri" => $uri];
-			} elseif ($isUriField) {
-				// Plain string value (e.g. language codes from lucos-lang)
-				$result[] = ["name" => $v, "uri" => $v];
 			} else {
 				$result[] = ["name" => $v];
 			}
