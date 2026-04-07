@@ -245,7 +245,7 @@
 					<?=!empty($field["preload"]) ? "data-preload" : ""?>>
 					<select
 						id="<?=htmlspecialchars($key)?>"
-						name="<?=htmlspecialchars($key)?>[]"
+						name="<?=htmlspecialchars($key)?>"
 						multiple
 						>
 						<?php
