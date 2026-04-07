@@ -6,26 +6,28 @@ require_once("../api.php");
  * Converts form post data for a single tag field to V3 format.
  * Each field type determines how values map to {"name": ..., "uri": ...} objects.
  *
- * Search fields: form sends URIs, JS adds names → {"name": name, "uri": uri}
+ * Search fields: lucos-search injects indexed structured pairs via the formdata
+ * event, so PHP parses field[N][uri] / field[N][name] into nested arrays directly.
  * Multi-text fields: form sends arrays of names → [{"name": name}, ...]
  * Other fields: form sends a single name → [{"name": value}]
- *
- * $names and $uris are parallel arrays from hidden inputs added by form-ui.js
- * on form submission. If JS fails, we fall back to using the form value for both.
  */
-function formValueToV3($value, $fieldConfig, $names = null, $uris = null) {
+function formValueToV3($value, $fieldConfig) {
 	$type = $fieldConfig["type"] ?? "text";
 	$isUriField = $type === "search";
 
 	if (is_array($value)) {
 		$result = [];
-		$values = array_values($value);
-		foreach ($values as $idx => $v) {
-			if ($v === "") continue;
-			if ($isUriField) {
-				$name = (!empty($names) && isset($names[$idx])) ? $names[$idx] : $v;
-				$uri = (!empty($uris) && isset($uris[$idx])) ? $uris[$idx] : $v;
+		foreach (array_values($value) as $v) {
+			if ($v === "" || $v === null) continue;
+			if ($isUriField && is_array($v)) {
+				// Indexed structured format from lucos-search: ['uri' => ..., 'name' => ...]
+				$uri = $v['uri'] ?? '';
+				$name = $v['name'] ?? $uri;
+				if ($uri === '') continue;
 				$result[] = ["name" => $name, "uri" => $uri];
+			} elseif ($isUriField) {
+				// Plain string value (e.g. language codes from lucos-lang)
+				$result[] = ["name" => $v, "uri" => $v];
 			} else {
 				$result[] = ["name" => $v];
 			}
@@ -38,9 +40,7 @@ function formValueToV3($value, $fieldConfig, $names = null, $uris = null) {
 	}
 
 	if ($isUriField) {
-		$name = (!empty($names) && isset($names[0])) ? $names[0] : $value;
-		$uri = (!empty($uris) && isset($uris[0])) ? $uris[0] : $value;
-		return [["name" => $name, "uri" => $uri]];
+		return [["name" => $value, "uri" => $value]];
 	}
 
 	return [["name" => $value]];
@@ -64,9 +64,7 @@ function updateTrack($trackid, $postdata) {
 	$tags = array();
 	$fieldConfig = getTagFields();
 	foreach (getTagKeys() as $key) {
-		$names = $postdata["{$key}_names"] ?? null;
-		$uris = $postdata["{$key}_uris"] ?? null;
-		$tags[$key] = formValueToV3($postdata[$key] ?? null, $fieldConfig[$key] ?? [], $names, $uris);
+		$tags[$key] = formValueToV3($postdata[$key] ?? null, $fieldConfig[$key] ?? []);
 	}
 	$api_data["tags"] = $tags;
 
