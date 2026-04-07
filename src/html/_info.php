@@ -4,6 +4,7 @@ require_once("../api.php");
 header("Content-Type: application/json");
 $output = [
 	"system" => "lucos_media_metadata_manager",
+	"title" => "Media Metadata Manager",
 	"ci" => [
 		"circle" => "gh/lucas42/lucos_media_metadata_manager",
 	],
@@ -12,6 +13,7 @@ $output = [
 			"techDetail" => "Can connect to lucos media metadata API",
 		]
 	],
+	"metrics" => (object)[],
 ];
 try {
 	fetchFromApi("/v3/tracks/1", timeout: 0.5);
