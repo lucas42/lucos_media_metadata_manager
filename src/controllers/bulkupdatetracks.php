@@ -30,9 +30,7 @@ function bulkUpdateTracks($params, $currentpage, $postdata)
 	$fieldConfig = getTagFields();
 	foreach (getTagKeys() as $key) {
 		if (isset($postdata[$key]) && $postdata[$key] !== "") {
-			$names = $postdata["{$key}_names"] ?? null;
-			$uris = $postdata["{$key}_uris"] ?? null;
-			$tags[$key] = formValueToV3($postdata[$key], $fieldConfig[$key] ?? [], $names, $uris);
+			$tags[$key] = formValueToV3($postdata[$key], $fieldConfig[$key] ?? []);
 		}
 		if (!empty($postdata["{$key}_blank"])) {
 			$tags[$key] = [];
