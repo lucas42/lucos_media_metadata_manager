@@ -14,9 +14,9 @@
 			<h2>Tracks</h2>
 			<form method="get" action="/search/full">
 				<div class="form-field">
-					<label for="trackid" class="key-label">Search Term</label>
+					<label for="search-term" class="key-label">Search Term</label>
 					<span class="form-input">
-						<input type="text" name="q"/>
+						<input type="text" name="q" id="search-term"/>
 					</span>
 					<input type="submit" value="Search" />
 				</div>
@@ -25,7 +25,7 @@
 				<div class="form-field">
 					<label for="trackid" class="key-label">Track ID</label>
 					<span class="form-input">
-						<input type="text" name="trackid"/>
+						<input type="text" name="trackid" id="trackid"/>
 					</span>
 					<input type="submit" value="View Track" />
 				</div>
@@ -40,7 +40,7 @@
 				<div class="form-field">
 					<label for="slug" class="key-label">Slug</label>
 					<span class="form-input">
-						<input type="text" name="slug"/>
+						<input type="text" name="slug" id="slug"/>
 					</span>
 					<input type="submit" value="View Collection" />
 				</div>
