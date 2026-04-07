@@ -12,7 +12,7 @@ function viewTrack($trackid) {
 		$form_fields = getFormFields();
 		$data["tags"]["collections"] = [];
 		foreach ($data["collections"] as $collection) {
-			$data["tags"]["collections"][] = $collection["slug"];
+			$data["tags"]["collections"][] = ["name" => $collection["slug"]];
 		}
 
 		require("../views/track.php");
