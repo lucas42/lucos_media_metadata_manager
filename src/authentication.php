@@ -45,7 +45,7 @@ if (isAuthenticated($token)) {
 	$secure = (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https') || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
 	setcookie('auth_token', $token, [
 		'httponly' => true,
-		'samesite' => 'Lax',
+		'samesite' => 'Strict',
 		'secure' => $secure,
 		'path' => '/',
 	]);
