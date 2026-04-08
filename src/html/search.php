@@ -1,5 +1,6 @@
 <?php
 require("../authentication.php");
+require("../csrf.php");
 require("../controllers/searchtracks.php");
 require("../controllers/bulkupdatetracks.php");
 require_once("../controllers/error.php");
@@ -36,6 +37,7 @@ if (array_key_exists('q', $_GET)) {
 try {
 	if (!empty($params)) {
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			verifyCsrfToken();
 			bulkUpdateTracks($params, $page, $_POST);
 		} else {
 			searchTracks($params, $page);

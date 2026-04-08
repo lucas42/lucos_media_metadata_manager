@@ -17,6 +17,7 @@
 		<a href="/" class="mock-button nav-home">&lt;- Home </a>
 		<div id="content" class="trackpage">
 <form method="post" id="trackform">
+	<?php echo csrfTokenField(); ?>
 	<header>
 		<input type="submit" value="Save" class="primary-submit" />
 		<h2>Metadata</h2>
@@ -81,6 +82,7 @@
 		data-trackid="<?=$data["id"]?>" />
 	</div>
 	<form method="post" action="/tracks/<?=$data["id"]?>/delete" data-confirm="Are you sure you want to delete track <?=$trackid?>?">
+		<?php echo csrfTokenField(); ?>
 		<input type="submit" value="Delete Track" class="standalone danger" />
 	</form>
 </div>

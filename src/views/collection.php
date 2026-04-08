@@ -32,6 +32,7 @@
 	<div id="content">
 		<h2>Collection Metadata</h2>
 		<form method="post" id="collectionform">
+			<?php echo csrfTokenField(); ?>
 			<div class="form-field">
 				<?php $key = "slug";
 $values = !empty($data["slug"]) ? [["name" => $data["slug"]]] : null;
@@ -100,6 +101,7 @@ include 'field.php';
 		<form method="post" action="/collections/<?= htmlspecialchars(urlencode($data["slug"]))?>/delete"
 			data-confirm="Are you sure you want to delete collection
 			<?= htmlspecialchars($data['name'])?>?">
+			<?php echo csrfTokenField(); ?>
 			<input type="submit" value="Delete Whole Collection" class="standalone danger" />
 		</form>
 		<?php

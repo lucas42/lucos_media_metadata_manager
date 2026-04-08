@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 // TODO: consider persisting this across requests to improve performance
 $agents = [];
 
@@ -39,7 +41,13 @@ elseif (!empty($_COOKIE['auth_token'])) {
 }
 
 if (isAuthenticated($token)) {
-	setcookie('auth_token', $token);
+	$secure = (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https') || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
+	setcookie('auth_token', $token, [
+		'httponly' => true,
+		'samesite' => 'Lax',
+		'secure' => $secure,
+		'path' => '/',
+	]);
 }
 else {
 	if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {

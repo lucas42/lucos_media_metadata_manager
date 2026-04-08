@@ -69,6 +69,7 @@ if ($prevpage > 0) {
 			<h2 id="advanced">Bulk Edit</h2>
 			<small>Updates all tracks returned by the current search. Fields left blank won't be edited.</small>
 			<form method="post" id="trackform">
+				<?php echo csrfTokenField(); ?>
 				<?php foreach ($form_fields as $key => $field) {
 	$values = null;
 	$blank = true;
