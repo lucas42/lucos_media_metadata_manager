@@ -1,5 +1,6 @@
 <?php
 require("../authentication.php");
+require("../csrf.php");
 require("../controllers/updatecollection.php");
 require("../controllers/viewcollection.php");
 require("../controllers/deletecollection.php");
@@ -18,6 +19,7 @@ if (!$subpath) {
 	if (array_key_exists("slug", $_GET)) {
 		header("Location: /collections/{$_GET["slug"]}");
 	} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		verifyCsrfToken();
 		updateCollection($slug, $_POST);
 	} elseif ($slug == "new") {
 		newCollectionForm();
@@ -28,6 +30,7 @@ if (!$subpath) {
 	}
 } elseif ($subpath == "delete") {
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		verifyCsrfToken();
 		deleteCollection($slug);
 	} else {
 		header("Allow: POST");
