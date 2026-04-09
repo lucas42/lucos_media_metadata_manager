@@ -26,6 +26,7 @@
 			</span>
 		</div>
 		<div id="facet-filters"></div>
+		<div id="search-loading" style="display:none;">Loading...</div>
 		<div id="search-error" style="display:none;">
 			<small>Search is currently unavailable. <a href="/search">Try the advanced search instead.</a></small>
 		</div>
@@ -39,6 +40,7 @@
 		const searchInput = document.getElementById('search-input');
 		const resultsList = document.getElementById('results');
 		const paginationDiv = document.getElementById('pagination');
+		const loadingDiv = document.getElementById('search-loading');
 		const errorDiv = document.getElementById('search-error');
 		const facetFiltersDiv = document.getElementById('facet-filters');
 		let debounceTimer = null;
@@ -96,6 +98,7 @@
 		function renderResults(data) {
 			resultsList.innerHTML = '';
 			errorDiv.style.display = 'none';
+			loadingDiv.style.display = 'none';
 
 			if (!data.hits || data.hits.length === 0) {
 				resultsList.innerHTML = '<li>No results found.</li>';
@@ -263,6 +266,7 @@
 				resultsList.innerHTML = '';
 				paginationDiv.innerHTML = '';
 				facetFiltersDiv.innerHTML = '';
+				loadingDiv.style.display = 'none';
 				errorDiv.style.display = 'none';
 				return;
 			}
@@ -272,6 +276,7 @@
 				currentController.abort();
 			}
 			currentController = new AbortController();
+			loadingDiv.style.display = 'block';
 
 			const url = buildSearchUrl(query, currentPage);
 
@@ -290,6 +295,7 @@
 				console.error('Search error:', err);
 				resultsList.innerHTML = '';
 				paginationDiv.innerHTML = '';
+				loadingDiv.style.display = 'none';
 				errorDiv.style.display = 'block';
 			}
 		}
