@@ -242,8 +242,6 @@
 					id="<?=htmlspecialchars($key)?>"
 					name="<?=htmlspecialchars($key)?>"
 					class="album-search-field album-search-field-<?=htmlspecialchars($key)?>"
-					data-media-api="<?=htmlspecialchars((string)getenv('MEDIA_API'))?>"
-					data-api-key="<?=htmlspecialchars((string)getenv('KEY_LUCOS_MEDIA_METADATA_API'))?>"
 					<?=empty($disabled) ? "" : "disabled"?>
 					>
 					<option value=""></option>

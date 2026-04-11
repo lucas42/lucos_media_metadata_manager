@@ -201,23 +201,17 @@ window.addEventListener('DOMContentLoaded', loadedEvent => {
 });
 
 /**
- * Use tom-select for album search fields, loading options from the media API
- * and supporting create-on-the-fly via POST /v3/albums
+ * Use tom-select for album search fields, loading options via the manager's
+ * /albums proxy endpoint and supporting create-on-the-fly via POST /albums
  */
 window.addEventListener('DOMContentLoaded', event => {
 	document.querySelectorAll(".form-field .album-search-field").forEach(select => {
-		const mediaApi = select.dataset.mediaApi;
-		const apiKey = select.dataset.apiKey;
-
 		const ts = new TomSelect(select, {
 			allowEmptyOption: true,
 			create: function(input, callback) {
-				fetch(`${mediaApi}/v3/albums`, {
+				fetch('/albums', {
 					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-						'Authorization': `key ${apiKey}`,
-					},
+					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ name: input }),
 				})
 				.then(r => r.ok ? r.json() : Promise.reject(r))
@@ -226,10 +220,8 @@ window.addEventListener('DOMContentLoaded', event => {
 			},
 		});
 
-		// Asynchronously load all albums from the API as additional options
-		fetch(`${mediaApi}/v3/albums`, {
-			headers: { 'Authorization': `key ${apiKey}` }
-		})
+		// Asynchronously load all albums as additional options
+		fetch('/albums')
 		.then(r => r.json())
 		.then(data => {
 			(data.albums || []).forEach(album => {
