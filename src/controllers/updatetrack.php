@@ -1,6 +1,6 @@
 <?php
-require_once("../formfields.php");
-require_once("../api.php");
+require_once(__DIR__ . "/../formfields.php");
+require_once(__DIR__ . "/../api.php");
 
 /**
  * Converts form post data for a single tag field to V3 format.

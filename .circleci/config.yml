@@ -2,14 +2,29 @@ version: 2.1
 orbs:
   lucos: lucos/deploy@0
 
+jobs:
+  test:
+    docker:
+      - image: cimg/php:8.4
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: composer install --no-progress --no-interaction
+      - run:
+          name: Run tests
+          command: vendor/bin/phpunit
+
 workflows:
   version: 2
   build-deploy:
     jobs:
+      - test
       - lucos/build-amd64
       - lucos/deploy-avalon:
           serial-group: << pipeline.project.slug >>/deploy-avalon
           requires:
+            - test
             - lucos/build-amd64
           filters:
             branches:
