@@ -201,6 +201,35 @@ window.addEventListener('DOMContentLoaded', loadedEvent => {
 });
 
 /**
+ * Use tom-select for album search fields, searching the manager's /albums
+ * proxy dynamically as the user types and supporting create-on-the-fly.
+ */
+window.addEventListener('DOMContentLoaded', event => {
+	document.querySelectorAll(".form-field .album-search-field").forEach(select => {
+		new TomSelect(select, {
+			allowEmptyOption: true,
+			load: function(query, callback) {
+				fetch(`/albums?q=${encodeURIComponent(query)}`, { headers: { 'Accept': 'application/json' } })
+				.then(r => r.json())
+				.then(data => callback((data.albums || []).map(a => ({ value: a.uri, text: a.name }))))
+				.catch(() => callback());
+			},
+			create: function(input, callback) {
+				fetch('/albums', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+					body: JSON.stringify({ name: input }),
+				})
+				.then(r => r.ok ? r.json() : Promise.reject(r))
+				.then(album => callback({ value: album.uri, text: album.name }))
+				.catch(() => callback());
+			},
+		});
+	});
+});
+
+
+/**
  * Use tom-select for nicer UX on select fields
  */
 window.addEventListener('DOMContentLoaded', event => {

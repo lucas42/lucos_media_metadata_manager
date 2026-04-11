@@ -16,7 +16,7 @@ function getTagFields()
 			"type" => "text",
 		],
 		"album" => [
-			"type" => "text",
+			"type" => "album-search",
 		],
 		"composer" => [
 			"type" => "multi-text",
