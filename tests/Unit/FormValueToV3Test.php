@@ -130,14 +130,14 @@ class FormValueToV3Test extends TestCase
     public function testAlbumSearchFieldWithUri(): void
     {
         // album-search submits a URI; name is resolved server-side by the API
-        $result = formValueToV3('/v3/albums/3', ['type' => 'album-search']);
-        $this->assertSame([['uri' => '/v3/albums/3']], $result);
+        $result = formValueToV3('/albums/3', ['type' => 'album-search']);
+        $this->assertSame([['uri' => '/albums/3']], $result);
     }
 
     public function testAlbumSearchFieldWithAbsoluteUri(): void
     {
-        $result = formValueToV3('https://media-api.l42.eu/v3/albums/7', ['type' => 'album-search']);
-        $this->assertSame([['uri' => 'https://media-api.l42.eu/v3/albums/7']], $result);
+        $result = formValueToV3('https://media-metadata.l42.eu/albums/7', ['type' => 'album-search']);
+        $this->assertSame([['uri' => 'https://media-metadata.l42.eu/albums/7']], $result);
     }
 
     public function testAlbumSearchFieldEmptyString(): void

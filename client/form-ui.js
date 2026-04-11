@@ -209,7 +209,7 @@ window.addEventListener('DOMContentLoaded', event => {
 		new TomSelect(select, {
 			allowEmptyOption: true,
 			load: function(query, callback) {
-				fetch(`/albums?q=${encodeURIComponent(query)}`)
+				fetch(`/albums?q=${encodeURIComponent(query)}`, { headers: { 'Accept': 'application/json' } })
 				.then(r => r.json())
 				.then(data => callback((data.albums || []).map(a => ({ value: a.uri, text: a.name }))))
 				.catch(() => callback());
@@ -217,7 +217,7 @@ window.addEventListener('DOMContentLoaded', event => {
 			create: function(input, callback) {
 				fetch('/albums', {
 					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
+					headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
 					body: JSON.stringify({ name: input }),
 				})
 				.then(r => r.ok ? r.json() : Promise.reject(r))

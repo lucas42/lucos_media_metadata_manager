@@ -15,8 +15,7 @@ if ($method === 'GET') {
 		$data = fetchFromApi($path);
 		echo json_encode($data);
 	} catch (ApiError $e) {
-		$status = $e->getCode();
-		http_response_code($status >= 400 ? $status : 502);
+		http_response_code(502);
 		echo json_encode(['error' => $e->getMessage()]);
 	}
 } elseif ($method === 'POST') {
@@ -27,8 +26,7 @@ if ($method === 'GET') {
 		http_response_code(201);
 		echo json_encode($data);
 	} catch (ApiError $e) {
-		$status = $e->getCode();
-		http_response_code($status >= 400 ? $status : 502);
+		http_response_code(502);
 		echo json_encode(['error' => $e->getMessage()]);
 	}
 } else {
