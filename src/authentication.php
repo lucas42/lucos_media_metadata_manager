@@ -49,16 +49,19 @@ if (isAuthenticated($token)) {
 		'secure' => $secure,
 		'path' => '/',
 	]);
-	// If the token arrived via GET query parameter, redirect immediately to the same URL
-	// without it — keeps the token out of server logs, browser history, and referrer headers.
-	if (!empty($_GET['token'])) {
-		$params = $_GET;
-		unset($params['token']);
-		$path = strtok($_SERVER['REQUEST_URI'], '?');
-		$redirectUrl = empty($params) ? $path : $path . '?' . http_build_query($params);
-		http_response_code(302);
-		header("Location: " . $redirectUrl);
-		exit();
+	// Expire any legacy auth_token cookies that may be scoped to specific paths (set before
+	// 2026-04-08 when setcookie() was called without an explicit path, defaulting to the
+	// request path). A stale path-scoped cookie takes browser precedence over the root-scoped
+	// one and causes a redirect loop. Clear the known problem paths explicitly.
+	$legacyPaths = ['/tracks/', '/collections/', '/search/'];
+	foreach ($legacyPaths as $legacyPath) {
+		setcookie('auth_token', '', [
+			'expires' => 1,
+			'path' => $legacyPath,
+			'httponly' => true,
+			'samesite' => 'Strict',
+			'secure' => $secure,
+		]);
 	}
 }
 else {
