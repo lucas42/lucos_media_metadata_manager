@@ -201,13 +201,19 @@ window.addEventListener('DOMContentLoaded', loadedEvent => {
 });
 
 /**
- * Use tom-select for album search fields, loading options via the manager's
- * /albums proxy endpoint and supporting create-on-the-fly via POST /albums
+ * Use tom-select for album search fields, searching the manager's /albums
+ * proxy dynamically as the user types and supporting create-on-the-fly.
  */
 window.addEventListener('DOMContentLoaded', event => {
 	document.querySelectorAll(".form-field .album-search-field").forEach(select => {
-		const ts = new TomSelect(select, {
+		new TomSelect(select, {
 			allowEmptyOption: true,
+			load: function(query, callback) {
+				fetch(`/albums?q=${encodeURIComponent(query)}`)
+				.then(r => r.json())
+				.then(data => callback((data.albums || []).map(a => ({ value: a.uri, text: a.name }))))
+				.catch(() => callback());
+			},
 			create: function(input, callback) {
 				fetch('/albums', {
 					method: 'POST',
@@ -219,17 +225,6 @@ window.addEventListener('DOMContentLoaded', event => {
 				.catch(() => callback());
 			},
 		});
-
-		// Asynchronously load all albums as additional options
-		fetch('/albums')
-		.then(r => r.json())
-		.then(data => {
-			(data.albums || []).forEach(album => {
-				ts.addOption({ value: album.uri, text: album.name });
-			});
-			ts.refreshOptions(false);
-		})
-		.catch(() => {}); // Preload failure is non-fatal; existing options still work
 	});
 });
 

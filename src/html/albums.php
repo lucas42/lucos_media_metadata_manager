@@ -8,8 +8,10 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'GET') {
 	try {
-		$page = $_GET['page'] ?? '';
-		$path = '/v3/albums' . ($page !== '' ? '?page=' . urlencode($page) : '');
+		$params = [];
+		if (isset($_GET['q']) && $_GET['q'] !== '') $params[] = 'q=' . urlencode($_GET['q']);
+		if (isset($_GET['page']) && $_GET['page'] !== '') $params[] = 'page=' . urlencode($_GET['page']);
+		$path = '/v3/albums' . ($params ? '?' . implode('&', $params) : '');
 		$data = fetchFromApi($path);
 		echo json_encode($data);
 	} catch (ApiError $e) {
