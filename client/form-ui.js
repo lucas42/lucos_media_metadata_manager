@@ -146,6 +146,15 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 
+// If an auth token was passed as a query parameter, strip it from the address bar after page
+// load so it doesn't linger in browser history or get sent as a Referer header.
+window.addEventListener('DOMContentLoaded', event => {
+	if (!window.location.search.includes('token=')) return;
+	const url = new URL(window.location.href);
+	url.searchParams.delete('token');
+	window.history.replaceState({}, '', url.toString());
+});
+
 // Following a post-redirect-get flow, indicate the successful save and modify the current URL
 window.addEventListener('DOMContentLoaded', event => {
 	if (window.location.search.indexOf("saved=true") === -1) return;
