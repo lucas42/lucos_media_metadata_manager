@@ -92,3 +92,30 @@ function choose_rdf_over_html() {
 	// Only redirect to RDF if rdf_weight is non-zero and is preferred or equal to html
 	return ($rdf_weight > 0 && $rdf_weight >= $html_weight);
 }
+
+/**
+ * Returns true if the client strictly prefers JSON over HTML.
+ * Used to keep existing JSON-API clients working against endpoints that
+ * otherwise serve HTML by default.
+ */
+function choose_json_over_html() {
+	$parsed = parse_accept_header();
+	$json_weight = 0.0;
+	$html_weight = 0.0;
+
+	foreach ($parsed as $pair) {
+		list($mime, $q) = $pair;
+		if ($mime === "application/json") {
+			if ($q > $json_weight) {
+				$json_weight = $q;
+			}
+		}
+		if ($mime === "text/html") {
+			if ($q > $html_weight) {
+				$html_weight = $q;
+			}
+		}
+	}
+
+	return ($json_weight > 0 && $json_weight > $html_weight);
+}
