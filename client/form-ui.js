@@ -220,7 +220,7 @@ window.addEventListener('DOMContentLoaded', event => {
 					},
 					body: JSON.stringify({ name: input }),
 				})
-				.then(r => r.json())
+				.then(r => r.ok ? r.json() : Promise.reject(r))
 				.then(album => callback({ value: album.url, text: album.name }))
 				.catch(() => callback());
 			},
