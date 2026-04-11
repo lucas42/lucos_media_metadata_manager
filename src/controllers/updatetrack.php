@@ -14,6 +14,7 @@ require_once(__DIR__ . "/../api.php");
 function formValueToV3($value, $fieldConfig) {
 	$type = $fieldConfig["type"] ?? "text";
 	$isUriField = $type === "search";
+	$isAlbumSearch = $type === "album-search";
 
 	if (is_array($value)) {
 		$result = [];
@@ -34,6 +35,11 @@ function formValueToV3($value, $fieldConfig) {
 
 	if ($value === "" || $value === null) {
 		return [];
+	}
+
+	if ($isAlbumSearch) {
+		// Submit URI only; the API resolves the album name from the URI at write time
+		return [["uri" => $value]];
 	}
 
 	if ($isUriField) {

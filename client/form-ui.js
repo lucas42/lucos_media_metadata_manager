@@ -201,6 +201,48 @@ window.addEventListener('DOMContentLoaded', loadedEvent => {
 });
 
 /**
+ * Use tom-select for album search fields, loading options from the media API
+ * and supporting create-on-the-fly via POST /v3/albums
+ */
+window.addEventListener('DOMContentLoaded', event => {
+	document.querySelectorAll(".form-field .album-search-field").forEach(select => {
+		const mediaApi = select.dataset.mediaApi;
+		const apiKey = select.dataset.apiKey;
+
+		const ts = new TomSelect(select, {
+			allowEmptyOption: true,
+			create: function(input, callback) {
+				fetch(`${mediaApi}/v3/albums`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `key ${apiKey}`,
+					},
+					body: JSON.stringify({ name: input }),
+				})
+				.then(r => r.json())
+				.then(album => callback({ value: album.url, text: album.name }))
+				.catch(() => callback());
+			},
+		});
+
+		// Asynchronously load all albums from the API as additional options
+		fetch(`${mediaApi}/v3/albums`, {
+			headers: { 'Authorization': `key ${apiKey}` }
+		})
+		.then(r => r.json())
+		.then(data => {
+			(data.albums || []).forEach(album => {
+				ts.addOption({ value: album.url, text: album.name });
+			});
+			ts.refreshOptions(false);
+		})
+		.catch(() => {}); // Preload failure is non-fatal; existing options still work
+	});
+});
+
+
+/**
  * Use tom-select for nicer UX on select fields
  */
 window.addEventListener('DOMContentLoaded', event => {
