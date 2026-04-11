@@ -235,6 +235,7 @@ window.addEventListener('DOMContentLoaded', event => {
 window.addEventListener('DOMContentLoaded', event => {
 	document.querySelectorAll(".form-field .select-field").forEach(select => {
 		const config = {
+			maxOptions: false,
 			plugins: {
 				drag_drop: {},
 			},
