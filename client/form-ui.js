@@ -221,7 +221,7 @@ window.addEventListener('DOMContentLoaded', event => {
 					body: JSON.stringify({ name: input }),
 				})
 				.then(r => r.ok ? r.json() : Promise.reject(r))
-				.then(album => callback({ value: album.url, text: album.name }))
+				.then(album => callback({ value: album.uri, text: album.name }))
 				.catch(() => callback());
 			},
 		});
@@ -233,7 +233,7 @@ window.addEventListener('DOMContentLoaded', event => {
 		.then(r => r.json())
 		.then(data => {
 			(data.albums || []).forEach(album => {
-				ts.addOption({ value: album.url, text: album.name });
+				ts.addOption({ value: album.uri, text: album.name });
 			});
 			ts.refreshOptions(false);
 		})
