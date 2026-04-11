@@ -49,6 +49,17 @@ if (isAuthenticated($token)) {
 		'secure' => $secure,
 		'path' => '/',
 	]);
+	// If the token arrived via GET query parameter, redirect immediately to the same URL
+	// without it — keeps the token out of server logs, browser history, and referrer headers.
+	if (!empty($_GET['token'])) {
+		$params = $_GET;
+		unset($params['token']);
+		$path = strtok($_SERVER['REQUEST_URI'], '?');
+		$redirectUrl = empty($params) ? $path : $path . '?' . http_build_query($params);
+		http_response_code(302);
+		header("Location: " . $redirectUrl);
+		exit();
+	}
 }
 else {
 	if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
