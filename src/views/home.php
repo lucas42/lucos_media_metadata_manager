@@ -48,6 +48,19 @@
 			<form method="get" action="/collections">
 				<input type="submit" value="List All Collections" class="standalone" />
 			</form>
+			<h2>Albums</h2>
+			<form method="get" action="/albums">
+				<div class="form-field">
+					<label for="albumid" class="key-label">Album ID</label>
+					<span class="form-input">
+						<input type="text" name="albumid" id="albumid"/>
+					</span>
+					<input type="submit" value="View Album" />
+				</div>
+			</form>
+			<form method="get" action="/albums">
+				<input type="submit" value="List All Albums" class="standalone" />
+			</form>
 		</div>
 		<script src="/script.js" type="text/javascript"></script>
 	</body>
