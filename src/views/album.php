@@ -70,10 +70,12 @@
 			</div>
 <?php } ?>
 
+<?php if (empty($tracks) && empty($tracksError)) { ?>
 			<form method="post" action="/albums/<?=htmlspecialchars(urlencode((string)$album["id"]))?>/delete" data-confirm="Are you sure you want to delete album <?=htmlspecialchars($album["name"])?>?">
 				<?php echo csrfTokenField(); ?>
 				<input type="submit" value="Delete Album" class="standalone danger" />
 			</form>
+<?php } ?>
 		</div>
 		<script src="/script.js" type="text/javascript"></script>
 	</body>
