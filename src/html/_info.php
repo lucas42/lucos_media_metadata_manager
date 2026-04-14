@@ -11,6 +11,7 @@ $output = [
 	"checks" => [
 		"metadata-api" => [
 			"techDetail" => "Can connect to lucos media metadata API",
+			"dependsOn" => "lucos_media_metadata_api",
 		]
 	],
 	"metrics" => (object)[],
