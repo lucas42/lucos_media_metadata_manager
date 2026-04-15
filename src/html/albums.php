@@ -63,12 +63,20 @@ require("../controllers/listalbums.php");
 require("../controllers/viewalbum.php");
 require("../controllers/updatealbum.php");
 require("../controllers/deletealbum.php");
+require("../controllers/mergealbums.php");
 require_once("../controllers/error.php");
 
 $page = empty($_GET['page']) ? null : $_GET['page'];
 if (!is_numeric($page) || $page < 1) $page = "1";
 
-if ($albumid === null) {
+if ($albumid === "merge") {
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		verifyCsrfToken();
+		mergeAlbums($_POST);
+	} else {
+		showMergeAlbums($_GET);
+	}
+} elseif ($albumid === null) {
 	// /albums — list page, or lookup-by-id form redirect
 	if (array_key_exists("albumid", $_GET) && $_GET["albumid"] !== "") {
 		header("Location: /albums/" . urlencode($_GET["albumid"]));

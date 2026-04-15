@@ -24,6 +24,7 @@
 		<a href="/" class="mock-button nav-home">&lt;- Home </a>
 		<div id="content">
 			<h1>Albums</h1>
+			<a href="/albums/merge" class="mock-button">Merge albums</a>
 <?php if (empty($albums)) { ?>
 			<p>No albums yet.</p>
 <?php } else { ?>
