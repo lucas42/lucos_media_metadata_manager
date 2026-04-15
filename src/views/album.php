@@ -27,6 +27,8 @@
 		<div id="content">
 			<h1><?=htmlspecialchars($album["name"])?></h1>
 
+			<a href="/albums/merge?<?=htmlspecialchars(http_build_query(["targetId" => $album["id"]]))?>" class="mock-button">Merge albums into this one</a>
+
 			<h2>Metadata</h2>
 			<form method="post" id="albumform">
 				<?php echo csrfTokenField(); ?>
