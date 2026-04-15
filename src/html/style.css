@@ -181,6 +181,8 @@ input[type=submit], .mock-button {
 	height: fit-content;
 	display: inline-block;
 	font-size: 13px;
+	align-self: flex-start;
+	width: fit-content;
 }
 input[type=submit].danger {
 	background-color: #900000;

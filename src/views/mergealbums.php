@@ -32,7 +32,7 @@
 			<p>Search for the album to keep. The target album survives the merge; all others are deleted.</p>
 
 			<form method="get" action="/albums/merge">
-				<div class="form-field">
+				<div>
 					<label for="q">Search albums</label>
 					<input type="text" id="q" name="q" value="<?=htmlspecialchars($searchQuery)?>" autofocus>
 				</div>
@@ -105,7 +105,7 @@
 <?php foreach ($sourceIds as $sid): ?>
 				<input type="hidden" name="sourceIds[]" value="<?=(int)$sid?>">
 <?php endforeach; ?>
-				<input type="submit" value="Confirm merge" class="standalone danger">
+				<input type="submit" value="Confirm merge" class="standalone">
 			</form>
 
 <?php else: ?>
@@ -123,7 +123,7 @@
 <?php foreach ($sourceIds as $sid): ?>
 				<input type="hidden" name="sourceIds[]" value="<?=(int)$sid?>">
 <?php endforeach; ?>
-				<div class="form-field">
+				<div>
 					<label for="sq">Search albums to merge in</label>
 					<input type="text" id="sq" name="sq" value="<?=htmlspecialchars($sourceQuery)?>" autofocus>
 				</div>
