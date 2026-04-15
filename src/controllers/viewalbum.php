@@ -7,7 +7,8 @@ require_once("../controllers/searchtracks.php");
  * Fetches metadata for a single album, and any tracks tagged with it, then
  * renders the album HTML page.
  *
- * Tracks are found by querying /v3/tracks with a p.album predicate filter.
+ * Tracks are found by querying /v3/tracks with a p.album.uri filter, which
+ * is more reliable than name-based search since URIs are stable identifiers.
  * The frontend deliberately does no re-ordering or filtering of the list —
  * whatever order the API returns is what the user sees.
  */
@@ -28,8 +29,8 @@ function viewAlbum($albumid, $page) {
 	$currentPage = 1;
 	try {
 		$params = http_build_query([
-			"p.album" => $album["name"],
-			"page"    => $page,
+			"p.album.uri" => $album["uri"],
+			"page"        => $page,
 		]);
 		$trackData = fetchFromApi("/v3/tracks?{$params}");
 		$tracks = summariseTracks($trackData["tracks"] ?? []);
