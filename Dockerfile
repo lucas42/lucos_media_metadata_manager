@@ -8,6 +8,8 @@ COPY client/*.js ./
 RUN npm run build
 
 FROM php:8.5.5-apache-trixie
+ARG VERSION
+ENV VERSION=$VERSION
 
 WORKDIR /srv/metadata_manager
 
