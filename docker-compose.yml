@@ -4,7 +4,7 @@ services:
     container_name: lucos_media_metadata_manager
     ports:
       - $PORT:80
-    image: lucas42/lucos_media_metadata_manager
+    image: lucas42/lucos_media_metadata_manager:${VERSION:-latest}
     restart: always
     healthcheck:
       test: ["CMD", "curl", "-fs", "http://127.0.0.1:80/_info"]
