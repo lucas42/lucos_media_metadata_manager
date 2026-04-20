@@ -12,6 +12,7 @@ $output = [
 		"metadata-api" => [
 			"techDetail" => "Can connect to lucos media metadata API",
 			"dependsOn" => "lucos_media_metadata_api",
+			"failThreshold" => 3,
 		]
 	],
 	"metrics" => (object)[],
