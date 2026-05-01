@@ -9,8 +9,8 @@
   },
   "devDependencies": {
     "css-loader": "^7.1.4",
-    "lucos_navbar": "^2.1.64",
-    "lucos_search_component": "^2.0.30",
+    "lucos_navbar": "^2.1.66",
+    "lucos_search_component": "^2.0.32",
     "style-loader": "^4.0.0",
     "tom-select": "^2.6.0",
     "webpack-cli": "^7.0.2"
