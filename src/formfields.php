@@ -59,7 +59,7 @@ function getTagFields()
 			"types" => "Language",
 			"hint" => "The language(s) used for lyrics in this track",
 			"eolas_add_url" => "https://eolas.l42.eu/metadata/language/add/",
-			"no_lang" => "Instrumental / No Language",
+			"label_override_zxx" => "Instrumental / No Language",
 			"common" => "https://eolas.l42.eu/metadata/language/en/,https://eolas.l42.eu/metadata/language/ga/,https://eolas.l42.eu/metadata/language/zxx/",
 			"preload" => true,
 		],

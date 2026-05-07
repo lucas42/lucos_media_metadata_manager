@@ -260,7 +260,7 @@
 					is="lucos-search"
 					data-api-key="<?=htmlspecialchars((string)getenv('KEY_LUCOS_ARACHNE'))?>"
 					<?=!empty($field["types"]) ? "data-types=\"".htmlspecialchars($field["types"])."\"" : "data-exclude_types=\"Track\""?>
-					<?=!empty($field["no_lang"]) ? "data-no-lang=\"".htmlspecialchars($field["no_lang"])."\"" : ""?>
+					<?=!empty($field["label_override_zxx"]) ? "data-label-override-zxx=\"".htmlspecialchars($field["label_override_zxx"])."\"" : ""?>
 					<?=!empty($field["common"]) ? "data-common=\"".htmlspecialchars($field["common"])."\"" : ""?>
 					<?=!empty($field["preload"]) ? "data-preload" : ""?>>
 					<select
