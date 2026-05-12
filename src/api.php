@@ -19,17 +19,34 @@ function fetchFromApi($path, $method="GET", $data=null, $headers=[], $timeout=nu
 	$context = stream_context_create([
 		"http" => $http_params
 	]);
+	$startTime = microtime(true);
 	$responseBody = @file_get_contents($url, false, $context);
+	$latencyMs = (int) round((microtime(true) - $startTime) * 1000);
 	if (empty($http_response_header)) {
-		throw new ApiError(error_get_last()["message"]);
+		$host = parse_url($url, PHP_URL_HOST) ?: "";
+		$resolvedIp = $host ? gethostbyname($host) : null;
+		throw new ApiError(error_get_last()["message"], 0, $latencyMs, null, $resolvedIp);
 	}
 	preg_match('/([0-9])\d+/', $http_response_header[0], $status_matches);
   	$responseCode = intval($status_matches[0]);
 	if ($responseCode >= 300) {
-		throw new ApiError("API returned unexpected status code {$responseCode}", $responseCode);
+		$host = parse_url($url, PHP_URL_HOST) ?: "";
+		$resolvedIp = $host ? gethostbyname($host) : null;
+		throw new ApiError("API returned unexpected status code {$responseCode}", $responseCode, $latencyMs, $responseBody, $resolvedIp);
 	}
 	$response_data = json_decode($responseBody, true);
 	return $response_data;
 }
 
-class ApiError extends Exception {}
+class ApiError extends Exception {
+	public function __construct(
+		string $message,
+		int $code = 0,
+		public readonly ?int $latencyMs = null,
+		public readonly ?string $responseBody = null,
+		public readonly ?string $resolvedIp = null,
+		?\Throwable $previous = null,
+	) {
+		parent::__construct($message, $code, $previous);
+	}
+}
