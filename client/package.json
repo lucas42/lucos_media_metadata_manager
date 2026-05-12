@@ -12,7 +12,7 @@
     "lucos_navbar": "^2.1.73",
     "lucos_search_component": "^3.0.2",
     "style-loader": "^4.0.0",
-    "tom-select": "^2.6.0",
+    "tom-select": "^2.6.1",
     "webpack-cli": "^7.0.2"
   }
 }
