@@ -148,6 +148,7 @@ function getTagFields()
 					"animal-cruelty" => "Animal Cruelty",
 					"fascism" => "Fascism",
 					"self-harm" => "Self Harm (including suicide)",
+					"gambling" => "Gambling",
 
 					/* Types of Discrimination */
 					"racism" => "Racism",
