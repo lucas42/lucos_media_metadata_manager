@@ -45,13 +45,13 @@ function getTagFields()
 		],
 		"theme_tune" => [
 			"type" => "search",
-			"types" => "CreativeWork",
+			"types" => "Creative Work",
 			"hint" => "What this track was used as the primary theme tune for",
 			"eolas_add_url" => "https://eolas.l42.eu/metadata/creativework/add/",
 		],
 		"soundtrack" => [
 			"type" => "search",
-			"types" => "CreativeWork",
+			"types" => "Creative Work",
 			"hint" => "What this track appeared in the soundtrack of",
 			"eolas_add_url" => "https://eolas.l42.eu/metadata/creativework/add/",
 		],
