@@ -44,12 +44,16 @@ function getTagFields()
 			"hint" => "What this song reminds Luke of",
 		],
 		"theme_tune" => [
-			"type" => "text",
+			"type" => "search",
+			"types" => "Creative Work",
 			"hint" => "What this track was used as the primary theme tune for",
+			"eolas_add_url" => "https://eolas.l42.eu/metadata/creativework/add/",
 		],
 		"soundtrack" => [
-			"type" => "text",
+			"type" => "search",
+			"types" => "Creative Work",
 			"hint" => "What this track appeared in the soundtrack of",
+			"eolas_add_url" => "https://eolas.l42.eu/metadata/creativework/add/",
 		],
 		"lyrics" => [
 			"type" => "textarea",
