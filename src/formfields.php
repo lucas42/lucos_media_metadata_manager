@@ -130,40 +130,11 @@ function getTagFields()
 			"hint" => "How easy it would be to replace this track if something happened to my collection",
 		],
 		"offence" => [
-			"type" => "multigroupselect",
-			"values" => [
-				"" => [
-					"swearing" => "Swearing",
-					"slurs" => "Slurs",
-					"sacrilege" => "Sacrilege",
-					"violence" => "Violence",
-					"war" => "War",
-					"lèse-majesté" => "Lèse-majesté",
-					"jingoism" => "Jingoism",
-					"smut" => "Smut",
-					"alcohol" => "Alcohol",
-					"drugs" => "Drugs",
-					"kink" => "Kink",
-					"arson" => "Arson",
-					"domestic-abuse" => "Domestic Abuse",
-					"colonialism" => "Colonialism",
-					"sexual-assault" => "Sexual Assault",
-					"sex-work" => "Sex Work",
-					"animal-cruelty" => "Animal Cruelty",
-					"fascism" => "Fascism",
-					"self-harm" => "Self Harm (including suicide)",
-					"gambling" => "Gambling",
-
-					/* Types of Discrimination */
-					"racism" => "Racism",
-					"religious-discrimination" => "Religious Discrimination", // Includes Antisemitism, Islamophobia and others
-					"sexism" => "Sexism",
-					"ableism" => "Ableism", // Includes physical and mental
-					"homophobia" => "Homophobia",
-					"transphobia" => "Transphobia",
-				],
-			],
+			"type" => "search",
+			"types" => "Offence",
 			"hint" => "Things in this track which may offend some people",
+			"eolas_add_url" => "https://eolas.l42.eu/metadata/offence/add/",
+			"preload" => true,
 		],
 		"comment" => [
 			"type" => "textarea",

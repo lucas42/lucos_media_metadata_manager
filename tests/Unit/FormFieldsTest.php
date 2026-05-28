@@ -107,10 +107,12 @@ class FormFieldsTest extends TestCase
         $this->assertArrayHasKey(5, $values);
     }
 
-    public function testOffenceFieldIsMultigroupselect(): void
+    public function testOffenceFieldIsSearch(): void
     {
         $fields = getTagFields();
-        $this->assertSame('multigroupselect', $fields['offence']['type']);
+        $this->assertSame('search', $fields['offence']['type']);
+        $this->assertSame('Offence', $fields['offence']['types']);
+        $this->assertTrue($fields['offence']['preload']);
     }
 
     // --- getTagKeys() ---
