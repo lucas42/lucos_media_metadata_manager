@@ -135,6 +135,16 @@ class FormFieldsTest extends TestCase
         $this->assertArrayNotHasKey('preload', $fields['producer']);
     }
 
+    public function testAboutAndMentionsHaveEolasOriginScope(): void
+    {
+        $fields = getTagFields();
+        foreach (['about', 'mentions'] as $key) {
+            $this->assertSame('search', $fields[$key]['type'], "$key should be type search");
+            $this->assertSame('https://eolas.l42.eu', $fields[$key]['allowed_origins'], "$key should have eolas allowed_origins");
+            $this->assertArrayNotHasKey('types', $fields[$key], "$key must not have a types constraint (origin filtering is used instead)");
+        }
+    }
+
     // --- getTagKeys() ---
 
     public function testGetTagKeysReturnsArray(): void

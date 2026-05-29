@@ -149,10 +149,12 @@ function getTagFields()
 		],
 		"about" => [
 			"type" => "search",
+			"allowed_origins" => "https://eolas.l42.eu",
 			"eolas_add_url" => "https://eolas.l42.eu/",
 		],
 		"mentions" => [
 			"type" => "search",
+			"allowed_origins" => "https://eolas.l42.eu",
 			"eolas_add_url" => "https://eolas.l42.eu/",
 		],
 	];
