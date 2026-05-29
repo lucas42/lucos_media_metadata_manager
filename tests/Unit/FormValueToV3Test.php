@@ -99,22 +99,54 @@ class FormValueToV3Test extends TestCase
         ], $result);
     }
 
-    public function testSearchFieldStructuredArrayFallsBackUriAsName(): void
+    public function testSearchFieldUriOnlySubmittedWithoutName(): void
     {
-        // When 'name' is missing, uri is used as the name
+        // When 'name' is absent but URI is present, submit URI-only.
+        // Name resolution is the API's responsibility at write time (ResolveURIToName);
+        // setting name to the URI string at write time would be wrong.
         $value = [['uri' => 'https://example.com/en/']];
         $result = formValueToV3($value, ['type' => 'search']);
-        $this->assertSame([['name' => 'https://example.com/en/', 'uri' => 'https://example.com/en/']], $result);
+        $this->assertSame([['uri' => 'https://example.com/en/']], $result);
     }
 
-    public function testSearchFieldStructuredArraySkipsEmptyUri(): void
+    public function testSearchFieldCreatedEntryIsKeptAsNameOnly(): void
     {
+        // Inline-created entries emit [name] only (no uri key).
+        // The API's create-on-write path resolves the name to a URI server-side.
         $value = [
-            ['uri' => '', 'name' => 'Should be skipped'],
+            ['name' => 'Ringo Starr'],  // created entry: no uri key
+            ['uri' => 'https://example.com/en/', 'name' => 'English'],
+        ];
+        $result = formValueToV3($value, ['type' => 'search']);
+        $this->assertSame([
+            ['name' => 'Ringo Starr'],
+            ['name' => 'English', 'uri' => 'https://example.com/en/'],
+        ], $result);
+    }
+
+    public function testSearchFieldSkipsBothEmptyUriAndName(): void
+    {
+        // Entries with both uri and name empty are genuinely blank and must be dropped.
+        $value = [
+            ['uri' => '', 'name' => ''],
             ['uri' => 'https://example.com/en/', 'name' => 'English'],
         ];
         $result = formValueToV3($value, ['type' => 'search']);
         $this->assertSame([['name' => 'English', 'uri' => 'https://example.com/en/']], $result);
+    }
+
+    public function testSearchFieldMixedCreatedAndSelected(): void
+    {
+        // Mixed: first entry inline-created (name-only), second from arachne (uri+name).
+        $value = [
+            ['name' => 'George Harrison'],                          // created
+            ['uri' => 'https://eolas.l42.eu/people/john/', 'name' => 'John Lennon'], // selected
+        ];
+        $result = formValueToV3($value, ['type' => 'search']);
+        $this->assertSame([
+            ['name' => 'George Harrison'],
+            ['name' => 'John Lennon', 'uri' => 'https://eolas.l42.eu/people/john/'],
+        ], $result);
     }
 
     public function testSearchFieldMixedArrayTreatsPlainStringsAsNameOnly(): void

@@ -22,10 +22,17 @@ function formValueToV3($value, $fieldConfig) {
 			if ($v === "" || $v === null) continue;
 			if ($isUriField && is_array($v)) {
 				// Indexed structured format from lucos-search: ['uri' => ..., 'name' => ...]
+				// Created (inline) entries emit only [name]; selected entries emit both.
 				$uri = $v['uri'] ?? '';
-				$name = $v['name'] ?? $uri;
-				if ($uri === '') continue;
-				$result[] = ["name" => $name, "uri" => $uri];
+				$name = $v['name'] ?? '';
+				if ($uri === '' && $name === '') continue;  // skip truly empty entries
+				if ($uri === '') {
+					$result[] = ["name" => $name];  // created entry: name-only; API resolves URI
+				} else if ($name !== '') {
+					$result[] = ["name" => $name, "uri" => $uri];  // selected entry with name
+				} else {
+					$result[] = ["uri" => $uri];  // URI-only entry; API resolves name at write time
+				}
 			} else {
 				$result[] = ["name" => $v];
 			}
