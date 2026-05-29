@@ -40,8 +40,10 @@ function getTagFields()
 			"hint" => "Can Luke sing along to it?",
 		],
 		"memory" => [
-			"type" => "text",
+			"type" => "search",
+			"types" => "Memory",
 			"hint" => "What this song reminds Luke of",
+			"eolas_add_url" => "https://eolas.l42.eu/metadata/memory/add/",
 		],
 		"theme_tune" => [
 			"type" => "search",
