@@ -19,10 +19,16 @@ function getTagFields()
 			"type" => "album-search",
 		],
 		"composer" => [
-			"type" => "multi-text",
+			"type" => "search",
+			"types" => "Person",
+			"create" => true,
+			"hint" => "Who composed this track",
 		],
 		"producer" => [
-			"type" => "multi-text",
+			"type" => "search",
+			"types" => "Person",
+			"create" => true,
+			"hint" => "Who produced this track",
 		],
 		"rating" => [
 			"type" => "range",

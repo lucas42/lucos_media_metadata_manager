@@ -115,6 +115,26 @@ class FormFieldsTest extends TestCase
         $this->assertTrue($fields['offence']['preload']);
     }
 
+    public function testComposerIsPersonSearchWithInlineCreate(): void
+    {
+        $fields = getTagFields();
+        $this->assertSame('search', $fields['composer']['type']);
+        $this->assertSame('Person', $fields['composer']['types']);
+        $this->assertTrue($fields['composer']['create']);
+        $this->assertArrayNotHasKey('eolas_add_url', $fields['composer']);
+        $this->assertArrayNotHasKey('preload', $fields['composer']);
+    }
+
+    public function testProducerIsPersonSearchWithInlineCreate(): void
+    {
+        $fields = getTagFields();
+        $this->assertSame('search', $fields['producer']['type']);
+        $this->assertSame('Person', $fields['producer']['types']);
+        $this->assertTrue($fields['producer']['create']);
+        $this->assertArrayNotHasKey('eolas_add_url', $fields['producer']);
+        $this->assertArrayNotHasKey('preload', $fields['producer']);
+    }
+
     // --- getTagKeys() ---
 
     public function testGetTagKeysReturnsArray(): void
