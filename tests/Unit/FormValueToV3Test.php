@@ -99,12 +99,14 @@ class FormValueToV3Test extends TestCase
         ], $result);
     }
 
-    public function testSearchFieldStructuredArrayFallsBackUriAsName(): void
+    public function testSearchFieldUriOnlySubmittedWithoutName(): void
     {
-        // When 'name' is missing, uri is used as the name
+        // When 'name' is absent but URI is present, submit URI-only.
+        // Name resolution is the API's responsibility at write time (ResolveURIToName);
+        // setting name to the URI string at write time would be wrong.
         $value = [['uri' => 'https://example.com/en/']];
         $result = formValueToV3($value, ['type' => 'search']);
-        $this->assertSame([['name' => 'https://example.com/en/', 'uri' => 'https://example.com/en/']], $result);
+        $this->assertSame([['uri' => 'https://example.com/en/']], $result);
     }
 
     public function testSearchFieldCreatedEntryIsKeptAsNameOnly(): void

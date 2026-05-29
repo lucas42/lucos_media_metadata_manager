@@ -27,9 +27,11 @@ function formValueToV3($value, $fieldConfig) {
 				$name = $v['name'] ?? '';
 				if ($uri === '' && $name === '') continue;  // skip truly empty entries
 				if ($uri === '') {
-					$result[] = ["name" => $name];  // created entry: name-only, no URI
+					$result[] = ["name" => $name];  // created entry: name-only; API resolves URI
+				} else if ($name !== '') {
+					$result[] = ["name" => $name, "uri" => $uri];  // selected entry with name
 				} else {
-					$result[] = ["name" => ($name !== '' ? $name : $uri), "uri" => $uri];
+					$result[] = ["uri" => $uri];  // URI-only entry; API resolves name at write time
 				}
 			} else {
 				$result[] = ["name" => $v];
