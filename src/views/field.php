@@ -263,7 +263,8 @@
 					<?=!empty($field["label_override_zxx"]) ? "data-label-override-zxx=\"".htmlspecialchars($field["label_override_zxx"])."\"" : ""?>
 					<?=!empty($field["common"]) ? "data-common=\"".htmlspecialchars($field["common"])."\"" : ""?>
 					<?=!empty($field["preload"]) ? "data-preload" : ""?>
-					<?=!empty($field["create"]) ? "data-create" : ""?>>
+					<?=!empty($field["create"]) ? "data-create" : ""?>
+					<?=!empty($field["allowed_origins"]) ? "data-allowed-origins=\"".htmlspecialchars($field["allowed_origins"])."\"" : ""?>
 					<select
 						id="<?=htmlspecialchars($key)?>"
 						name="<?=htmlspecialchars($key)?>"
