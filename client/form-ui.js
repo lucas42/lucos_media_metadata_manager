@@ -239,6 +239,35 @@ window.addEventListener('DOMContentLoaded', event => {
 
 
 /**
+ * Use tom-select for artist search fields, searching the manager's /artists
+ * proxy dynamically as the user types and supporting create-on-the-fly.
+ */
+window.addEventListener('DOMContentLoaded', event => {
+	document.querySelectorAll(".form-field .artist-search-field").forEach(select => {
+		new TomSelect(select, {
+			allowEmptyOption: true,
+			load: function(query, callback) {
+				fetch(`/artists?q=${encodeURIComponent(query)}`, { headers: { 'Accept': 'application/json' } })
+				.then(r => r.json())
+				.then(data => callback((data.artists || []).map(a => ({ value: a.uri, text: a.name }))))
+				.catch(() => callback());
+			},
+			create: function(input, callback) {
+				fetch('/artists', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+					body: JSON.stringify({ name: input }),
+				})
+				.then(r => r.ok ? r.json() : Promise.reject(r))
+				.then(artist => callback({ value: artist.uri, text: artist.name }))
+				.catch(() => callback());
+			},
+		});
+	});
+});
+
+
+/**
  * Use tom-select for nicer UX on select fields
  */
 window.addEventListener('DOMContentLoaded', event => {

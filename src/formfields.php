@@ -13,7 +13,7 @@ function getTagFields()
 			"type" => "text",
 		],
 		"artist" => [
-			"type" => "text",
+			"type" => "artist-search",
 		],
 		"album" => [
 			"type" => "album-search",

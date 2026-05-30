@@ -253,6 +253,26 @@
 				</select>
 				<?php
 				break;
+			case "artist-search":
+				// Artist search fields use the artist URI as value; tom-select loads options from the media API
+				$currentUri = (!empty($values) && isset($values[0]["uri"])) ? $values[0]["uri"] : null;
+				$currentName = (!empty($values)) ? ($values[0]["name"] ?? $values[0]["uri"] ?? "") : "";
+				?>
+				<select
+					id="<?=htmlspecialchars($key)?>"
+					name="<?=htmlspecialchars($key)?>"
+					class="artist-search-field artist-search-field-<?=htmlspecialchars($key)?>"
+					<?=empty($disabled) ? "" : "disabled"?>
+					>
+					<option value=""></option>
+					<?php if ($currentUri !== null): ?>
+					<option value="<?=htmlspecialchars($currentUri)?>" selected>
+						<?=htmlspecialchars($currentName)?>
+					</option>
+					<?php endif; ?>
+				</select>
+				<?php
+				break;
 			case "search":
 				// Search fields use uri as <option value> and name as display text
 				?>
