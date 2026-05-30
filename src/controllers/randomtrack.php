@@ -11,6 +11,6 @@ function pickRandomTrack() {
 		$trackid = $data["tracks"][0]["id"]; // Just look at the first track in the list
 		header("Location: /tracks/{$trackid}");
 	} catch (ApiError $error) {
-		displayError(apiErrorToManagerStatus($error), apiErrorMessage($error, "Can't fetch random tracks from API."));
+		displayApiError($error, "Can't fetch random tracks from API.");
 	}
 }

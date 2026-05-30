@@ -22,7 +22,7 @@ function deleteAlbum($albumid) {
 		} else if ($error->getCode() == 404) {
 			displayError(404, "Album {$albumid} Not Found");
 		} else {
-			displayError(apiErrorToManagerStatus($error), apiErrorMessage($error, "Error deleting album in API."));
+			displayApiError($error, "Error deleting album in API.");
 		}
 	}
 }

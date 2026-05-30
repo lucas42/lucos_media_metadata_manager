@@ -19,7 +19,7 @@ function viewAlbum($albumid, $page) {
 		if ($error->getCode() == 404) {
 			displayError(404, "Album {$albumid} Not Found");
 		} else {
-			displayError(apiErrorToManagerStatus($error), apiErrorMessage($error, "Can't fetch album from API."));
+			displayApiError($error, "Can't fetch album from API.");
 		}
 		return;
 	}

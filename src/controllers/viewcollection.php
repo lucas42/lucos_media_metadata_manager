@@ -16,7 +16,7 @@ function viewCollection($slug, $page) {
 		if ($error->getCode() == 404) {
 			displayError(404, "Collection {$slug} Not Found");
 		} else {
-			displayError(apiErrorToManagerStatus($error), apiErrorMessage($error, "Can't fetch collection from API."));
+			displayApiError($error, "Can't fetch collection from API.");
 		}
 	}
 }
