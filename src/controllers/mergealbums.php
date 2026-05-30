@@ -40,7 +40,7 @@ function showMergeAlbums($params) {
 			if ($error->getCode() == 404) {
 				displayError(404, "Album {$targetId} Not Found");
 			} else {
-				displayError(502, "Can't fetch album from API.\n\n" . $error->getMessage());
+				displayApiError($error, "Can't fetch album from API.");
 			}
 			return;
 		}
@@ -129,7 +129,7 @@ function mergeAlbums($postdata) {
 		} elseif ($error->getCode() == 400) {
 			displayError(400, "Invalid merge request.");
 		} else {
-			displayError(502, "Error merging albums.\n\n" . $error->getMessage());
+			displayApiError($error, "Error merging albums.");
 		}
 	}
 }

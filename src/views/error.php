@@ -13,7 +13,10 @@
 		<a href="/" class="mock-button nav-home">&lt;- Home </a>
 		<div id="content">
 			<h1>An error occured</h1>
-			<pre style="white-space: break-spaces;"><?=htmlspecialchars($errorMessage)?></pre>
+			<p><?=nl2br(htmlspecialchars($errorMessage))?></p>
+			<?php if (!empty($errorDetail)): ?>
+			<pre>Detail: <?=htmlspecialchars($errorDetail)?></pre>
+			<?php endif; ?>
 			<h2>Try Another Track?</h2>
 			<form method="get" action="/tracks">
 				<div class="form-field">

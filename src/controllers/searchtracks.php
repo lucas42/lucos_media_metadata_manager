@@ -14,7 +14,7 @@ function searchTracks($params, $page) {
 		$form_fields = getFormFields();
 		require("../views/searchresults.php");
 	} catch (ApiError $error) {
-		displayError(502, "Can't fetch search results from API.\n\n".$error->getMessage());
+		displayApiError($error, "Can't fetch search results from API.");
 	}
 }
 

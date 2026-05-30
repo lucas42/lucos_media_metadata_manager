@@ -10,6 +10,6 @@ function listCollections() {
 		$collections = fetchFromApi("/v3/collections");
 		require("../views/collections.php");
 	} catch (ApiError $error) {
-		displayError(502, "Can't fetch collections from API.\n\n".$error->getMessage());
+		displayApiError($error, "Can't fetch collections from API.");
 	}
 }
