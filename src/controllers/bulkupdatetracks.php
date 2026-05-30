@@ -1,6 +1,7 @@
 <?php
 require_once("../formfields.php");
 require_once("../api.php");
+require_once("../controllers/error.php");
 require_once("../controllers/updatetrack.php");
 
 /**
@@ -45,9 +46,8 @@ function bulkUpdateTracks($params, $currentpage, $postdata)
 	}
 	try {
 		fetchFromApi($path, "PATCH", $api_data, $headers);
+		header("Location: /search?{$basequerystring}&page={$currentpage}&saved=true", true, 303);
+	} catch (ApiError $error) {
+		displayApiError($error, "Failed to bulk update tracks in API.");
 	}
-	catch (ApiError $error) {
-		throw new Exception(apiErrorMessage($error, "Failed to bulk update tracks in API."), apiErrorToManagerStatus($error));
-	}
-	header("Location: /search?{$basequerystring}&page={$currentpage}&saved=true", true, 303);
 }

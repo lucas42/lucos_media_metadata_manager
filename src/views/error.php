@@ -13,22 +13,9 @@
 		<a href="/" class="mock-button nav-home">&lt;- Home </a>
 		<div id="content">
 			<h1>An error occured</h1>
-			<?php
-				// Split on the Detail separator so the human-readable message renders as prose
-				// and any technical detail (e.g. the API's rejection reason) renders as code.
-				$detailSep = "\n\nDetail: ";
-				$detailPos = strpos($errorMessage, $detailSep);
-				if ($detailPos !== false) {
-					$mainMessage = substr($errorMessage, 0, $detailPos);
-					$detail = substr($errorMessage, $detailPos + strlen($detailSep));
-				} else {
-					$mainMessage = $errorMessage;
-					$detail = null;
-				}
-			?>
-			<p style="white-space: pre-wrap;"><?=htmlspecialchars($mainMessage)?></p>
-			<?php if ($detail !== null): ?>
-			<pre>Detail: <?=htmlspecialchars($detail)?></pre>
+			<p><?=nl2br(htmlspecialchars($errorMessage))?></p>
+			<?php if (!empty($errorDetail)): ?>
+			<pre>Detail: <?=htmlspecialchars($errorDetail)?></pre>
 			<?php endif; ?>
 			<h2>Try Another Track?</h2>
 			<form method="get" action="/tracks">

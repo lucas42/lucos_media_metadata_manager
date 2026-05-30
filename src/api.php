@@ -38,78 +38,6 @@ function fetchFromApi($path, $method="GET", $data=null, $headers=[], $timeout=nu
 	return $response_data;
 }
 
-/**
- * Maps an ApiError to the HTTP status code the manager should return to the
- * browser. The mapping is range-based (not a per-code switch) so that callers
- * never need to hard-code 502 in catch blocks:
- *
- *   code == 0 (no response / connection failure)  → 502  downstream unreachable
- *   code >= 500 (upstream 5xx)                    → 502  downstream misbehaving
- *   code >= 400 (upstream 4xx)                    → 500  we sent bad input (our bug)
- *   anything else                                 → 502  unexpected; treat as transient
- *
- * Intentional per-code special-cases (e.g. 404 → "Not Found" page) are handled
- * by callers *before* reaching this fallback.
- */
-function apiErrorToManagerStatus(ApiError $error): int {
-	$code = $error->getCode();
-	if ($code === 0 || $code >= 500) {
-		return 502;
-	}
-	if ($code >= 400) {
-		return 500;
-	}
-	return 502;
-}
-
-/**
- * Builds the user-facing error message for an unexpected API error.
- * Uses two class-based templates keyed off the same 4xx/5xx boundary:
- *
- *   500-class (4xx upstream — our bug):
- *     "Something went wrong. [Detail: <API reason>]"
- *     Signals: do not blindly retry — something in our request was wrong.
- *
- *   502-class (5xx/network — transient):
- *     "The metadata service is temporarily unavailable. Please try again shortly."
- *     Signals: retry.
- *
- * The API's reason text (not the status code) is appended for 500-class errors
- * where the API returned a parseable reason — surfacing it here is valuable
- * because the API does not currently log these rejections server-side.
- *
- * @param string $context  Short description of the operation that failed,
- *                         e.g. "Error updating track". Prepended to the message.
- */
-function apiErrorMessage(ApiError $error, string $context = ''): string {
-	$status = apiErrorToManagerStatus($error);
-	$prefix = $context !== '' ? $context . "\n\n" : '';
-	if ($status === 500) {
-		$reason = apiErrorReason($error);
-		$detail = $reason !== '' ? "\n\nDetail: " . $reason : '';
-		return $prefix . "Something went wrong saving this change. Retrying is unlikely to help." . $detail;
-	}
-	// 502-class: transient/downstream failure
-	return $prefix . "The metadata service is temporarily unavailable. Try again in a moment.";
-}
-
-/**
- * Extracts the human-readable reason text from an ApiError's response body.
- * The API returns JSON with an "error" field on 4xx rejections (e.g.
- * {"error": "uri … does not start with an allowed origin", "code": "…"}).
- * Returns an empty string if no parseable reason is available.
- */
-function apiErrorReason(ApiError $error): string {
-	if ($error->responseBody === null || $error->responseBody === '') {
-		return '';
-	}
-	$body = json_decode($error->responseBody, true);
-	if (!is_array($body) || empty($body['error'])) {
-		return '';
-	}
-	return (string) $body['error'];
-}
-
 class ApiError extends Exception {
 	public function __construct(
 		string $message,
@@ -120,5 +48,65 @@ class ApiError extends Exception {
 		?\Throwable $previous = null,
 	) {
 		parent::__construct($message, $code, $previous);
+	}
+
+	/**
+	 * Maps this error to the HTTP status the manager should return to the browser.
+	 * Range-based (not a per-code switch) so callers never need to hard-code 502:
+	 *
+	 *   code == 0 (no response / connection failure)  → 502  downstream unreachable
+	 *   code >= 500 (upstream 5xx)                    → 502  downstream misbehaving
+	 *   code >= 400 (upstream 4xx)                    → 500  we sent bad input (our bug)
+	 *   anything else                                 → 502  unexpected; treat as transient
+	 *
+	 * Intentional per-code special-cases (e.g. 404 → "Not Found" page) are handled
+	 * by callers before reaching this fallback.
+	 */
+	public function managerStatus(): int {
+		$code = $this->getCode();
+		if ($code === 0 || $code >= 500) {
+			return 502;
+		}
+		if ($code >= 400) {
+			return 500;
+		}
+		return 502;
+	}
+
+	/**
+	 * Extracts the human-readable reason text from the API's response body.
+	 * The API returns JSON with an "error" field on 4xx rejections (e.g.
+	 * {"error": "uri … does not start with an allowed origin", "code": "…"}).
+	 * Returns an empty string if no parseable reason is available.
+	 */
+	public function detail(): string {
+		if ($this->responseBody === null || $this->responseBody === '') {
+			return '';
+		}
+		$body = json_decode($this->responseBody, true);
+		if (!is_array($body) || empty($body['error'])) {
+			return '';
+		}
+		return (string) $body['error'];
+	}
+
+	/**
+	 * Returns the class-based user-facing message for this error.
+	 * Two templates keyed off the same 4xx/5xx boundary:
+	 *
+	 *   500-class (4xx upstream — our bug):
+	 *     "Something went wrong saving this change. Retrying is unlikely to help."
+	 *
+	 *   502-class (5xx/network — transient):
+	 *     "The metadata service is temporarily unavailable. Try again in a moment."
+	 *
+	 * Any API reason text is exposed separately via detail() — pass it through
+	 * as $errorDetail to displayError() rather than embedding it here.
+	 */
+	public function userMessage(): string {
+		if ($this->managerStatus() === 500) {
+			return "Something went wrong saving this change. Retrying is unlikely to help.";
+		}
+		return "The metadata service is temporarily unavailable. Try again in a moment.";
 	}
 }
