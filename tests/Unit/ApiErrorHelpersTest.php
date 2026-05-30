@@ -112,7 +112,8 @@ class ApiErrorHelpersTest extends TestCase
     {
         $error = new ApiError("API returned unexpected status code 400", 400);
         $msg = apiErrorMessage($error);
-        $this->assertStringContainsString("Something went wrong", $msg);
+        $this->assertStringContainsString("Something went wrong saving this change.", $msg);
+        $this->assertStringContainsString("Retrying is unlikely to help.", $msg);
         $this->assertStringNotContainsString("400", $msg); // code must not appear
     }
 
@@ -121,7 +122,8 @@ class ApiErrorHelpersTest extends TestCase
         $error = new ApiError("API returned unexpected status code 400", 400);
         $msg = apiErrorMessage($error, "Error updating track in API.");
         $this->assertStringStartsWith("Error updating track in API.", $msg);
-        $this->assertStringContainsString("Something went wrong", $msg);
+        $this->assertStringContainsString("Something went wrong saving this change.", $msg);
+        $this->assertStringContainsString("Retrying is unlikely to help.", $msg);
     }
 
     public function test500ClassMessageAppendsApiReason(): void
@@ -130,6 +132,7 @@ class ApiErrorHelpersTest extends TestCase
         $error = new ApiError("API returned unexpected status code 400", 400, null, $body);
         $msg = apiErrorMessage($error, "Error updating track in API.");
         $this->assertStringContainsString("uri does not start with an allowed origin", $msg);
+        $this->assertStringContainsString("Detail: ", $msg);
         $this->assertStringNotContainsString("status code 400", $msg);
     }
 
@@ -139,6 +142,7 @@ class ApiErrorHelpersTest extends TestCase
         $msg = apiErrorMessage($error, "Can't fetch tracks from API.");
         $this->assertStringStartsWith("Can't fetch tracks from API.", $msg);
         $this->assertStringContainsString("temporarily unavailable", $msg);
+        $this->assertStringContainsString("Try again in a moment.", $msg);
     }
 
     public function test502ClassMessageForUpstream5xx(): void
@@ -146,6 +150,7 @@ class ApiErrorHelpersTest extends TestCase
         $error = new ApiError("API returned unexpected status code 503", 503);
         $msg = apiErrorMessage($error, "Error fetching album.");
         $this->assertStringContainsString("temporarily unavailable", $msg);
+        $this->assertStringContainsString("Try again in a moment.", $msg);
         $this->assertStringNotContainsString("503", $msg); // code must not appear
     }
 

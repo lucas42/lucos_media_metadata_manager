@@ -87,10 +87,10 @@ function apiErrorMessage(ApiError $error, string $context = ''): string {
 	if ($status === 500) {
 		$reason = apiErrorReason($error);
 		$detail = $reason !== '' ? "\n\nDetail: " . $reason : '';
-		return $prefix . "Something went wrong." . $detail;
+		return $prefix . "Something went wrong saving this change. Retrying is unlikely to help." . $detail;
 	}
 	// 502-class: transient/downstream failure
-	return $prefix . "The metadata service is temporarily unavailable. Please try again shortly.";
+	return $prefix . "The metadata service is temporarily unavailable. Try again in a moment.";
 }
 
 /**
