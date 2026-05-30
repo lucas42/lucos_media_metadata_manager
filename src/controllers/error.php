@@ -21,7 +21,5 @@ function displayError($statusCode, $errorMessage, $trackid=null, $errorDetail=nu
  * before reaching this.
  */
 function displayApiError(ApiError $error, string $context, $trackid=null) {
-	$errorMessage = $context . "\n\n" . $error->userMessage();
-	$errorDetail  = $error->detail() !== '' ? $error->detail() : null;
-	displayError($error->managerStatus(), $errorMessage, $trackid, $errorDetail);
+	displayError($error->managerStatus(), $context . "\n\n" . $error->userMessage(), $trackid, $error->detail());
 }
