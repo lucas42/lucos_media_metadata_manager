@@ -443,18 +443,3 @@ small {
 	--select-field-border: #000000;
 	--select-field-text: #000000;
 }
-.select-field-language {
-	--select-field-background: #8affe7;
-	--select-field-border: #068900;
-	--select-field-text: #000000;
-}
-.select-field-offence {
-	--select-field-background: #010102;
-	--select-field-border: #000020;
-	--select-field-text: #ffffff;
-}
-.input-field-composer, .input-field-producer {
-	--select-field-background: #044E00;
-	--select-field-border: #033100;
-	--select-field-text: #ffffff;
-}
