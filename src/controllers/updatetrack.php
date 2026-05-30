@@ -15,6 +15,7 @@ function formValueToV3($value, $fieldConfig) {
 	$type = $fieldConfig["type"] ?? "text";
 	$isUriField = $type === "search";
 	$isAlbumSearch = $type === "album-search";
+	$isArtistSearch = $type === "artist-search";
 
 	if (is_array($value)) {
 		$result = [];
@@ -44,8 +45,8 @@ function formValueToV3($value, $fieldConfig) {
 		return [];
 	}
 
-	if ($isAlbumSearch) {
-		// Submit URI only; the API resolves the album name from the URI at write time
+	if ($isAlbumSearch || $isArtistSearch) {
+		// Submit URI only; the API resolves the name from the URI at write time
 		return [["uri" => $value]];
 	}
 

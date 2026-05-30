@@ -52,7 +52,7 @@ class FormFieldsTest extends TestCase
     public function testKnownFieldTypes(): void
     {
         $allowedTypes = ['text', 'multi-text', 'textarea', 'range', 'discrete-range',
-                         'select', 'multiselect', 'multigroupselect', 'search', 'album-search'];
+                         'select', 'multiselect', 'multigroupselect', 'search', 'album-search', 'artist-search'];
         $fields = getTagFields();
         foreach ($fields as $key => $field) {
             $this->assertContains(
@@ -79,6 +79,12 @@ class FormFieldsTest extends TestCase
     {
         $fields = getTagFields();
         $this->assertSame('text', $fields['title']['type']);
+    }
+
+    public function testArtistFieldIsArtistSearch(): void
+    {
+        $fields = getTagFields();
+        $this->assertSame('artist-search', $fields['artist']['type']);
     }
 
     public function testAlbumFieldIsAlbumSearch(): void
