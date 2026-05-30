@@ -20,7 +20,7 @@ function viewTrack($trackid) {
 		if ($error->getCode() == 404) {
 			displayError(404, "Track {$trackid} Not Found", $trackid);
 		} else {
-			displayError(502, "Can't fetch track from API.\n\n".$error->getMessage(), $trackid);
+			displayError(apiErrorToManagerStatus($error), apiErrorMessage($error, "Can't fetch track from API."), $trackid);
 		}
 	}
 }

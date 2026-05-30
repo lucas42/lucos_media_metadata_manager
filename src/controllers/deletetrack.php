@@ -11,6 +11,6 @@ function deleteTrack($trackid) {
 		$response = fetchFromApi("/v3/tracks/{$trackid}", "DELETE");
 		header("Location: /?deleted=track", true, 303);
 	} catch (ApiError $error) {
-		displayError(502, "Error deleting track in API.\n\n".$response);
+		displayError(apiErrorToManagerStatus($error), apiErrorMessage($error, "Error deleting track in API."));
 	}
 }

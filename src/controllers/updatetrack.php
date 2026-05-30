@@ -82,6 +82,6 @@ function updateTrack($trackid, $postdata) {
 		fetchFromApi("/v3/tracks/{$trackid}", "PATCH", $api_data);
 		header("Location: /tracks/{$trackid}?saved=true", true, 303);
 	} catch (ApiError $error) {
-		displayError(502, "Error updating track in API.\n\n".$error->getMessage());
+		displayError(apiErrorToManagerStatus($error), apiErrorMessage($error, "Error updating track in API."));
 	}
 }

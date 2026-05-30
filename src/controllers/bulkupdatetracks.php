@@ -47,7 +47,7 @@ function bulkUpdateTracks($params, $currentpage, $postdata)
 		fetchFromApi($path, "PATCH", $api_data, $headers);
 	}
 	catch (ApiError $error) {
-		throw new Exception("Failed to bulk update tracks in API.\n\n{$error}", 502);
+		throw new Exception(apiErrorMessage($error, "Failed to bulk update tracks in API."), apiErrorToManagerStatus($error));
 	}
 	header("Location: /search?{$basequerystring}&page={$currentpage}&saved=true", true, 303);
 }

@@ -13,6 +13,6 @@ function listAlbums($page) {
 		$currentPage = $data["page"] ?? 1;
 		require("../views/albums.php");
 	} catch (ApiError $error) {
-		displayError(502, "Can't fetch albums from API.\n\n".$error->getMessage());
+		displayError(apiErrorToManagerStatus($error), apiErrorMessage($error, "Can't fetch albums from API."));
 	}
 }

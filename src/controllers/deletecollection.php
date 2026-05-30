@@ -14,6 +14,6 @@ function deleteCollection($slug) {
 		$response = fetchFromApi("/v3/collections/".urlencode($slug), "DELETE");
 		header("Location: /collections/?deleted=collection", true, 303);
 	} catch (ApiError $error) {
-		displayError(502, "Error deleting collection in API.\n\n".$response);
+		displayError(apiErrorToManagerStatus($error), apiErrorMessage($error, "Error deleting collection in API."));
 	}
 }
