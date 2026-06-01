@@ -185,46 +185,6 @@
 					}?>
 				</select><?php
 				break;
-			case "multigroupselect":
-				// For multigroupselect, extract names as values
-				$selectedValues = [];
-				if (!empty($values)) {
-					$selectedValues = array_filter(array_map(function($v) { return $v["name"] ?? null; }, $values), function($n) { return $n !== null; });
-				}
-				?>
-				<select
-					id="<?=htmlspecialchars($key)?>"
-					name="<?=htmlspecialchars($key)?>[]"
-					class="select-field select-field-<?=htmlspecialchars($key)?>"
-					multiple
-					>
-					<?php
-					if (is_array($field["values"])) {
-						foreach ($field["values"] as $groupname => $options) {
-							if (!empty($groupname)) {
-								?>
-						<optgroup label="<?=htmlspecialchars((string)$groupname)?>">
-								<?php
-							}
-							if (is_array($options)) {
-								foreach ($options as $option => $name) {
-								?>
-									<option value="<?=htmlspecialchars((string)$option)?>"<?=in_array($option, $selectedValues)?" selected":""?>>
-										<?=htmlspecialchars((string)$name)?>
-									</option>
-								<?php
-								}
-							}
-							if (!empty($groupname)) {
-								?>
-						</optgroup>
-								<?php
-							}
-						}
-					}
-					?>
-				</select><?php
-				break;
 			case "textarea":
 				$value = (!empty($values) && isset($values[0]["name"])) ? $values[0]["name"] : null;
 				?>
