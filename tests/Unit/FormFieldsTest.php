@@ -52,7 +52,7 @@ class FormFieldsTest extends TestCase
     public function testKnownFieldTypes(): void
     {
         $allowedTypes = ['text', 'multi-text', 'textarea', 'range', 'discrete-range',
-                         'select', 'multiselect', 'multigroupselect', 'search', 'album-search', 'artist-search'];
+                         'select', 'multiselect', 'search', 'album-search', 'artist-search'];
         $fields = getTagFields();
         foreach ($fields as $key => $field) {
             $this->assertContains(
@@ -67,7 +67,7 @@ class FormFieldsTest extends TestCase
     {
         $fields = getTagFields();
         foreach ($fields as $key => $field) {
-            if (in_array($field['type'], ['select', 'multiselect', 'multigroupselect', 'discrete-range'])) {
+            if (in_array($field['type'], ['select', 'multiselect', 'discrete-range'])) {
                 $this->assertArrayHasKey('values', $field, "Field '$key' (type: {$field['type']}) should have a 'values' key");
                 $this->assertIsArray($field['values'], "Field '$key' values should be an array");
                 $this->assertNotEmpty($field['values'], "Field '$key' values should not be empty");
