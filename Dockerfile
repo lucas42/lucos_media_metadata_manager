@@ -1,3 +1,9 @@
+FROM composer:latest AS composer-build
+
+WORKDIR /app
+COPY composer*.json ./
+RUN composer install --no-dev --optimize-autoloader --no-interaction
+
 FROM node:26-alpine AS js-build
 
 WORKDIR /srv/client
@@ -18,6 +24,8 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 RUN a2enmod rewrite
 RUN echo "ServerName localhost\nServerAdmin webmaster@localhost" >> /etc/apache2/apache2.conf
 COPY vhost.conf /etc/apache2/sites-available/000-default.conf
+
+COPY --from=composer-build /app/vendor ./vendor
 
 COPY src .
 COPY --from=js-build /srv/client/dist/script.js* html/

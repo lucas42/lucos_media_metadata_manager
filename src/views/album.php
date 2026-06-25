@@ -22,14 +22,17 @@
 		</script>
 	</head>
 	<body>
-		<lucos-navbar bg-colour="#000020">Metadata Manager - <?=htmlspecialchars($album["name"])?></lucos-navbar>
+		<lucos-navbar bg-colour="#000020" aithne-origin="<?=htmlspecialchars(getenv('AITHNE_ORIGIN') ?: 'https://aithne.l42.eu')?>">Metadata Manager - <?=htmlspecialchars($album["name"])?></lucos-navbar>
 		<a href="/albums" class="mock-button nav-home">&lt;- All Albums </a>
 		<div id="content">
 			<h1><?=htmlspecialchars($album["name"])?></h1>
 
+			<?php if (hasScope("media-metadata:write")): ?>
 			<a href="/albums/merge?<?=htmlspecialchars(http_build_query(["targetId" => $album["id"]]))?>" class="mock-button">Merge albums into this one</a>
+			<?php endif; ?>
 
 			<h2>Metadata</h2>
+			<?php if (hasScope("media-metadata:write")): ?>
 			<form method="post" id="albumform">
 				<?php echo csrfTokenField(); ?>
 				<div class="form-field">
@@ -43,6 +46,7 @@
 				</div>
 				<input type="submit" value="Save" class="primary-submit" />
 			</form>
+			<?php endif; ?>
 
 			<h2>Tracks</h2>
 <?php if (!empty($tracksError)) { ?>
@@ -72,7 +76,7 @@
 			</div>
 <?php } ?>
 
-<?php if (empty($tracks) && empty($tracksError)) { ?>
+<?php if (empty($tracks) && empty($tracksError) && hasScope("media-metadata:write")) { ?>
 			<form method="post" action="/albums/<?=htmlspecialchars(urlencode((string)$album["id"]))?>/delete" data-confirm="Are you sure you want to delete album <?=htmlspecialchars($album["name"])?>?">
 				<?php echo csrfTokenField(); ?>
 				<input type="submit" value="Delete Album" class="standalone danger" />

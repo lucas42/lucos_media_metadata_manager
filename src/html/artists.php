@@ -16,6 +16,13 @@ if ($artistid === null && choose_json_over_html()) {
 
 	$method = $_SERVER['REQUEST_METHOD'];
 
+	// POST (create artist) is a write; GET (search) is read
+	if ($method === 'POST') {
+		requireScope("media-metadata:write");
+	} else {
+		requireScope("media-metadata:read");
+	}
+
 	if ($method === 'GET') {
 		try {
 			$params = [];

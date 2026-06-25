@@ -13,9 +13,10 @@
 		</script>
 	</head>
 	<body>
-		<lucos-navbar bg-colour="#000020">Metadata Manager - track <?=$trackid?></lucos-navbar>
+		<lucos-navbar bg-colour="#000020" aithne-origin="<?=htmlspecialchars(getenv('AITHNE_ORIGIN') ?: 'https://aithne.l42.eu')?>">Metadata Manager - track <?=$trackid?></lucos-navbar>
 		<a href="/" class="mock-button nav-home">&lt;- Home </a>
 		<div id="content" class="trackpage">
+<?php if (hasScope("media-metadata:write")): ?>
 <form method="post" id="trackform">
 	<?php echo csrfTokenField(); ?>
 	<header>
@@ -46,6 +47,7 @@
 ?>
 	<footer><input type="submit" value="Save" class="primary-submit" /></footer>
 </form>
+<?php endif; ?>
 <h2>Additional Details</h2>
 <div id="details">
 <?php
@@ -81,10 +83,12 @@
 		data-trackurl="<?=htmlspecialchars($data["url"])?>"
 		data-trackid="<?=$data["id"]?>" />
 	</div>
+	<?php if (hasScope("media-metadata:write")): ?>
 	<form method="post" action="/tracks/<?=$data["id"]?>/delete" data-confirm="Are you sure you want to delete track <?=$trackid?>?">
 		<?php echo csrfTokenField(); ?>
 		<input type="submit" value="Delete Track" class="standalone danger" />
 	</form>
+	<?php endif; ?>
 </div>
 <script src="/script.js" type="text/javascript"></script>
 </body>
