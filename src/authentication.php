@@ -38,9 +38,6 @@ $AITHNE_JWKS_URL = getenv('AITHNE_JWKS_URL') ?: ($AITHNE_ORIGIN . '/.well-known/
 /** @var array<string,mixed>|null  Verified JWT payload for this request (null = not authenticated) */
 $_auth_payload = null;
 
-/** @var array<string,mixed>|null  Last-known-good raw JWKS (re-used on transient fetch failures) */
-$_cached_raw_jwks = null;
-
 // ---------------------------------------------------------------------------
 // Internal helpers
 // ---------------------------------------------------------------------------
@@ -70,20 +67,48 @@ function _buildLoginUrl(): string
 /**
  * Fetch and parse JWKS key objects, with last-known-good fallback on failure.
  *
+ * Uses a static variable (not a module-level global) so the cache survives across
+ * requests within a PHP-FPM worker process.  Module-level globals are cleared by
+ * PHP-FPM between requests; static function variables are not.
+ *
  * Tests may inject pre-parsed Key objects by setting:
  *   $GLOBALS['_test_jwks_keys'] = ['kid' => new \Firebase\JWT\Key(...)];
+ *
+ * Additional test hooks (set before calling; unset / reset in tearDown):
+ *   $GLOBALS['_test_reset_jwks_cache'] — set to true to clear the static cache
+ *   $GLOBALS['_test_cached_raw_jwks']  — raw JWKS array to pre-seed the cache
+ *   $GLOBALS['_test_force_jwks_fetch_failure'] — set to true to simulate a fetch error
  *
  * @return array<string, \Firebase\JWT\Key>
  */
 function _getJwksKeys(): array
 {
-    global $AITHNE_JWKS_URL, $_cached_raw_jwks;
+    global $AITHNE_JWKS_URL;
+    static $cachedRawJwks = null; // persists for the FPM worker lifetime across requests
 
+    // Test: reset the static cache between test runs
+    if (!empty($GLOBALS['_test_reset_jwks_cache'])) {
+        $cachedRawJwks = null;
+        unset($GLOBALS['_test_reset_jwks_cache']);
+    }
+
+    // Test: direct Key injection — bypasses fetch and cache entirely
     if (isset($GLOBALS['_test_jwks_keys'])) {
         return $GLOBALS['_test_jwks_keys'];
     }
 
+    // Test: pre-seed the static cache with a known-good JWKS array
+    if (isset($GLOBALS['_test_cached_raw_jwks'])) {
+        $cachedRawJwks = $GLOBALS['_test_cached_raw_jwks'];
+        unset($GLOBALS['_test_cached_raw_jwks']);
+    }
+
     try {
+        // Test: simulate a fetch failure after the cache has been seeded
+        if (!empty($GLOBALS['_test_force_jwks_fetch_failure'])) {
+            throw new RuntimeException('Simulated JWKS fetch failure (test hook)');
+        }
+
         $context = stream_context_create(['http' => [
             'timeout'       => 5,
             'ignore_errors' => true,
@@ -98,16 +123,20 @@ function _getJwksKeys(): array
         if (!is_array($jwks) || !array_key_exists('keys', $jwks)) {
             throw new RuntimeException('JWKS response is not a valid JWKS object');
         }
-        $_cached_raw_jwks = $jwks;
+        $cachedRawJwks = $jwks;
         return JWK::parseKeySet($jwks, 'ES256');
     } catch (Exception $e) {
-        error_log(
-            'Warning: JWKS fetch failed: ' . _sanitizeForLog($e->getMessage()) .
-            ' — serving last-known-good key set'
-        );
-        if ($_cached_raw_jwks !== null) {
-            return JWK::parseKeySet($_cached_raw_jwks, 'ES256');
+        if ($cachedRawJwks !== null) {
+            error_log(
+                'Warning: JWKS fetch failed: ' . _sanitizeForLog($e->getMessage()) .
+                ' — serving last-known-good key set'
+            );
+            return JWK::parseKeySet($cachedRawJwks, 'ES256');
         }
+        error_log(
+            'Error: JWKS fetch failed: ' . _sanitizeForLog($e->getMessage()) .
+            ' — no cached key set available, cannot authenticate'
+        );
         throw $e;
     }
 }
@@ -153,6 +182,13 @@ function _verifyAithneToken(string $token): ?array
         }
         if (!in_array('l42.eu', $aud, true)) {
             error_log('Auth: JWT aud does not contain l42.eu');
+            return null;
+        }
+
+        // Validate principal_class is a recognised value (contract §4-5)
+        $principalClass = $claims['principal_class'] ?? '';
+        if (!in_array($principalClass, ['human', 'agent'], true)) {
+            error_log('Auth: JWT has unrecognised principal_class: ' . _sanitizeForLog((string)$principalClass));
             return null;
         }
 

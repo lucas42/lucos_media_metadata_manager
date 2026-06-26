@@ -55,6 +55,9 @@ namespace Tests\Unit {
         /** @var string  PEM-encoded public key for test verification */
         private string $publicKey;
 
+        /** @var array<string,mixed>  Raw key details (for constructing JWK arrays in fallback tests) */
+        private array $keyDetails;
+
         protected function setUp(): void
         {
             // Generate a fresh ES256 (P-256) key pair for each test
@@ -63,8 +66,9 @@ namespace Tests\Unit {
                 'private_key_type' => OPENSSL_KEYTYPE_EC,
             ]);
             openssl_pkey_export($keyPair, $this->privateKey);
-            $details         = openssl_pkey_get_details($keyPair);
-            $this->publicKey = $details['key'];
+            $details           = openssl_pkey_get_details($keyPair);
+            $this->publicKey   = $details['key'];
+            $this->keyDetails  = $details;
 
             // Inject test key set so _getJwksKeys() bypasses network
             $GLOBALS['_test_jwks_keys'] = ['test-kid' => new Key($this->publicKey, 'ES256')];
@@ -86,7 +90,11 @@ namespace Tests\Unit {
         {
             unset($GLOBALS['_test_jwks_keys']);
             unset($GLOBALS['_test_exit_fn']);
+            unset($GLOBALS['_test_cached_raw_jwks']);
+            unset($GLOBALS['_test_force_jwks_fetch_failure']);
             $GLOBALS['_auth_payload'] = null;
+            // Clear the static JWKS cache so each test starts with a clean slate
+            $GLOBALS['_test_reset_jwks_cache'] = true;
         }
 
         // -----------------------------------------------------------------------
@@ -101,12 +109,13 @@ namespace Tests\Unit {
         private function makeToken(array $overrides = []): string
         {
             $defaults = [
-                'iss'    => 'https://aithne.l42.eu',
-                'aud'    => 'l42.eu',
-                'sub'    => 'test-user',
-                'iat'    => time() - 1,
-                'exp'    => time() + 3600,
-                'scopes' => ['media-metadata:read'],
+                'iss'             => 'https://aithne.l42.eu',
+                'aud'             => 'l42.eu',
+                'sub'             => 'test-user',
+                'iat'             => time() - 1,
+                'exp'             => time() + 3600,
+                'scopes'          => ['media-metadata:read'],
+                'principal_class' => 'human',   // contract §5
             ];
             return JWT::encode(
                 array_merge($defaults, $overrides),
@@ -114,6 +123,30 @@ namespace Tests\Unit {
                 'ES256',
                 'test-kid'
             );
+        }
+
+        /**
+         * Build a raw JWKS array for the current test key pair.
+         * Used to pre-seed the static JWKS cache in fallback tests.
+         *
+         * @return array<string,mixed>
+         */
+        private function buildRawJwks(): array
+        {
+            $ec = $this->keyDetails['ec'];
+            return [
+                'keys' => [
+                    [
+                        'kty' => 'EC',
+                        'crv' => 'P-256',
+                        'x'   => rtrim(strtr(base64_encode($ec['x']), '+/', '-_'), '='),
+                        'y'   => rtrim(strtr(base64_encode($ec['y']), '+/', '-_'), '='),
+                        'kid' => 'test-kid',
+                        'use' => 'sig',
+                        'alg' => 'ES256',
+                    ]
+                ]
+            ];
         }
 
         // -----------------------------------------------------------------------
@@ -173,6 +206,45 @@ namespace Tests\Unit {
             $token   = $this->makeToken(['aud' => ['l42.eu', 'other.example.com']]);
             $payload = _verifyAithneToken($token);
             $this->assertIsArray($payload);
+        }
+
+        public function testUnrecognisedPrincipalClassReturnsNull(): void
+        {
+            $token   = $this->makeToken(['principal_class' => 'service']);
+            $payload = _verifyAithneToken($token);
+            $this->assertNull($payload);
+        }
+
+        public function testAgentPrincipalClassIsAccepted(): void
+        {
+            $token   = $this->makeToken(['principal_class' => 'agent']);
+            $payload = _verifyAithneToken($token);
+            $this->assertIsArray($payload);
+            $this->assertSame('agent', $payload['principal_class']);
+        }
+
+        public function testJwksFallbackServesLastKnownGoodKeySet(): void
+        {
+            // Pre-seed the static JWKS cache with a raw JWK for our test key,
+            // then simulate a fetch failure: the cache must carry the request.
+            $GLOBALS['_test_cached_raw_jwks']          = $this->buildRawJwks();
+            $GLOBALS['_test_force_jwks_fetch_failure'] = true;
+
+            try {
+                // Remove the direct-key bypass so _getJwksKeys() runs the real path
+                unset($GLOBALS['_test_jwks_keys']);
+
+                $token   = $this->makeToken();
+                $payload = _verifyAithneToken($token);
+
+                $this->assertIsArray($payload, 'Cached key set must allow token verification on fetch failure');
+                $this->assertSame('test-user', $payload['sub']);
+            } finally {
+                // Restore the direct-key bypass and clean up test state
+                $GLOBALS['_test_jwks_keys'] = ['test-kid' => new Key($this->publicKey, 'ES256')];
+                unset($GLOBALS['_test_force_jwks_fetch_failure']);
+                $GLOBALS['_test_reset_jwks_cache'] = true;
+            }
         }
 
         // -----------------------------------------------------------------------
