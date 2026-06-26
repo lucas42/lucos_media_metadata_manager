@@ -272,13 +272,15 @@ function requireScope(string $scope): void
         if (hasScope($scope)) {
             return; // Branch 1: authorised
         }
-        // Branch 2: authenticated but missing the required scope
+        // Branch 2: authenticated but missing the required scope.
+        // Name the specific scope so an operator knows which grant to add
+        // (contract §6 Enhancement B: server-side constant, not user input).
         require_once __DIR__ . '/controllers/error.php';
         displayError(
             403,
-            'Access denied: you do not have the ' .
+            'This action requires the ' .
             htmlspecialchars($scope, ENT_QUOTES, 'UTF-8') .
-            ' permission needed for this page.'
+            ' scope.'
         );
         _authExit();
         return; // unreachable; keeps static analysis happy
