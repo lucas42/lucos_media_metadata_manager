@@ -19,3 +19,8 @@ services:
       - MEDIA_MANAGER_URL=https://ceol.l42.eu/
       - KEY_LUCOS_ARACHNE
       - ARACHNE_URL=https://arachne.l42.eu
+      - AITHNE_ORIGIN
+      - AITHNE_JWKS_URL
+      - APP_ORIGIN
+      - ENVIRONMENT
+      - SYSTEM

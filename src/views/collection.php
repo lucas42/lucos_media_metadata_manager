@@ -20,17 +20,18 @@
 	<meta name="mobile-web-app-capable" content="yes">
 	<script type="text/javascript">
 		const mediaManager = "<?= htmlspecialchars(getenv('MEDIA_MANAGER_URL'))?>";
-		const mediaManager_apiKey = "<?= htmlspecialchars(getenv('KEY_LUCOS_MEDIA_MANAGER'))?>";
+		const mediaManager_apiKey = "<?= hasScope('media-manager:use') ? htmlspecialchars(getenv('KEY_LUCOS_MEDIA_MANAGER')) : '' ?>";
 	</script>
 </head>
 
 <body>
-	<lucos-navbar bg-colour="#000020">Metadata Manager -
+	<lucos-navbar bg-colour="#000020" aithne-origin="<?=htmlspecialchars(getenv('AITHNE_ORIGIN'))?>">Metadata Manager -
 		<?= htmlspecialchars($data['name'])?> Collection
 	</lucos-navbar>
 	<a href="/collections" class="mock-button nav-home">&lt;- All Collections </a>
 	<div id="content">
 		<h2>Collection Metadata</h2>
+		<?php if (hasScope("media-metadata:write")): ?>
 		<form method="post" id="collectionform">
 			<?php echo csrfTokenField(); ?>
 			<div class="form-field">
@@ -59,6 +60,7 @@ include 'field.php';
 			</div>
 			<input type="submit" value="Save" class="primary-submit" />
 		</form>
+		<?php endif; ?>
 
 		<?php if (!empty($data["slug"])) { ?>
 		<h2>Tracks</h2>
@@ -98,12 +100,14 @@ include 'field.php';
 ?>
 		</div>
 		<collection-controls slug="<?= htmlspecialchars(urlencode($data["slug"]))?>"></collection-controls>
+		<?php if (hasScope("media-metadata:write")): ?>
 		<form method="post" action="/collections/<?= htmlspecialchars(urlencode($data["slug"]))?>/delete"
 			data-confirm="Are you sure you want to delete collection
 			<?= htmlspecialchars($data['name'])?>?">
 			<?php echo csrfTokenField(); ?>
 			<input type="submit" value="Delete Whole Collection" class="standalone danger" />
 		</form>
+		<?php endif; ?>
 		<?php
 }?>
 	</div>

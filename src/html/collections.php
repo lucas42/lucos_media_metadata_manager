@@ -1,5 +1,6 @@
 <?php
 require("../authentication.php");
+requireScope("media-metadata:read");
 require("../csrf.php");
 require("../controllers/updatecollection.php");
 require("../controllers/viewcollection.php");
@@ -19,9 +20,11 @@ if (!$subpath) {
 	if (array_key_exists("slug", $_GET)) {
 		header("Location: /collections/{$_GET["slug"]}");
 	} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		requireScope("media-metadata:write");
 		verifyCsrfToken();
 		updateCollection($slug, $_POST);
 	} elseif ($slug == "new") {
+		requireScope("media-metadata:write");
 		newCollectionForm();
 	} elseif ($slug) {
 		viewCollection($slug, $page);
@@ -30,6 +33,7 @@ if (!$subpath) {
 	}
 } elseif ($subpath == "delete") {
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		requireScope("media-metadata:write");
 		verifyCsrfToken();
 		deleteCollection($slug);
 	} else {

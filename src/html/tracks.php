@@ -12,6 +12,7 @@ if (is_numeric($trackid) and (choose_rdf_over_html() or choose_json_over_html())
 }
 
 require("../authentication.php");
+requireScope("media-metadata:read");
 require("../csrf.php");
 require("../controllers/updatetrack.php");
 require("../controllers/viewtrack.php");
@@ -27,6 +28,7 @@ if (array_key_exists("trackid", $_GET)) {
 } elseif (!is_numeric($trackid)) {
 	displayError(404, "Need to provide a numerical trackid in URL", $trackid);
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	requireScope("media-metadata:write");
 	verifyCsrfToken();
 	if (!$subpath) {
 		updateTrack($trackid, $_POST);

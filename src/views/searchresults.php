@@ -19,12 +19,12 @@
 	<meta name="mobile-web-app-capable" content="yes">
 	<script type="text/javascript">
 		const mediaManager = "<?= htmlspecialchars(getenv('MEDIA_MANAGER_URL'))?>";
-		const mediaManager_apiKey = "<?= htmlspecialchars(getenv('KEY_LUCOS_MEDIA_MANAGER'))?>";
+		const mediaManager_apiKey = "<?= hasScope('media-manager:use') ? htmlspecialchars(getenv('KEY_LUCOS_MEDIA_MANAGER')) : '' ?>";
 	</script>
 </head>
 
 <body>
-	<lucos-navbar bg-colour="#000020">Metadata Manager</lucos-navbar>
+	<lucos-navbar bg-colour="#000020" aithne-origin="<?=htmlspecialchars(getenv('AITHNE_ORIGIN'))?>">Metadata Manager</lucos-navbar>
 	<a href="/" class="mock-button nav-home">&lt;- Home </a>
 	<div class="content_container">
 		<div id="content">
@@ -64,6 +64,7 @@ if ($prevpage > 0) {
 ?>
 			</div>
 		</div>
+		<?php if (hasScope("media-metadata:write")): ?>
 		<div id="bulk-edit">
 
 			<h2 id="advanced">Bulk Edit</h2>
@@ -95,6 +96,7 @@ if ($prevpage > 0) {
 				<input type="submit" value="Edit All" class="primary-submit" />
 			</form>
 		</div>
+		<?php endif; ?>
 	</div>
 	<script src="/script.js" type="text/javascript"></script>
 </body>

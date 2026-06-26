@@ -27,6 +27,7 @@ if ($albumid === null && choose_json_over_html()) {
 	$method = $_SERVER['REQUEST_METHOD'];
 
 	if ($method === 'GET') {
+		requireScope("media-metadata:read");
 		try {
 			$params = [];
 			if (isset($_GET['q']) && $_GET['q'] !== '') $params[] = 'q=' . urlencode($_GET['q']);
@@ -39,6 +40,7 @@ if ($albumid === null && choose_json_over_html()) {
 			echo json_encode(['error' => $e->getMessage()]);
 		}
 	} elseif ($method === 'POST') {
+		requireScope("media-metadata:write");
 		$input = json_decode(file_get_contents('php://input'), true) ?? [];
 		$name = trim($input['name'] ?? '');
 		try {
@@ -57,7 +59,8 @@ if ($albumid === null && choose_json_over_html()) {
 	exit;
 }
 
-require("../authentication.php");
+require_once("../authentication.php");
+requireScope("media-metadata:read");
 require("../csrf.php");
 require("../controllers/listalbums.php");
 require("../controllers/viewalbum.php");
@@ -70,6 +73,7 @@ $page = empty($_GET['page']) ? null : $_GET['page'];
 if (!is_numeric($page) || $page < 1) $page = "1";
 
 if ($albumid === "merge") {
+	requireScope("media-metadata:write");
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		verifyCsrfToken();
 		mergeAlbums($_POST);
@@ -87,6 +91,7 @@ if ($albumid === "merge") {
 	displayError(404, "Need to provide a numerical album id in the URL");
 } elseif (!$subpath) {
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		requireScope("media-metadata:write");
 		verifyCsrfToken();
 		updateAlbum($albumid, $_POST);
 	} else {
@@ -94,6 +99,7 @@ if ($albumid === "merge") {
 	}
 } elseif ($subpath === "delete") {
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		requireScope("media-metadata:write");
 		verifyCsrfToken();
 		deleteAlbum($albumid);
 	} else {

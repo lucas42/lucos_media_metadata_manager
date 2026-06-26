@@ -16,11 +16,11 @@
 		<meta name="mobile-web-app-capable" content="yes">
 		<script type="text/javascript">
 			const mediaManager = "<?=htmlspecialchars(getenv('MEDIA_MANAGER_URL'))?>";
-			const mediaManager_apiKey = "<?=htmlspecialchars(getenv('KEY_LUCOS_MEDIA_MANAGER'))?>";
+			const mediaManager_apiKey = "<?= hasScope('media-manager:use') ? htmlspecialchars(getenv('KEY_LUCOS_MEDIA_MANAGER')) : '' ?>";
 		</script>
 	</head>
 	<body>
-		<lucos-navbar bg-colour="#000020">Metadata Manager - Albums</lucos-navbar>
+		<lucos-navbar bg-colour="#000020" aithne-origin="<?=htmlspecialchars(getenv('AITHNE_ORIGIN'))?>">Metadata Manager - Albums</lucos-navbar>
 		<a href="/" class="mock-button nav-home">&lt;- Home </a>
 		<div id="content">
 			<h1>Albums</h1>

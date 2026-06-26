@@ -9,11 +9,11 @@
 		<meta name="mobile-web-app-capable" content="yes">
 		<script type="text/javascript">
 			const mediaManager = "<?=htmlspecialchars(getenv('MEDIA_MANAGER_URL'))?>";
-			const mediaManager_apiKey = "<?=htmlspecialchars(getenv('KEY_LUCOS_MEDIA_MANAGER'))?>";
+			const mediaManager_apiKey = "<?= hasScope('media-manager:use') ? htmlspecialchars(getenv('KEY_LUCOS_MEDIA_MANAGER')) : '' ?>";
 		</script>
 	</head>
 	<body>
-		<lucos-navbar bg-colour="#000020">Metadata Manager - Collections</lucos-navbar>
+		<lucos-navbar bg-colour="#000020" aithne-origin="<?=htmlspecialchars(getenv('AITHNE_ORIGIN'))?>">Metadata Manager - Collections</lucos-navbar>
 		<a href="/" class="mock-button nav-home">&lt;- Home </a>
 		<div id="content">
 			<form method="get" action="/collections/new">

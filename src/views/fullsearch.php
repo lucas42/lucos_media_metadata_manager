@@ -15,7 +15,7 @@
 </head>
 
 <body>
-	<lucos-navbar bg-colour="#000020">Metadata Manager</lucos-navbar>
+	<lucos-navbar bg-colour="#000020" aithne-origin="<?=htmlspecialchars(getenv('AITHNE_ORIGIN'))?>">Metadata Manager</lucos-navbar>
 	<a href="/" class="mock-button nav-home">&lt;- Home </a>
 	<div id="content">
 		<h2>Search Tracks</h2>

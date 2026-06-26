@@ -1,5 +1,6 @@
 <?php
 require("../authentication.php");
+requireScope("media-metadata:read");
 require("../csrf.php");
 require("../controllers/searchtracks.php");
 require("../controllers/bulkupdatetracks.php");
@@ -37,6 +38,7 @@ if (array_key_exists('q', $_GET)) {
 try {
 	if (!empty($params)) {
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			requireScope("media-metadata:write");
 			verifyCsrfToken();
 			bulkUpdateTracks($params, $page, $_POST);
 		} else {
