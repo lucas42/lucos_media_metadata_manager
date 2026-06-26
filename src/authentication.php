@@ -34,7 +34,7 @@ session_start();
 // Module-level config (evaluated once at require-time)
 $AITHNE_ORIGIN   = getenv('AITHNE_ORIGIN')   ?: 'https://aithne.l42.eu';
 $AITHNE_JWKS_URL = getenv('AITHNE_JWKS_URL') ?: ($AITHNE_ORIGIN . '/.well-known/jwks.json');
-$APP_ORIGIN      = (string)(getenv('APP_ORIGIN') ?: '');
+$APP_ORIGIN      = getenv('APP_ORIGIN') ?: '';
 
 /** @var array<string,mixed>|null  Verified JWT payload for this request (null = not authenticated) */
 $_auth_payload = null;
