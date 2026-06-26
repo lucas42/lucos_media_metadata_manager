@@ -83,7 +83,9 @@ namespace Tests\Unit {
             // Reset env vars to defaults
             putenv('AITHNE_ORIGIN=https://aithne.l42.eu');
             putenv('ENVIRONMENT=');
+            putenv('APP_ORIGIN=https://media-metadata.l42.eu');
             $GLOBALS['AITHNE_ORIGIN'] = 'https://aithne.l42.eu';
+            $GLOBALS['APP_ORIGIN']    = 'https://media-metadata.l42.eu';
         }
 
         protected function tearDown(): void
@@ -365,6 +367,53 @@ namespace Tests\Unit {
             $this->assertTrue($exitCalled, '_authExit must be called on branch 3');
             // header() and http_response_code() are not inspectable in CLI mode;
             // redirect URL correctness is verified by _buildLoginUrl() logic.
+        }
+
+        // -----------------------------------------------------------------------
+        // _buildLoginUrl() — next param must be a full URL, not just a path
+        // -----------------------------------------------------------------------
+
+        /**
+         * Without APP_ORIGIN, aithne would redirect the user to a path on its
+         * own domain (e.g. aithne.l42.eu/tracks/42) instead of back to
+         * media-metadata.l42.eu/tracks/42.  This test asserts that APP_ORIGIN is
+         * prepended so the `next` parameter is always a fully-qualified URL.
+         */
+        public function testBuildLoginUrlPrependsAppOriginToNext(): void
+        {
+            $GLOBALS['AITHNE_ORIGIN'] = 'https://aithne.l42.eu';
+            $GLOBALS['APP_ORIGIN']    = 'https://media-metadata.l42.eu';
+            $_SERVER['REQUEST_URI']   = '/tracks/42';
+
+            $url = _buildLoginUrl();
+
+            $expectedNext = 'https://media-metadata.l42.eu/tracks/42';
+            $this->assertStringContainsString(
+                'next=' . rawurlencode($expectedNext),
+                $url,
+                '_buildLoginUrl() must include APP_ORIGIN in the next= param so aithne redirects back to this service'
+            );
+            $this->assertStringStartsWith(
+                'https://aithne.l42.eu/auth/login',
+                $url
+            );
+        }
+
+        public function testBuildLoginUrlGuardsOpenRedirect(): void
+        {
+            $GLOBALS['AITHNE_ORIGIN'] = 'https://aithne.l42.eu';
+            $GLOBALS['APP_ORIGIN']    = 'https://media-metadata.l42.eu';
+            // An attacker-supplied REQUEST_URI with a full URL must be rejected
+            $_SERVER['REQUEST_URI']   = 'https://evil.example.com/steal';
+
+            $url = _buildLoginUrl();
+
+            // next must fall back to APP_ORIGIN + '/' not to the attacker URL
+            $this->assertStringContainsString(
+                'next=' . rawurlencode('https://media-metadata.l42.eu/'),
+                $url
+            );
+            $this->assertStringNotContainsString('evil.example.com', $url);
         }
 
         // -----------------------------------------------------------------------

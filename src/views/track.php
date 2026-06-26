@@ -9,7 +9,7 @@
 		<meta name="mobile-web-app-capable" content="yes">
 		<script type="text/javascript">
 			const mediaManager = "<?=htmlspecialchars(getenv('MEDIA_MANAGER_URL'))?>";
-			const mediaManager_apiKey = "<?=htmlspecialchars(getenv('KEY_LUCOS_MEDIA_MANAGER'))?>";
+			const mediaManager_apiKey = "<?= hasScope('media-manager:use') ? htmlspecialchars(getenv('KEY_LUCOS_MEDIA_MANAGER')) : '' ?>";
 		</script>
 	</head>
 	<body>

@@ -34,6 +34,7 @@ session_start();
 // Module-level config (evaluated once at require-time)
 $AITHNE_ORIGIN   = getenv('AITHNE_ORIGIN')   ?: 'https://aithne.l42.eu';
 $AITHNE_JWKS_URL = getenv('AITHNE_JWKS_URL') ?: ($AITHNE_ORIGIN . '/.well-known/jwks.json');
+$APP_ORIGIN      = (string)(getenv('APP_ORIGIN') ?: '');
 
 /** @var array<string,mixed>|null  Verified JWT payload for this request (null = not authenticated) */
 $_auth_payload = null;
@@ -52,16 +53,20 @@ function _sanitizeForLog(string $s): string
 
 /**
  * Build the login redirect URL, with an open-redirect guard on the `next` param.
+ *
+ * The `next` parameter passed to aithne must be a full URL so that aithne
+ * redirects back to this service after login, not to a path on aithne's own
+ * domain.  APP_ORIGIN is prepended to the request path to form that full URL.
  */
 function _buildLoginUrl(): string
 {
-    global $AITHNE_ORIGIN;
+    global $AITHNE_ORIGIN, $APP_ORIGIN;
     $next   = $_SERVER['REQUEST_URI'] ?? '/';
     $parsed = parse_url($next);
     if (!empty($parsed['scheme']) || !empty($parsed['host'])) {
         $next = '/';
     }
-    return rtrim($AITHNE_ORIGIN, '/') . '/auth/login?next=' . rawurlencode($next);
+    return rtrim($AITHNE_ORIGIN, '/') . '/auth/login?next=' . rawurlencode(rtrim($APP_ORIGIN, '/') . $next);
 }
 
 /**
