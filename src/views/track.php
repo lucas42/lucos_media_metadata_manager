@@ -13,7 +13,7 @@
 		</script>
 	</head>
 	<body>
-		<lucos-navbar bg-colour="#000020" aithne-origin="<?=htmlspecialchars(getenv('AITHNE_ORIGIN') ?: 'https://aithne.l42.eu')?>">Metadata Manager - track <?=$trackid?></lucos-navbar>
+		<lucos-navbar bg-colour="#000020" aithne-origin="<?=htmlspecialchars(getenv('AITHNE_ORIGIN'))?>">Metadata Manager - track <?=$trackid?></lucos-navbar>
 		<a href="/" class="mock-button nav-home">&lt;- Home </a>
 		<div id="content" class="trackpage">
 <?php if (hasScope("media-metadata:write")): ?>

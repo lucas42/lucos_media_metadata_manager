@@ -9,7 +9,7 @@
 		<meta name="mobile-web-app-capable" content="yes">
 	</head>
 	<body>
-		<lucos-navbar bg-colour="#000020" aithne-origin="<?=htmlspecialchars(getenv('AITHNE_ORIGIN') ?: 'https://aithne.l42.eu')?>">Metadata Manager</lucos-navbar>
+		<lucos-navbar bg-colour="#000020" aithne-origin="<?=htmlspecialchars(getenv('AITHNE_ORIGIN'))?>">Metadata Manager</lucos-navbar>
 		<div id="content">
 			<h2>Tracks</h2>
 			<form method="get" action="/search/full">

@@ -26,14 +26,8 @@ if ($albumid === null && choose_json_over_html()) {
 
 	$method = $_SERVER['REQUEST_METHOD'];
 
-	// POST (create album) is a write; GET (search) is read
-	if ($method === 'POST') {
-		requireScope("media-metadata:write");
-	} else {
-		requireScope("media-metadata:read");
-	}
-
 	if ($method === 'GET') {
+		requireScope("media-metadata:read");
 		try {
 			$params = [];
 			if (isset($_GET['q']) && $_GET['q'] !== '') $params[] = 'q=' . urlencode($_GET['q']);
@@ -46,6 +40,7 @@ if ($albumid === null && choose_json_over_html()) {
 			echo json_encode(['error' => $e->getMessage()]);
 		}
 	} elseif ($method === 'POST') {
+		requireScope("media-metadata:write");
 		$input = json_decode(file_get_contents('php://input'), true) ?? [];
 		$name = trim($input['name'] ?? '');
 		try {

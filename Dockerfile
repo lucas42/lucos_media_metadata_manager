@@ -1,4 +1,4 @@
-FROM composer:latest AS composer-build
+FROM composer:2.10.1 AS composer-build
 
 WORKDIR /app
 COPY composer*.json ./

@@ -24,7 +24,7 @@
 </head>
 
 <body>
-	<lucos-navbar bg-colour="#000020" aithne-origin="<?=htmlspecialchars(getenv('AITHNE_ORIGIN') ?: 'https://aithne.l42.eu')?>">Metadata Manager</lucos-navbar>
+	<lucos-navbar bg-colour="#000020" aithne-origin="<?=htmlspecialchars(getenv('AITHNE_ORIGIN'))?>">Metadata Manager</lucos-navbar>
 	<a href="/" class="mock-button nav-home">&lt;- Home </a>
 	<div class="content_container">
 		<div id="content">
