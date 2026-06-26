@@ -139,8 +139,8 @@ namespace Tests\Unit {
                     [
                         'kty' => 'EC',
                         'crv' => 'P-256',
-                        'x'   => rtrim(strtr(base64_encode($ec['x']), '+/', '-_'), '='),
-                        'y'   => rtrim(strtr(base64_encode($ec['y']), '+/', '-_'), '='),
+                        'x'   => rtrim(strtr(base64_encode(str_pad($ec['x'], 32, "\0", STR_PAD_LEFT)), '+/', '-_'), '='),
+                        'y'   => rtrim(strtr(base64_encode(str_pad($ec['y'], 32, "\0", STR_PAD_LEFT)), '+/', '-_'), '='),
                         'kid' => 'test-kid',
                         'use' => 'sig',
                         'alg' => 'ES256',
