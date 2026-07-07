@@ -1,4 +1,4 @@
-FROM composer:2.10.1 AS composer-build
+FROM composer:2.10.2 AS composer-build
 
 WORKDIR /app
 COPY composer*.json ./
@@ -13,7 +13,7 @@ COPY client/*.js ./
 
 RUN npm run build
 
-FROM php:8.5.7-apache-trixie
+FROM php:8.5.8-apache-trixie
 ARG VERSION
 ENV VERSION=$VERSION
 
