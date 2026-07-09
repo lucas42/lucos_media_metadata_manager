@@ -190,12 +190,6 @@ function _verifyAithneToken(string $token): ?array
             return null;
         }
 
-        // principal_class is informational only — authorisation is enforced
-        // purely by scope (ADR-0001 §6). Do not reject on an absent or
-        // unrecognised principal_class; per lucas42's 2026-06-30 decision
-        // (reversing lucas42/lucos_aithne#250), consumers must not hardcode
-        // a principal_class allowlist. See local-verification-contract §5
-        // redesign in lucas42/lucos_aithne#268.
         return $claims;
     } catch (Exception $e) {
         $kidStr = $kid !== null ? (' kid=' . _sanitizeForLog((string)$kid)) : '';
