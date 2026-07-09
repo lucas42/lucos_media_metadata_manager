@@ -190,13 +190,6 @@ function _verifyAithneToken(string $token): ?array
             return null;
         }
 
-        // Validate principal_class is a recognised value (contract §4-5)
-        $principalClass = $claims['principal_class'] ?? '';
-        if (!in_array($principalClass, ['human', 'agent'], true)) {
-            error_log('Auth: JWT has unrecognised principal_class: ' . _sanitizeForLog((string)$principalClass));
-            return null;
-        }
-
         return $claims;
     } catch (Exception $e) {
         $kidStr = $kid !== null ? (' kid=' . _sanitizeForLog((string)$kid)) : '';

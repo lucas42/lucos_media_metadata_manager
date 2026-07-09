@@ -210,11 +210,16 @@ namespace Tests\Unit {
             $this->assertIsArray($payload);
         }
 
-        public function testUnrecognisedPrincipalClassReturnsNull(): void
+        public function testUnrecognisedPrincipalClassIsAccepted(): void
         {
+            // principal_class is informational only (contract §5 redesign,
+            // lucas42/lucos_aithne#268) — authorisation is enforced purely by
+            // scope (ADR-0001 §6). An unrecognised/absent principal_class must
+            // not cause rejection as long as the required scope is present.
             $token   = $this->makeToken(['principal_class' => 'service']);
             $payload = _verifyAithneToken($token);
-            $this->assertNull($payload);
+            $this->assertIsArray($payload);
+            $this->assertSame('service', $payload['principal_class']);
         }
 
         public function testAgentPrincipalClassIsAccepted(): void
