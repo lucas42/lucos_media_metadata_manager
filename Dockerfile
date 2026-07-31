@@ -4,6 +4,11 @@ WORKDIR /app
 COPY composer*.json ./
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
+# Adds phpunit and the autoload-dev mapping on top of the production vendor dir above.
+# Used exclusively by the test stage below — never shipped in the app image.
+FROM composer-build AS composer-build-dev
+RUN composer install --optimize-autoloader --no-interaction
+
 FROM node:26-alpine AS js-build
 
 WORKDIR /srv/client
@@ -13,7 +18,7 @@ COPY client/*.js ./
 
 RUN npm run build
 
-FROM php:8.5.8-apache-trixie
+FROM php:8.5.8-apache-trixie AS app
 ARG VERSION
 ENV VERSION=$VERSION
 
@@ -29,3 +34,14 @@ COPY --from=composer-build /app/vendor ./vendor
 
 COPY src .
 COPY --from=js-build /srv/client/dist/script.js* html/
+
+# Runs the test suite inside the same PHP image (same base image, extensions, php.ini)
+# that app ships with, so a missing extension in a base-image bump fails CI rather than
+# only surfacing at runtime. Keeps the unflattened src/ and tests/ layout the tests expect,
+# alongside app's own flattened copy above — this stage is never shipped.
+FROM app AS test
+COPY --from=composer-build-dev /app/vendor ./vendor
+COPY src ./src
+COPY tests ./tests
+COPY phpunit.xml ./phpunit.xml
+CMD ["vendor/bin/phpunit"]
