@@ -12,9 +12,14 @@
  * locally: a genuine fatal came back as an empty-bodied 500 with
  * `ErrorDocument 500 /500.php` wired up and nothing else (#389).
  *
- * A shutdown function *does* work: at the point a fatal fires, PHP has not
- * yet sent headers (nothing here calls flush() or emits output early), so a
- * shutdown handler can still set the status code and write a body.
+ * A shutdown function *does* work: `output_buffering = 4096` (the stock
+ * php.ini-production, unoverridden here) means headers aren't actually sent
+ * until either the buffer fills or the request ends, so at the point a fatal
+ * fires `headers_sent()` is still false even if a view had already echoed
+ * some markup (nav/header content, typically, before reaching whatever
+ * fatals). That buffered partial output has to be discarded before the
+ * friendly page is written, or the response ends up as the partial page and
+ * the friendly page concatenated together.
  *
  * Wired in globally via `php_admin_value auto_prepend_file` in vhost.conf's
  * <Directory> block, so it applies to every request without editing every
@@ -39,6 +44,12 @@ if (!function_exists('isUnrecoverableFatal')) {
 if (!function_exists('handleFatalErrorShutdown')) {
 	function handleFatalErrorShutdown(): void {
 		if (isUnrecoverableFatal(error_get_last()) && !headers_sent()) {
+			// Discard whatever partial markup the crashed request already
+			// echoed into the output buffer — otherwise it's still sitting
+			// there and renderFatalErrorPage() would just append after it.
+			while (ob_get_level() > 0) {
+				ob_end_clean();
+			}
 			http_response_code(500);
 			renderFatalErrorPage();
 		}

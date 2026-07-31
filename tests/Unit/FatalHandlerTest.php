@@ -13,10 +13,13 @@ require_once __DIR__ . '/../../src/fatalhandler.php';
  * every request, so it registers a shutdown function that renders the
  * friendly 500 page when a PHP fatal fires (#389). ErrorDocument 500 alone
  * doesn't reach these under mod_php — see the file's docblock for why this
- * exists — this test covers the pure detection logic; the end-to-end
- * behaviour (shutdown function firing, status code, response body) was
- * verified manually against a running container, since PHPUnit's CLI SAPI
- * has no real headers-sent state to exercise.
+ * exists. Most of this covers the pure detection logic in-process; the
+ * buffered-output regression test below shells out to a fresh PHP process
+ * instead, since it needs a genuine fatal and real output-buffering state
+ * rather than a faked error_get_last() value. Full request/response
+ * behaviour (actual HTTP status and headers) was verified manually against
+ * a running container, since PHPUnit's CLI SAPI has no real headers-sent
+ * state to exercise.
  */
 class FatalHandlerTest extends TestCase
 {
@@ -57,6 +60,30 @@ class FatalHandlerTest extends TestCase
         // error_get_last() returns null when nothing has gone wrong —
         // the overwhelmingly common case, run on every successful request.
         $this->assertFalse(isUnrecoverableFatal(null));
+    }
+
+    public function testDiscardsBufferedPartialOutputBeforeRenderingFriendlyPage(): void
+    {
+        // A genuine fatal in a fresh subprocess, rather than a faked
+        // error_get_last() state, so real output-buffering applies exactly
+        // as it does under mod_php. CLI's own output_buffering default
+        // differs from php.ini-production's, so it's set explicitly here to
+        // match: this is the scenario the review on #391 caught — with
+        // output_buffering on, a fatal that fires after some markup has
+        // already been echoed (nav/header content, typically, before the
+        // view reaches whatever fatals) left that partial markup sitting in
+        // the buffer, and the friendly page got appended after it rather
+        // than replacing it.
+        $script = 'require ' . var_export(__DIR__ . '/../../src/fatalhandler.php', true) . ';'
+            . 'echo "<html>partial nav already echoed before the crash</html>";'
+            . 'undefinedFunctionToForceAFatal();';
+
+        $output = shell_exec(
+            'php -d output_buffering=4096 -r ' . escapeshellarg($script) . ' 2>/dev/null'
+        );
+
+        $this->assertStringNotContainsString('partial nav already echoed', $output);
+        $this->assertStringContainsString("Something's gone wrong", $output);
     }
 
     public function testHasNoApplicationBootstrapDependency(): void
