@@ -9,6 +9,14 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Reject pre-release base images
+          command: |
+            if grep -nE '^FROM [^ ]*:[^ ]*(alpha|beta|[-.]rc[0-9])' Dockerfile; then
+              echo "Pre-release base image tag(s) found above."
+              echo "Pre-release images ship straight to production via auto-merge and are not covered by any runtime test."
+              exit 1
+            fi
+      - run:
           name: Install dependencies
           command: composer install --no-progress --no-interaction
       - run:
