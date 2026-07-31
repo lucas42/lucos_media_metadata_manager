@@ -5,7 +5,7 @@ orbs:
 jobs:
   test:
     docker:
-      - image: cimg/php:8.4
+      - image: cimg/base:current
     steps:
       - checkout
       - run:
@@ -16,12 +16,10 @@ jobs:
               echo "Pre-release images ship straight to production via auto-merge and are not covered by any runtime test."
               exit 1
             fi
-      - run:
-          name: Install dependencies
-          command: composer install --no-progress --no-interaction
+      - setup_remote_docker
       - run:
           name: Run tests
-          command: vendor/bin/phpunit
+          command: docker compose --profile test up test --build --exit-code-from test
 
 workflows:
   version: 2

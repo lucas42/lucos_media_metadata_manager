@@ -1,6 +1,8 @@
 services:
   media_manager:
-    build: .
+    build:
+      context: .
+      target: app
     container_name: lucos_media_metadata_manager
     ports:
       - $PORT:80
@@ -24,3 +26,12 @@ services:
       - APP_ORIGIN
       - ENVIRONMENT
       - SYSTEM
+  test:
+    build:
+      context: .
+      target: test
+    container_name: lucos_media_metadata_manager_test
+    image: lucas42/lucos_media_metadata_manager_test:${VERSION:-latest}
+    command: vendor/bin/phpunit
+    profiles:
+      - test
