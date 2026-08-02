@@ -315,6 +315,9 @@
 					signal: currentController.signal,
 				}).then(r => r.ok ? r.json() : Promise.reject(new Error('Artist search request failed')))
 				: Promise.resolve({ artists: [] });
+			// Prevent an unhandled rejection if this call gets superseded (aborted) before
+			// the second try block below runs — the real handling still happens there.
+			artistsPromise.catch(() => {});
 
 			try {
 				const response = await fetch(url, {
