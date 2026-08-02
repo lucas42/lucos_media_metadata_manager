@@ -30,6 +30,10 @@
 		<div id="search-error" style="display:none;">
 			<small>Search is currently unavailable. <a href="/search">Try the advanced search instead.</a></small>
 		</div>
+		<div id="artists-section" style="display:none;">
+			<h3>Artists</h3>
+			<ul id="artist-results"></ul>
+		</div>
 		<ul id="results"></ul>
 		<div class="pagination" id="pagination"></div>
 		<a href="/search" class="standalone">Advanced Search / Bulk Edit</a>
@@ -43,6 +47,9 @@
 		const loadingDiv = document.getElementById('search-loading');
 		const errorDiv = document.getElementById('search-error');
 		const facetFiltersDiv = document.getElementById('facet-filters');
+		const artistsSectionDiv = document.getElementById('artists-section');
+		const artistResultsList = document.getElementById('artist-results');
+		const MAX_ARTIST_RESULTS = 5;
 		let debounceTimer = null;
 		let currentPage = 1;
 		let currentQuery = '';
@@ -167,6 +174,24 @@
 			renderFacets(data.facet_counts || []);
 		}
 
+		function renderArtists(data) {
+			const artists = (data.artists || []).slice(0, MAX_ARTIST_RESULTS);
+			artistResultsList.innerHTML = '';
+			if (artists.length === 0) {
+				artistsSectionDiv.style.display = 'none';
+				return;
+			}
+			artists.forEach(function(artist) {
+				const li = document.createElement('li');
+				const a = document.createElement('a');
+				a.href = '/search?p.artist=' + encodeURIComponent(artist.name);
+				a.textContent = artist.name;
+				li.appendChild(a);
+				artistResultsList.appendChild(li);
+			});
+			artistsSectionDiv.style.display = 'block';
+		}
+
 		function createChip(label, value) {
 			const span = document.createElement('span');
 			span.className = 'result-chip';
@@ -266,6 +291,8 @@
 				resultsList.innerHTML = '';
 				paginationDiv.innerHTML = '';
 				facetFiltersDiv.innerHTML = '';
+				artistResultsList.innerHTML = '';
+				artistsSectionDiv.style.display = 'none';
 				loadingDiv.style.display = 'none';
 				errorDiv.style.display = 'none';
 				return;
@@ -279,6 +306,15 @@
 			loadingDiv.style.display = 'block';
 
 			const url = buildSearchUrl(query, currentPage);
+
+			// Artist matches are fetched alongside the track search, but only for an
+			// actual text query — facet-only browsing has no query term to match artists against.
+			const artistsPromise = query
+				? fetch('/artists?q=' + encodeURIComponent(query), {
+					headers: { 'Accept': 'application/json' },
+					signal: currentController.signal,
+				}).then(r => r.ok ? r.json() : Promise.reject(new Error('Artist search request failed')))
+				: Promise.resolve({ artists: [] });
 
 			try {
 				const response = await fetch(url, {
@@ -297,6 +333,18 @@
 				paginationDiv.innerHTML = '';
 				loadingDiv.style.display = 'none';
 				errorDiv.style.display = 'block';
+			}
+
+			try {
+				const artistData = await artistsPromise;
+				renderArtists(artistData);
+			} catch (err) {
+				if (err.name === 'AbortError') return;
+				// Artist matching is a secondary enhancement to the track search — a failure
+				// here shouldn't block or overwrite the track results/error state above.
+				console.error('Artist search error:', err);
+				artistResultsList.innerHTML = '';
+				artistsSectionDiv.style.display = 'none';
 			}
 		}
 
