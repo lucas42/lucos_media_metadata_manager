@@ -18,7 +18,7 @@ COPY client/*.js ./
 
 RUN npm run build
 
-FROM php:8.5.12-apache-trixie AS app
+FROM php:8.6.0RC5-apache-trixie AS app
 ARG VERSION
 ENV VERSION=$VERSION
 
