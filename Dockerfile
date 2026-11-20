@@ -1,13 +1,13 @@
 FROM composer:2.11.2 AS composer-build
 
 WORKDIR /app
-COPY composer*.json ./
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-req=ext-mbstring
 
 # Adds phpunit and the autoload-dev mapping on top of the production vendor dir above.
 # Used exclusively by the test stage below — never shipped in the app image.
 FROM composer-build AS composer-build-dev
-RUN composer install --optimize-autoloader --no-interaction
+RUN composer install --optimize-autoloader --no-interaction --ignore-platform-req=ext-mbstring
 
 FROM node:26-alpine AS js-build
 
